@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Python,math,numpy,">
+  <meta name="keywords" content="Python,时间格式处理,">
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="万壑松风知客来，摇扇抚琴待留声 简述：很早的一个问题，当然现在有时还是会迷糊，所以这里简单记录下来。这是关于 Python 中计算幂运算、开方时的几种方法。主要包括了 math、numpy 提供的几种方法 math模块：1. $pow(x,y)$ 函数：结果：幂运算，返回以 $x$ 为底，$y$ 为指数的运算结果 $x^{y}$ 。 规则：当底数 $x$ 为正数时，指数 $y$ 可以为任何实数(-">
-<meta name="keywords" content="Python,math,numpy">
+<meta name="description" content="万壑松风知客来，摇扇抚琴待留声 1. 简介好吧，不用等很久了，刚写完一篇又想到了一个比较实用的小技巧，当然由于内容篇幅较小，所以这里可以先简单介绍下，如果后面有相关内容再做补充即可。因为上一篇介绍了关于 Grouper 的使用，其中的例子用了时间序列的数据，所以这里可以对时间数据进行筛选数据集，比如筛选可以1：直接利用时间格式类型的数据进行选择；2：使用字符串格式时间进行选择。（主要是想熟悉下这个">
+<meta name="keywords" content="Python,时间格式处理">
 <meta property="og:type" content="article">
-<meta property="og:title" content="pythonon_tips-分不清楚的乘法和开方">
-<meta property="og:url" content="http://yoursite.com/2019/06/21/python_tips-分不清楚的乘法和开方/index.html">
+<meta property="og:title" content="Python_tips-pandas模糊匹配">
+<meta property="og:url" content="http://yoursite.com/2019/07/23/Python_tips-pandas模糊匹配/index.html">
 <meta property="og:site_name" content="不自在">
-<meta property="og:description" content="万壑松风知客来，摇扇抚琴待留声 简述：很早的一个问题，当然现在有时还是会迷糊，所以这里简单记录下来。这是关于 Python 中计算幂运算、开方时的几种方法。主要包括了 math、numpy 提供的几种方法 math模块：1. $pow(x,y)$ 函数：结果：幂运算，返回以 $x$ 为底，$y$ 为指数的运算结果 $x^{y}$ 。 规则：当底数 $x$ 为正数时，指数 $y$ 可以为任何实数(-">
+<meta property="og:description" content="万壑松风知客来，摇扇抚琴待留声 1. 简介好吧，不用等很久了，刚写完一篇又想到了一个比较实用的小技巧，当然由于内容篇幅较小，所以这里可以先简单介绍下，如果后面有相关内容再做补充即可。因为上一篇介绍了关于 Grouper 的使用，其中的例子用了时间序列的数据，所以这里可以对时间数据进行筛选数据集，比如筛选可以1：直接利用时间格式类型的数据进行选择；2：使用字符串格式时间进行选择。（主要是想熟悉下这个">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-21T09:57:02.608Z">
+<meta property="og:updated_time" content="2019-07-23T12:46:48.974Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="pythonon_tips-分不清楚的乘法和开方">
-<meta name="twitter:description" content="万壑松风知客来，摇扇抚琴待留声 简述：很早的一个问题，当然现在有时还是会迷糊，所以这里简单记录下来。这是关于 Python 中计算幂运算、开方时的几种方法。主要包括了 math、numpy 提供的几种方法 math模块：1. $pow(x,y)$ 函数：结果：幂运算，返回以 $x$ 为底，$y$ 为指数的运算结果 $x^{y}$ 。 规则：当底数 $x$ 为正数时，指数 $y$ 可以为任何实数(-">
+<meta name="twitter:title" content="Python_tips-pandas模糊匹配">
+<meta name="twitter:description" content="万壑松风知客来，摇扇抚琴待留声 1. 简介好吧，不用等很久了，刚写完一篇又想到了一个比较实用的小技巧，当然由于内容篇幅较小，所以这里可以先简单介绍下，如果后面有相关内容再做补充即可。因为上一篇介绍了关于 Grouper 的使用，其中的例子用了时间序列的数据，所以这里可以对时间数据进行筛选数据集，比如筛选可以1：直接利用时间格式类型的数据进行选择；2：使用字符串格式时间进行选择。（主要是想熟悉下这个">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/06/21/python_tips-分不清楚的乘法和开方/">
+  <link rel="canonical" href="http://yoursite.com/2019/07/23/Python_tips-pandas模糊匹配/">
 
 
 
 
 
-  <title>pythonon_tips-分不清楚的乘法和开方 | 不自在</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>Python_tips-pandas模糊匹配 | 不自在</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -253,7 +253,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/21/python_tips-分不清楚的乘法和开方/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/23/Python_tips-pandas模糊匹配/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="DHui">
@@ -270,7 +270,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">pythonon_tips-分不清楚的乘法和开方</h1>
+          <h1 class="post-title" itemprop="name headline">Python_tips-pandas模糊匹配</h1>
         
 
         <div class="post-meta">
@@ -282,8 +282,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-21T17:38:10+08:00">
-                2019-06-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-23T20:45:33+08:00">
+                2019-07-23
               </time>
             
 
@@ -343,25 +343,18 @@
 
       
         <p><em>万壑松风知客来，摇扇抚琴待留声</em></p>
-<h3 id="简述："><a href="#简述：" class="headerlink" title="简述："></a><strong>简述</strong>：</h3><p>很早的一个问题，当然现在有时还是会迷糊，所以这里简单记录下来。这是关于 Python 中计算幂运算、开方时的几种方法。主要包括了 math、numpy 提供的几种方法</p>
-<h3 id="math模块："><a href="#math模块：" class="headerlink" title="math模块："></a>math模块：</h3><h4 id="1-pow-x-y-函数："><a href="#1-pow-x-y-函数：" class="headerlink" title="1. $pow(x,y)$ 函数："></a>1. $pow(x,y)$ 函数：</h4><h5 id="结果："><a href="#结果：" class="headerlink" title="结果："></a>结果：</h5><p>幂运算，返回以 $x$ 为底，$y$ 为指数的运算结果 $x^{y}$ 。</p>
-<h5 id="规则："><a href="#规则：" class="headerlink" title="规则："></a>规则：</h5><p>当底数 $x$ 为正数时，指数 $y$ 可以为任何实数(-1.5、-2、0、1.5、2)；当 $x$ 为负数时，$y$ 可以为任何整数(-2、0、2)；当 $x$ 为 0 时，$y$ 可以为任何正数(2、2.5)；当 $y$ 为 0 时，x 取任何值结果都为 1。</p>
-<h5 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h5><p>该函数只能计算 $x$ 一个数，即不能处理数组，且返回结果为  float 类型。</p>
-<h4 id="2-sqrt-x-函数："><a href="#2-sqrt-x-函数：" class="headerlink" title="2. $sqrt(x)$ 函数："></a>2. $sqrt(x)$ 函数：</h4><h5 id="结果：-1"><a href="#结果：-1" class="headerlink" title="结果："></a>结果：</h5><p>开平方，返回 $x$ 的平方根运算结果 $\sqrt{x}$ 。</p>
-<h5 id="规则：-1"><a href="#规则：-1" class="headerlink" title="规则："></a>规则：</h5><p>只需传入一个数 $x$ 即可，没有多余参数。</p>
-<h5 id="注意：-1"><a href="#注意：-1" class="headerlink" title="注意："></a>注意：</h5><p>$x$ 不可为负数，可以为任何非负数(0、2、2.5)，该函数只能计算 $x$ 一个数，即不能处理数组，且返回结果为  float 类型。</p>
-<h3 id="numpy模块："><a href="#numpy模块：" class="headerlink" title="numpy模块："></a>numpy模块：</h3><blockquote>
-<p><small>相对于 math 模块，numpy 功能更强大，与 math 模块最大的区别就是可以对数组或矩阵运算，但是这里仅做部分主要参数的使用说明</small></p>
-</blockquote>
-<h4 id="1-np-power-x-y-函数："><a href="#1-np-power-x-y-函数：" class="headerlink" title="1. $np.power(x,y)$ 函数："></a>1. $np.power(x,y)$ 函数：</h4><h5 id="结果：-2"><a href="#结果：-2" class="headerlink" title="结果："></a>结果：</h5><p>（矩阵）幂运算，返回 $x$ 为底，$y$ 为指数的运算结果 $x^y$ 。</p>
-<h5 id="规则：-2"><a href="#规则：-2" class="headerlink" title="规则："></a>规则：</h5><p>$x$ 和 $y$ 可以分别是元素、列表、矩阵，若 $x$ 与 $y$ 都是列表或者矩阵，则唯一的要求就是两者的列（也就是维数）相等。</p>
-<h5 id="注意：-2"><a href="#注意：-2" class="headerlink" title="注意："></a>注意：</h5><p>$x$、$y$ 可以为任何数值，只需满足当 $x$、$y$ 都为列表或矩阵时，两者的列相等，且返回结果为  float 类型。</p>
-<h4 id="2-np-sqrt-x-函数："><a href="#2-np-sqrt-x-函数：" class="headerlink" title="2. $np.sqrt(x)$ 函数："></a>2. $np.sqrt(x)$ 函数：</h4><h5 id="结果：-3"><a href="#结果：-3" class="headerlink" title="结果："></a>结果：</h5><p>（矩阵）开平方，返回 $x$ 的平方根运算结果  $\sqrt{x}$ 。</p>
-<h5 id="规则：-3"><a href="#规则：-3" class="headerlink" title="规则："></a>规则：</h5><p>$x$ 可以是元素、列表、矩阵，分别对每个元素进行开方，若某元素为空值或负数，则开方后是空值（$nan$），且非空值返回结果为 float 类型。</p>
-<h5 id="注意：-3"><a href="#注意：-3" class="headerlink" title="注意："></a>注意：</h5><p>没有什么注意的。</p>
-<h4 id="3-np-square-x-函数："><a href="#3-np-square-x-函数：" class="headerlink" title="3. $np.square(x)$ 函数："></a>3. $np.square(x)$ 函数：</h4><h5 id="结果：-4"><a href="#结果：-4" class="headerlink" title="结果："></a>结果：</h5><p>（矩阵）幂为 2 运算，返回 $x*x$ 的结果，也就是 $x^2$ 。</p>
-<h5 id="规则：-4"><a href="#规则：-4" class="headerlink" title="规则："></a>规则：</h5><p>$x$ 可以是元素、列表、矩阵，分别对每个元素进行平方运算，若 $x$ 全部为非空值整数，则返回结果为 int 类型，否者为 float 类型。</p>
-<h5 id="注意：-4"><a href="#注意：-4" class="headerlink" title="注意："></a>注意：</h5><p>没什么注意的。</p>
+<h4 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h4><p>好吧，不用等很久了，刚写完一篇又想到了一个比较实用的小技巧，当然由于内容篇幅较小，所以这里可以先简单介绍下，如果后面有相关内容再做补充即可。因为上一篇介绍了关于 Grouper 的使用，其中的例子用了时间序列的数据，所以这里可以对时间数据进行筛选数据集，比如筛选可以<strong>1：</strong>直接利用时间格式类型的数据进行选择；<strong>2：</strong>使用字符串格式时间进行选择。（主要是想熟悉下这个模糊匹配，每次使用都会忘）</p>
+<h4 id="2-时间格式筛选"><a href="#2-时间格式筛选" class="headerlink" title="2. 时间格式筛选"></a>2. 时间格式筛选</h4><p>这是很简单，很容易想到的一种方式，数据本身是时间格式，就可以根据时间的起点、终点来取截取。操作如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成1到4月的数据</span></span><br><span class="line">b = pd.date_range(start=<span class="string">'2019-01-01'</span>, end=<span class="string">'2019-04-30'</span>, freq=<span class="string">'D'</span>)</span><br><span class="line">a = np.arange(<span class="number">0</span>,b.shape[<span class="number">0</span>])</span><br><span class="line">c = np.random.randint(<span class="number">0</span>, <span class="number">10</span>, size=b.shape[<span class="number">0</span>])</span><br><span class="line">df = pd.DataFrame(&#123;<span class="string">'a'</span>:a, <span class="string">'date'</span>:b, <span class="string">'c'</span>:c&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">#    a       date  c</span></span><br><span class="line"><span class="comment"># 0  0 2019-01-01  2</span></span><br><span class="line"><span class="comment"># 1  1 2019-01-02  1</span></span><br><span class="line"><span class="comment"># 2  2 2019-01-03  8</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 根据时间起点、终点来截取数据集三月份的数据</span></span><br><span class="line">df_3 = df[df[<span class="string">'date'</span>] &gt; <span class="string">'2019-02-28'</span>]</span><br><span class="line">df_3 = df_3[df_3[<span class="string">'date'</span>] &lt; <span class="string">'2019-04-01'</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment">#      a       date  c</span></span><br><span class="line"><span class="comment"># 59  59 2019-03-01  5</span></span><br><span class="line"><span class="comment"># 60  60 2019-03-02  5</span></span><br><span class="line"><span class="comment"># ......</span></span><br><span class="line"><span class="comment"># 88  88 2019-03-30  0</span></span><br><span class="line"><span class="comment"># 89  89 2019-03-31  5</span></span><br></pre></td></tr></table></figure>
+<h4 id="3-字符串模糊匹配"><a href="#3-字符串模糊匹配" class="headerlink" title="3. 字符串模糊匹配"></a>3. 字符串模糊匹配</h4><p>很多时候我们拿到的时间列并不是时间格式，更多可能是字符串格式的数据，如果每次都将这些字符串转换成时间格式，然后再截取，写冗余代码是很<small>脑残</small>的，所以对字符串的截取还是很有必要的，其中的一种方式，我们可以使用模糊匹配的方式，下面简单描述下。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 当然首先将前面的时间格式转换成字符串格式，这可不是冗余操作，以便后续操作</span></span><br><span class="line"><span class="comment"># 这是两种时间格式转换成字符串的操作方式</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># df['date'] = df['date'].map(lambda x : str(x))</span></span><br><span class="line">df[<span class="string">'date'</span>] = df[<span class="string">'date'</span>].map(<span class="keyword">lambda</span> x : x.strftime(<span class="string">"%Y-%m-%d"</span>))</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用正则匹配规则，模糊匹配三月份数据集，得到相同的结果</span></span><br><span class="line">df = df[df[<span class="string">'date'</span>].str.contains(<span class="string">r'.*?-04-.'</span>)]</span><br><span class="line"></span><br><span class="line"><span class="comment">#      a       date  c</span></span><br><span class="line"><span class="comment"># 59  59 2019-03-01  5</span></span><br><span class="line"><span class="comment"># 60  60 2019-03-02  5</span></span><br><span class="line"><span class="comment"># ......</span></span><br><span class="line"><span class="comment"># 88  88 2019-03-30  0</span></span><br><span class="line"><span class="comment"># 89  89 2019-03-31  5</span></span><br></pre></td></tr></table></figure>
+<p>.str.contains() 中的 str 可以理解成将 Series 数据结构转化为 String 格式，然后使用 contains() 方法匹配数据。</p>
+<p>其实该方法还可以扩展，我们可以结合 <code>&amp;、|</code>（与或），两种方法组合筛选数据。比如这里，我们可以同时模糊匹配出三月和四月的数据。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">df = df[df[<span class="string">'date'</span>].str.contains(<span class="string">r'.*?-03-.|.*?-04-.'</span>)]</span><br><span class="line"></span><br><span class="line"><span class="comment">#        a        date  c</span></span><br><span class="line"><span class="comment"># 59    59  2019-03-01  8</span></span><br><span class="line"><span class="comment"># 60    60  2019-03-02  4</span></span><br><span class="line"><span class="comment"># ......</span></span><br><span class="line"><span class="comment"># 118  118  2019-04-29  7</span></span><br><span class="line"><span class="comment"># 119  119  2019-04-30  0</span></span><br></pre></td></tr></table></figure>
+<p>这种方法有点像 SQL 中的 like ，当然其中的匹配规则自己定义难度不大。</p>
+<h4 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h4><p>简短的文章，总是让人还没有写过瘾就结束了。如果正常下一次的 Pyton_tips 应该会隔一段时间。期待下一次是哪个幸运的小方法将会走入这个系列。</p>
 
       
     </div>
@@ -381,9 +374,7 @@
           
             <a href="/tags/Python/" rel="tag"># Python</a>
           
-            <a href="/tags/math/" rel="tag"># math</a>
-          
-            <a href="/tags/numpy/" rel="tag"># numpy</a>
+            <a href="/tags/时间格式处理/" rel="tag"># 时间格式处理</a>
           
         </div>
       
@@ -396,8 +387,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/13/VMware配置Linux/" rel="next" title="VMware配置Linux">
-                <i class="fa fa-chevron-left"></i> VMware配置Linux
+              <a href="/2019/07/23/Python_tips-Grouper允许指定groupby指令/" rel="next" title="Python_tips-Grouper允许指定groupby指令">
+                <i class="fa fa-chevron-left"></i> Python_tips-Grouper允许指定groupby指令
               </a>
             
           </div>
@@ -405,10 +396,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/07/02/3.0-VMware配置Linux/" rel="prev" title="3.0VMware配置Linux">
-                3.0VMware配置Linux <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -558,7 +545,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#简述："><span class="nav-number">1.</span> <span class="nav-text">简述：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#math模块："><span class="nav-number">2.</span> <span class="nav-text">math模块：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-pow-x-y-函数："><span class="nav-number">2.1.</span> <span class="nav-text">1. $pow(x,y)$ 函数：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#结果："><span class="nav-number">2.1.1.</span> <span class="nav-text">结果：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#规则："><span class="nav-number">2.1.2.</span> <span class="nav-text">规则：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#注意："><span class="nav-number">2.1.3.</span> <span class="nav-text">注意：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-sqrt-x-函数："><span class="nav-number">2.2.</span> <span class="nav-text">2. $sqrt(x)$ 函数：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#结果：-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">结果：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#规则：-1"><span class="nav-number">2.2.2.</span> <span class="nav-text">规则：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#注意：-1"><span class="nav-number">2.2.3.</span> <span class="nav-text">注意：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy模块："><span class="nav-number">3.</span> <span class="nav-text">numpy模块：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-np-power-x-y-函数："><span class="nav-number">3.1.</span> <span class="nav-text">1. $np.power(x,y)$ 函数：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#结果：-2"><span class="nav-number">3.1.1.</span> <span class="nav-text">结果：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#规则：-2"><span class="nav-number">3.1.2.</span> <span class="nav-text">规则：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#注意：-2"><span class="nav-number">3.1.3.</span> <span class="nav-text">注意：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-np-sqrt-x-函数："><span class="nav-number">3.2.</span> <span class="nav-text">2. $np.sqrt(x)$ 函数：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#结果：-3"><span class="nav-number">3.2.1.</span> <span class="nav-text">结果：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#规则：-3"><span class="nav-number">3.2.2.</span> <span class="nav-text">规则：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#注意：-3"><span class="nav-number">3.2.3.</span> <span class="nav-text">注意：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-np-square-x-函数："><span class="nav-number">3.3.</span> <span class="nav-text">3. $np.square(x)$ 函数：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#结果：-4"><span class="nav-number">3.3.1.</span> <span class="nav-text">结果：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#规则：-4"><span class="nav-number">3.3.2.</span> <span class="nav-text">规则：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#注意：-4"><span class="nav-number">3.3.3.</span> <span class="nav-text">注意：</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-简介"><span class="nav-number">1.</span> <span class="nav-text">1. 简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-时间格式筛选"><span class="nav-number">2.</span> <span class="nav-text">2. 时间格式筛选</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-字符串模糊匹配"><span class="nav-number">3.</span> <span class="nav-text">3. 字符串模糊匹配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-总结"><span class="nav-number">4.</span> <span class="nav-text">4. 总结</span></a></li></ol></div>
             
 
           </div>
