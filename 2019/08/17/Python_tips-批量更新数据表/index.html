@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="不自在">
 <meta property="og:description" content="万壑松风知客来，摇扇抚琴待留声 1. 简介在计算机领域做开发，或多或少你都会涉及到数据的处理，那么和数据库打交道则是稀疏平常的事，区别只是用的多或用的少/用的深或用的浅。 回忆一下，最开始接触数据库是在大二上学期，自学 Python 后出于兴趣开始简单接触 MySQL，之后在下学期有了《数据库原理》这门课，那时候虽然平时有练习，也都只是简单使用，较深的地方学了没用也就忘了，所以总体上也就是基础水平">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-17T09:26:32.555Z">
+<meta property="og:updated_time" content="2019-08-17T13:08:57.300Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python_tips-批量更新数据表">
 <meta name="twitter:description" content="万壑松风知客来，摇扇抚琴待留声 1. 简介在计算机领域做开发，或多或少你都会涉及到数据的处理，那么和数据库打交道则是稀疏平常的事，区别只是用的多或用的少/用的深或用的浅。 回忆一下，最开始接触数据库是在大二上学期，自学 Python 后出于兴趣开始简单接触 MySQL，之后在下学期有了《数据库原理》这门课，那时候虽然平时有练习，也都只是简单使用，较深的地方学了没用也就忘了，所以总体上也就是基础水平">
@@ -352,8 +352,8 @@
 <p>简化过程，可以这样来构建代码：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">connect = pymysql.connect(user=<span class="string">'root'</span>, password=<span class="string">''</span>, host=<span class="string">''</span>, port=<span class="number">3306</span>)</span><br><span class="line">con = connect.cursor()</span><br><span class="line">con.execute(<span class="string">'use database'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(df.shape[<span class="number">0</span>]):</span><br><span class="line">    a = df.ix[i,<span class="string">'a'</span>]</span><br><span class="line">    b = df.ix[i,<span class="string">'b'</span>]</span><br><span class="line">    algo_code = df.ix[i,<span class="string">'algo_code'</span>]</span><br><span class="line">    atm_code = df.ix[i,<span class="string">'atm_code'</span>]</span><br><span class="line">    pred_date = df.ix[i,<span class="string">'pred_date'</span>]</span><br><span class="line">    update_sql = <span class="string">"update table_name set a=&#123;0&#125;,b=&#123;1&#125; where algo_code=&#123;2&#125;,atm_code=&#123;3&#125;,pred_date=&#123;4&#125;"</span>.format(a,b,algo_code,atm_code,pred_date)</span><br><span class="line">    con.execute(update_sql)</span><br><span class="line">connect.commit()</span><br></pre></td></tr></table></figure>
 <p>容易理解的一种数据表更新的方式。</p>
-<h4 id="3-尝试批量更新"><a href="#3-尝试批量更新" class="headerlink" title="3. 尝试批量更新"></a>3. 尝试批量更新</h4><p>上面的方式容易理解也容易实现，但仅限于数据量在一定范围，或时间可接受范围内。其实可以做实验查看只更新一条数据需要耗费多少时间，我这里查看下大概在 0.5s左右（居然这么长），更新量大岂不是会等到天亮。</p>
-<p>由此提高更新效率是当务之急，通过查阅发现 pymysql 库提供批量更新的函数 <code>executemany</code>，通过传入两个参数——更新 sql 和参数元组。通过 executemany 便可以完成批量更新的方式。</p>
+<h4 id="3-尝试批量更新"><a href="#3-尝试批量更新" class="headerlink" title="3. 尝试批量更新"></a>3. 尝试批量更新</h4><p>上面的方式容易理解也容易实现，但仅限于数据量在一定范围，或时间可接受范围内。其实可以做实验查看只更新一条数据需要耗费多少时间，我这里查看下大概在 0.5s 左右（居然这么长），更新量大岂不是会等到天亮。</p>
+<p>由此提高更新效率是当务之急，通过查阅发现 pymysql 库提供批量更新的函数 <code>executemany</code>，通过传入两个参数——更新 sql 和参数元组。通过 <code>executemany</code> 便可以完成批量更新的方式。</p>
 <p>简化过程，构建代码和上面相似：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 外部构建sql语句，留出参数位置，循环内将需要更新的参数和条件添加到元组，达到一定数量后批量提交</span></span><br><span class="line"></span><br><span class="line">update_sql = <span class="string">"update table_name set a = %s,b = %s  where algo_code = %s,atm_code = %s,pred_date = %s;'''</span></span><br><span class="line"><span class="string">condition = []</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">for i in range(df.shape[0]):</span></span><br><span class="line"><span class="string">    a = df.ix[i,'a']</span></span><br><span class="line"><span class="string">    b = df.ix[i,'b']</span></span><br><span class="line"><span class="string">    algo_code = df.ix[i,'algo_code']</span></span><br><span class="line"><span class="string">    atm_code = df.ix[i,'atm_code']</span></span><br><span class="line"><span class="string">    pred_date = df.ix[i,'pred_date']</span></span><br><span class="line"><span class="string">    condition.append((a, b, algo_code, atm_code, pred_date))</span></span><br><span class="line"><span class="string">    if i%6000 == 0:</span></span><br><span class="line"><span class="string">        con.executemany(update_sql, condition)</span></span><br><span class="line"><span class="string">        condition = []</span></span><br><span class="line"><span class="string"># 剩余不足6000条更新</span></span><br><span class="line"><span class="string">con.executemay(update_sql, condition)</span></span><br><span class="line"><span class="string">connect.commit()</span></span><br></pre></td></tr></table></figure>
 <p>按理说应该可以了吧，运行程序后让人头疼的是竟然效率没有提高，你这是批量的是什么鬼？</p>
@@ -362,7 +362,7 @@
 <p>修改 update_sql 语句，然后再使用 <code>executemany</code> 批量提交更新数据。相对于上面的改变是减少了 where 的判断条件，使用 id 一个条件来确定数据位置：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">update_sql = <span class="string">"update table_name set a = %s,b = %s  where id = %s;'''</span></span><br><span class="line"><span class="string">condition = []</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">for i in range(df.shape[0]):</span></span><br><span class="line"><span class="string">    a = df.ix[i,'a']</span></span><br><span class="line"><span class="string">    b = df.ix[i,'b']</span></span><br><span class="line"><span class="string">    id = df.ix[i,'id']</span></span><br><span class="line"><span class="string">    condition.append((a, b, id))</span></span><br><span class="line"><span class="string">    if i%6000 == 0:</span></span><br><span class="line"><span class="string">        con.executemany(update_sql, condition)</span></span><br><span class="line"><span class="string">        condition = []</span></span><br><span class="line"><span class="string"># 剩余不足6000条更新</span></span><br><span class="line"><span class="string">con.executemay(update_sql, condition)</span></span><br><span class="line"><span class="string">connect.commit()</span></span><br></pre></td></tr></table></figure>
 <p>运行程序，10s 之内就能完成，你会发现时间复杂度下降不止 1000 倍。</p>
-<p>具体原因我不能确定，目前猜测有两个：1、where 条件过多会造成查表慢。2、自增长 id 相当于目录索引。这两个条件容易验证（我们有做~~太懒了，没时间）。</p>
+<p>具体原因我不能确定，目前猜测有两个：1、where 条件过多会造成查表慢。2、自增长 id 相当于目录索引。这两个条件容易验证（我木有做~~太懒了，没时间）。</p>
 <h4 id="5-结语"><a href="#5-结语" class="headerlink" title="5. 结语"></a>5. 结语</h4><p>到此算是完成了目标，大数据量更新并且效率高。但是里面还有很多可以优化的地方，在后续的使用中我会进行处理，然后更新文章。</p>
 
       
@@ -405,6 +405,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/17/Sublime离线添加插件+关联环境/" rel="prev" title="Sublime离线添加插件/关联环境">
+                Sublime离线添加插件/关联环境 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -483,7 +487,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -505,7 +509,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
