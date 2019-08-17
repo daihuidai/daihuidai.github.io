@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Python,数据库,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="万壑松风知客来，摇扇抚琴待留声 1. 简介在计算机领域做开发，或多或少你都会涉及到数据的处理，那么和数据库打交道则是稀疏平常的事，区别只是用的多或用的少/用的深或用的浅。 回忆一下，最开始接触数据库是在大二上学期，自学 Python 后出于兴趣开始简单接触 MySQL，之后在下学期有了《数据库原理》这门课，那时候虽然平时有练习，也都只是简单使用，较深的地方学了没用也就忘了，所以总体上也就是基础水平">
+<meta name="keywords" content="Python,数据库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python_tips-批量更新数据表">
+<meta property="og:url" content="http://yoursite.com/2019/08/17/Python_tips-批量更新数据表/index.html">
+<meta property="og:site_name" content="不自在">
+<meta property="og:description" content="万壑松风知客来，摇扇抚琴待留声 1. 简介在计算机领域做开发，或多或少你都会涉及到数据的处理，那么和数据库打交道则是稀疏平常的事，区别只是用的多或用的少/用的深或用的浅。 回忆一下，最开始接触数据库是在大二上学期，自学 Python 后出于兴趣开始简单接触 MySQL，之后在下学期有了《数据库原理》这门课，那时候虽然平时有练习，也都只是简单使用，较深的地方学了没用也就忘了，所以总体上也就是基础水平">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-08-17T09:26:32.555Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python_tips-批量更新数据表">
+<meta name="twitter:description" content="万壑松风知客来，摇扇抚琴待留声 1. 简介在计算机领域做开发，或多或少你都会涉及到数据的处理，那么和数据库打交道则是稀疏平常的事，区别只是用的多或用的少/用的深或用的浅。 回忆一下，最开始接触数据库是在大二上学期，自学 Python 后出于兴趣开始简单接触 MySQL，之后在下学期有了《数据库原理》这门课，那时候虽然平时有练习，也都只是简单使用，较深的地方学了没用也就忘了，所以总体上也就是基础水平">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/08/17/Python_tips-批量更新数据表/">
+
+
+
+
+
+  <title>Python_tips-批量更新数据表 | 不自在</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">不自在</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">You Konw Nothing</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/17/Python_tips-批量更新数据表/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DHui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/Favorite_CAT.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不自在">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Python_tips-批量更新数据表</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-17T17:24:53+08:00">
+                2019-08-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python-tips系列/" itemprop="url" rel="index">
+                    <span itemprop="name">Python_tips系列</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><em>万壑松风知客来，摇扇抚琴待留声</em></p>
+<h4 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h4><p>在计算机领域做开发，或多或少你都会涉及到数据的处理，那么和数据库打交道则是稀疏平常的事，区别只是用的多或用的少/用的深或用的浅。</p>
+<p>回忆一下，最开始接触数据库是在大二上学期，自学 Python 后出于兴趣开始简单接触 MySQL，之后在下学期有了《数据库原理》这门课，那时候虽然平时有练习，也都只是简单使用，较深的地方学了没用也就忘了，所以总体上也就是基础水平。（简单回忆下想起了好多事~~）目前的工作经常和数据库打交道所以偶尔也会遇到问题，对于这类问题现在就需要认真对待了，写一篇文章做记录。</p>
+<p>这里的问题是什么呢？由于我需要处理大量的数据，并将处理后的数据根据条件更新到数据库中，最开始数据少倒没什么影响，后续数据过大导致更新时间过长，有时数据库也会连接失败。</p>
+<h4 id="2-最初处理方式"><a href="#2-最初处理方式" class="headerlink" title="2. 最初处理方式"></a>2. 最初处理方式</h4><p>最容易想到的一种更新方式就是将处理后的数据通过 for 循环逐条更新，当然数据少时这并没有问题。</p>
+<p>少量样例数据构建如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">print(df)</span><br><span class="line"></span><br><span class="line"><span class="comment">#      a    b  area_a  area_b algo_code atm_code   pred_date</span></span><br><span class="line"><span class="comment"># 0  100  400     500     300     ml_rf     9000  2019-01-01</span></span><br><span class="line"><span class="comment"># 1  200  400     600     200     ml_rf     9001  2019-01-02</span></span><br><span class="line"><span class="comment"># 2  100  500     600     400     ml_rf     9003  2019-01-04</span></span><br><span class="line"><span class="comment"># 3  200  500     700     300     ml_rf     9006  2019-01-07</span></span><br><span class="line"><span class="comment"># 4  300  300     600       0     ml_rf     9000  2019-01-08</span></span><br><span class="line"><span class="comment"># 5  100  300     400     200     ml_rf     9001  2019-01-09</span></span><br></pre></td></tr></table></figure>
+<p>简化过程，可以这样来构建代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">connect = pymysql.connect(user=<span class="string">'root'</span>, password=<span class="string">''</span>, host=<span class="string">''</span>, port=<span class="number">3306</span>)</span><br><span class="line">con = connect.cursor()</span><br><span class="line">con.execute(<span class="string">'use database'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(df.shape[<span class="number">0</span>]):</span><br><span class="line">    a = df.ix[i,<span class="string">'a'</span>]</span><br><span class="line">    b = df.ix[i,<span class="string">'b'</span>]</span><br><span class="line">    algo_code = df.ix[i,<span class="string">'algo_code'</span>]</span><br><span class="line">    atm_code = df.ix[i,<span class="string">'atm_code'</span>]</span><br><span class="line">    pred_date = df.ix[i,<span class="string">'pred_date'</span>]</span><br><span class="line">    update_sql = <span class="string">"update table_name set a=&#123;0&#125;,b=&#123;1&#125; where algo_code=&#123;2&#125;,atm_code=&#123;3&#125;,pred_date=&#123;4&#125;"</span>.format(a,b,algo_code,atm_code,pred_date)</span><br><span class="line">    con.execute(update_sql)</span><br><span class="line">connect.commit()</span><br></pre></td></tr></table></figure>
+<p>容易理解的一种数据表更新的方式。</p>
+<h4 id="3-尝试批量更新"><a href="#3-尝试批量更新" class="headerlink" title="3. 尝试批量更新"></a>3. 尝试批量更新</h4><p>上面的方式容易理解也容易实现，但仅限于数据量在一定范围，或时间可接受范围内。其实可以做实验查看只更新一条数据需要耗费多少时间，我这里查看下大概在 0.5s左右（居然这么长），更新量大岂不是会等到天亮。</p>
+<p>由此提高更新效率是当务之急，通过查阅发现 pymysql 库提供批量更新的函数 <code>executemany</code>，通过传入两个参数——更新 sql 和参数元组。通过 executemany 便可以完成批量更新的方式。</p>
+<p>简化过程，构建代码和上面相似：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 外部构建sql语句，留出参数位置，循环内将需要更新的参数和条件添加到元组，达到一定数量后批量提交</span></span><br><span class="line"></span><br><span class="line">update_sql = <span class="string">"update table_name set a = %s,b = %s  where algo_code = %s,atm_code = %s,pred_date = %s;'''</span></span><br><span class="line"><span class="string">condition = []</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">for i in range(df.shape[0]):</span></span><br><span class="line"><span class="string">    a = df.ix[i,'a']</span></span><br><span class="line"><span class="string">    b = df.ix[i,'b']</span></span><br><span class="line"><span class="string">    algo_code = df.ix[i,'algo_code']</span></span><br><span class="line"><span class="string">    atm_code = df.ix[i,'atm_code']</span></span><br><span class="line"><span class="string">    pred_date = df.ix[i,'pred_date']</span></span><br><span class="line"><span class="string">    condition.append((a, b, algo_code, atm_code, pred_date))</span></span><br><span class="line"><span class="string">    if i%6000 == 0:</span></span><br><span class="line"><span class="string">        con.executemany(update_sql, condition)</span></span><br><span class="line"><span class="string">        condition = []</span></span><br><span class="line"><span class="string"># 剩余不足6000条更新</span></span><br><span class="line"><span class="string">con.executemay(update_sql, condition)</span></span><br><span class="line"><span class="string">connect.commit()</span></span><br></pre></td></tr></table></figure>
+<p>按理说应该可以了吧，运行程序后让人头疼的是竟然效率没有提高，你这是批量的是什么鬼？</p>
+<p>然后去查看了 <code>executemany</code> 函数的源代码，失望的发现虽然是批量提交，但内部还是使用的 <code>execute</code> 函数逐条更新，查表真的耗时间。</p>
+<h4 id="4-批量更新"><a href="#4-批量更新" class="headerlink" title="4. 批量更新"></a>4. 批量更新</h4><p>这时想到了数据表的索引，有了索引更新数据就像翻书一样有了目录。我想设置这个索引，但无奈本人能力有限实现并不容易。观察表结构后发现了，在建表时给了一列自增长的数据，这个值对于每条数据都是唯一的，相当于索引，其实上面的所有 where 条件判断到的位置可以认为就是这个自增长 id，所以换换这个 update_sql 语句再试试。</p>
+<p>修改 update_sql 语句，然后再使用 <code>executemany</code> 批量提交更新数据。相对于上面的改变是减少了 where 的判断条件，使用 id 一个条件来确定数据位置：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">update_sql = <span class="string">"update table_name set a = %s,b = %s  where id = %s;'''</span></span><br><span class="line"><span class="string">condition = []</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">for i in range(df.shape[0]):</span></span><br><span class="line"><span class="string">    a = df.ix[i,'a']</span></span><br><span class="line"><span class="string">    b = df.ix[i,'b']</span></span><br><span class="line"><span class="string">    id = df.ix[i,'id']</span></span><br><span class="line"><span class="string">    condition.append((a, b, id))</span></span><br><span class="line"><span class="string">    if i%6000 == 0:</span></span><br><span class="line"><span class="string">        con.executemany(update_sql, condition)</span></span><br><span class="line"><span class="string">        condition = []</span></span><br><span class="line"><span class="string"># 剩余不足6000条更新</span></span><br><span class="line"><span class="string">con.executemay(update_sql, condition)</span></span><br><span class="line"><span class="string">connect.commit()</span></span><br></pre></td></tr></table></figure>
+<p>运行程序，10s 之内就能完成，你会发现时间复杂度下降不止 1000 倍。</p>
+<p>具体原因我不能确定，目前猜测有两个：1、where 条件过多会造成查表慢。2、自增长 id 相当于目录索引。这两个条件容易验证（我们有做~~太懒了，没时间）。</p>
+<h4 id="5-结语"><a href="#5-结语" class="headerlink" title="5. 结语"></a>5. 结语</h4><p>到此算是完成了目标，大数据量更新并且效率高。但是里面还有很多可以优化的地方，在后续的使用中我会进行处理，然后更新文章。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/数据库/" rel="tag"># 数据库</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/17/Linux任务调度/" rel="next" title="Linux任务调度">
+                <i class="fa fa-chevron-left"></i> Linux任务调度
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/Favorite_CAT.png" alt="DHui">
+            
+              <p class="site-author-name" itemprop="name">DHui</p>
+              <p class="site-description motion-element" itemprop="description">纸上得来终觉浅，绝知此事要躬行</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/na-hai-95/activities" target="_blank" title="Zhihu">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Zhihu</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/daihuidai" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-简介"><span class="nav-number">1.</span> <span class="nav-text">1. 简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-最初处理方式"><span class="nav-number">2.</span> <span class="nav-text">2. 最初处理方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-尝试批量更新"><span class="nav-number">3.</span> <span class="nav-text">3. 尝试批量更新</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-批量更新"><span class="nav-number">4.</span> <span class="nav-text">4. 批量更新</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-结语"><span class="nav-number">5.</span> <span class="nav-text">5. 结语</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DHui</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Nothing</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Nothing  </div>
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"live2d-widget-model-koharu"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+</html>
