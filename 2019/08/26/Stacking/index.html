@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Stacking,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="万壑松风知客来，摇扇抚琴待留声 1. 简介集成算法作为机器学习中的一大亮点，并且在多数场景下得到了很好的实践效果，例如 Kaggle、天池等很多比赛中选手最后都会将众多较优模型进行集成，得到其融合效果，往往这种方法等得到更优的结果。 目前集成算法大致包括了 Bagging（袋装）、Boosting（提升）、Stacking（堆叠）、Blending（混合）等几个大的思想。其中袋装以随机森林作为代表">
+<meta name="keywords" content="Stacking">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Stacking">
+<meta property="og:url" content="http://yoursite.com/2019/08/26/Stacking/index.html">
+<meta property="og:site_name" content="不自在">
+<meta property="og:description" content="万壑松风知客来，摇扇抚琴待留声 1. 简介集成算法作为机器学习中的一大亮点，并且在多数场景下得到了很好的实践效果，例如 Kaggle、天池等很多比赛中选手最后都会将众多较优模型进行集成，得到其融合效果，往往这种方法等得到更优的结果。 目前集成算法大致包括了 Bagging（袋装）、Boosting（提升）、Stacking（堆叠）、Blending（混合）等几个大的思想。其中袋装以随机森林作为代表">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://gitee.com/daihuidai/First_Image_Bed/raw/master/Stacking/1.jpg">
+<meta property="og:updated_time" content="2019-08-26T07:22:23.435Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Stacking">
+<meta name="twitter:description" content="万壑松风知客来，摇扇抚琴待留声 1. 简介集成算法作为机器学习中的一大亮点，并且在多数场景下得到了很好的实践效果，例如 Kaggle、天池等很多比赛中选手最后都会将众多较优模型进行集成，得到其融合效果，往往这种方法等得到更优的结果。 目前集成算法大致包括了 Bagging（袋装）、Boosting（提升）、Stacking（堆叠）、Blending（混合）等几个大的思想。其中袋装以随机森林作为代表">
+<meta name="twitter:image" content="https://gitee.com/daihuidai/First_Image_Bed/raw/master/Stacking/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/08/26/Stacking/">
+
+
+
+
+
+  <title>Stacking | 不自在</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">不自在</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">You Konw Nothing</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/26/Stacking/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DHui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/Favorite_CAT.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不自在">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Stacking</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-26T15:15:55+08:00">
+                2019-08-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><em>万壑松风知客来，摇扇抚琴待留声</em></p>
+<h4 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h4><p>集成算法作为机器学习中的一大亮点，并且在多数场景下得到了很好的实践效果，例如 Kaggle、天池等很多比赛中选手最后都会将众多较优模型进行集成，得到其融合效果，往往这种方法等得到更优的结果。</p>
+<p>目前集成算法大致包括了 Bagging（袋装）、Boosting（提升）、Stacking（堆叠）、Blending（混合）等几个大的思想。其中袋装以随机森林作为代表，提升以梯度提升一些列为代表。本文对这两个算法暂时不做介绍，重点说说堆叠的集成方式。</p>
+<h4 id="2-Stacking-思想"><a href="#2-Stacking-思想" class="headerlink" title="2. Stacking 思想"></a>2. Stacking 思想</h4><p>通过结合策略，可以将个体学习器进行集成在一起。对于分类问题，可以通过投票法选择出得票最多的类；对于回归问题，可以通过平均法求所有学习器输出结果的平均值。Stacking 与前面两种方式不同，通过一个机器学习器将其它多个个体机器学习器的预测结果结合作为样本数据来进行训练、预测。</p>
+<p>相比于同质集成算法 Bagging、Boosting，Stacking 属于异质集成算法。在 Stacking 中个体学习器叫做初级学习器，用于结合的学习器叫做次级学习器或元学习器（meta-learner），次级学习器用于训练的数据叫做次级训练集。次级训练集是在训练集上用初级学习器得到的。你可以使用加入任何你觉得效果好的初级模型，并且次级模型也是可以任意选择的。</p>
+<h4 id="3-实现方式"><a href="#3-实现方式" class="headerlink" title="3. 实现方式"></a>3. 实现方式</h4><p><small>下图是 Stacking 的实现原理：</small></p>
+<p><img width="800px" src="https://gitee.com/daihuidai/First_Image_Bed/raw/master/Stacking/1.jpg"></p>
+<p>乍一眼看有点晕，不过一点点细看其实并不难，比 Boosting 还要简单，稍微总结一下：</p>
+<p>以上是两个阶段的 Stacking，也是比较常用的构建方式。第一层由多个个体学习器组成，第二层由第一层的个体学习器输出作为特征加入训练集通过次级学习器在训练。</p>
+<p>上图中可以看到首先将整体数据划分为 m 行训练集（Training Data）和 n 行测试集（Test Data），并且第一层的个体学习器使用了 5 个模型，每个模型的处理方式，训练集都使用了 5 折的交叉验证。<strong>以 Model1 为例</strong>，训练集再划分每次使用其中四折作为训练样本（Learn），剩下一折数据作为测试样本（Predict），然后使用 Model1 对训练样本训练，对测试样本进行预测得到该折的预测值，Model1 如此重复 5 次直至交叉验证完成，最后会得到每折的一个预测结果，将他们按列组合后就是整个训练集大小列的预测结果，形如 （m行X1列）的预测结果数据集。<strong>注意</strong>在交叉验证的过程中，每次训练的模型不仅要对训练集划分的测试集预测，还要对真正的测试集进行预测。如按照 5 折交叉验证，那么最后对真正的测试集将会产生 5 份预测结果，这 5 个结果按行取均值得到（n行X1列）的测试集预测结果，到此第一层的第一个个体模型 Model1 就完成它的工作。</p>
+<p>按照 Model1 的方式，重复每个个体模型（这里的 Model2、Model3、Model4、Model5），最后会得到 5 个（m行X1列）的模型对训练集预测结果，和 5 个（n行X1列）的模型对测试集预测结果。这些结果将作为新特征加入第二层的模型训练和预测。</p>
+<p>整个数据集上的真实标签的使用理解起来有点难，只需要记得每个样本和它的标签一一相对应，只有在作为训练集训练模型时才使用，比如对划分的训练集进行交叉验证时，四折作为训练集它们的真实标签会参与当前模型训练，剩下一折的测试数据只会对其进行预测，不会用到它们的真实标签。真实的测试数据在两个阶段都不会用到它们的标签。</p>
+<p>上面完成了比较绕的第一阶段。第二阶段使用 5 个（m行X1列）的预测数据集按行排列组成新的训练集，使用 5 个（n行X1列）的预测数据集按行排列组成新的测试集。使用次级模型对它们训练和预测，得到测试集上的预测结果，此时可以与测试集的真实标签进行准确性分析。</p>
+<h4 id="4-函数实现与封装"><a href="#4-函数实现与封装" class="headerlink" title="4. 函数实现与封装"></a>4. 函数实现与封装</h4><p>理解思想是一方面，代码实现是一方面，如果能从基础思想中构建出实现代码那基本上就是大体掌握了 Stacking。下面将给出两部分代码，第一部分是分为函数逐步实现的过程，第二部分是对 Stacking 封装成类似 Sklearn 接口的类。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> KFold</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_absolute_error</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_squared_error</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br><span class="line"><span class="keyword">from</span> sklearn.svm <span class="keyword">import</span> SVR</span><br><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> RandomForestRegressor</span><br><span class="line"><span class="keyword">from</span> sklearn.tree <span class="keyword">import</span> DecisionTreeRegressor</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">obtain_data</span><span class="params">()</span>:</span></span><br><span class="line">	df = pd.read_csv(<span class="string">r'./data.csv'</span>)</span><br><span class="line">	<span class="comment"># 数据处理，这个按照你的要求处理数据。</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># columns中填入需要的特征名</span></span><br><span class="line">	columns = [<span class="string">'a'</span>,<span class="string">'b'</span>,...]</span><br><span class="line">	df_X = df[columns]</span><br><span class="line">	df_y = df[<span class="string">'target'</span>]</span><br><span class="line">	train_X, test_X, train_y, test_y = train_test_split(df_X, df_y, test_size=<span class="number">0.25</span>, random_state=<span class="number">999</span>)</span><br><span class="line">	<span class="keyword">return</span> train_X, test_X, train_y, test_y</span><br><span class="line"></span><br><span class="line"><span class="comment"># 传入DataFrame类型</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">stacking</span><span class="params">(clf, train_X, train_y, test_X, n_folds=<span class="number">3</span>)</span>:</span></span><br><span class="line">	train_X = train_X.get_values()</span><br><span class="line">	train_y = train_y.get_values()</span><br><span class="line">	test_X = test_X.get_values()</span><br><span class="line"></span><br><span class="line">	train_size, test_size = train_X.shape[<span class="number">0</span>], test_X.shape[<span class="number">0</span>]</span><br><span class="line">	next_level_train_set = np.zeros((train_size,))</span><br><span class="line">	next_level_test_set = np.zeros((test_size,))</span><br><span class="line">	train_nfolds_test_sets = np.zeros((test_size,n_folds))</span><br><span class="line">    <span class="comment"># kf划分能得到训练集、测试集的索引标签</span></span><br><span class="line">	kf = KFold(n_splits=n_folds, shuffle=<span class="keyword">True</span>, random_state=<span class="number">999</span>)</span><br><span class="line">	<span class="comment"># 这是训练集的CV划分，记住所有的数据格式都是ndarray</span></span><br><span class="line">	<span class="keyword">for</span> i,(train_index, test_index) <span class="keyword">in</span> enumerate(kf.split(train_X)):</span><br><span class="line">		cv_train_X, cv_train_y = train_X[train_index], train_y[train_index]</span><br><span class="line">		cv_test_X, cv_test_y = train_X[test_index], train_y[test_index]</span><br><span class="line">		clf.fit(cv_train_X, cv_train_y)</span><br><span class="line">		<span class="comment"># 下面对训练集中划分出来的测试集预测，循环完毕得到整个训练集的预测值</span></span><br><span class="line">		next_level_train_set[test_index] = clf.predict(cv_test_X)</span><br><span class="line">		<span class="comment"># 下面对测试集进行预测得到（测试行，n_folds列）</span></span><br><span class="line">		train_nfolds_test_sets[:,i] = clf.predict(test_X)</span><br><span class="line"></span><br><span class="line">	next_level_test_set[:] = train_nfolds_test_sets.mean(axis=<span class="number">1</span>)</span><br><span class="line">	<span class="keyword">return</span> next_level_train_set, next_level_test_set</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">create_model</span><span class="params">()</span>:</span></span><br><span class="line">	<span class="comment"># 可以多添加模型融合，模型比如下面这样给就行，模型有点多参数先自己确定</span></span><br><span class="line">	linear_regressor = LinearRegression()</span><br><span class="line">	svr = SVR()</span><br><span class="line">	rf = RandomForestRegressor(n_estimators=<span class="number">300</span>)</span><br><span class="line">	<span class="comment"># 模型加入列表</span></span><br><span class="line">	model_list = [linear_regressor, svr, rf]</span><br><span class="line">	<span class="keyword">return</span> model_list</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run_stacking</span><span class="params">()</span>:</span></span><br><span class="line">	train_X, test_X, train_y, test_y = obtain_data()</span><br><span class="line">	model_list = create_model()</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 得到下一阶段（这里指第二阶段）的训练集、测试集 形状</span></span><br><span class="line">	m_train = train_X.shape[<span class="number">0</span>]</span><br><span class="line">	m_test = test_X.shape[<span class="number">0</span>]</span><br><span class="line">	n = len(model_list)</span><br><span class="line">	meta_train = np.zeros((m_train, n))</span><br><span class="line">	meta_test = np.zeros((m_test, n))</span><br><span class="line">	<span class="keyword">for</span> i,clf <span class="keyword">in</span> enumerate(model_list):</span><br><span class="line">		train_set, test_set = stacking(clf, train_X, train_y, test_X)</span><br><span class="line">		meta_train[:,i] = train_set</span><br><span class="line">		meta_test[:,i] = test_set</span><br><span class="line">	<span class="keyword">return</span> meta_train, meta_test, train_y, test_y</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">next_preprocess</span><span class="params">(meta_train, meta_test, train_y, test_y)</span>:</span></span><br><span class="line">	<span class="comment"># 第二阶段使用决策树作为次级模型来验证（可修改模型修改参数）</span></span><br><span class="line">	tree = DecisionTreeRegressor()</span><br><span class="line">	tree.fit(meta_train, train_y)</span><br><span class="line">	tree_pred = tree.predict(meta_test)</span><br><span class="line"></span><br><span class="line">	mae = mean_absolute_error(test_y, tree_pred)</span><br><span class="line">	print(<span class="string">"最终的均对误差为：&#123;&#125;"</span>.format(mae))</span><br><span class="line">	mse = mean_squared_error(test_y, tree_pred)</span><br><span class="line">	print(<span class="string">"最终的均方误差为：&#123;&#125;"</span>.format(mse))</span><br><span class="line">	error = np.absolute(test_y - tree_pred) / test_y</span><br><span class="line">	precision = np.mean(error.get_values())</span><br><span class="line">	print(<span class="string">'测试集上的精度为：&#123;&#125;'</span>.format(precision))</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__==<span class="string">"__main__"</span>:</span><br><span class="line">	meta_train, meta_test, train_y, test_y= run_stacking()</span><br><span class="line">	next_preprocess(meta_train, meta_test, train_y, test_y)</span><br></pre></td></tr></table></figure>
+<p>以上是函数式的实现方式，较为详细可以先理解清楚。下面对其进行封装，封装后的 Stacking 只需要实例化对象后传入接口规范化数据即可实现 fit、predict 方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> KFold</span><br><span class="line"><span class="keyword">from</span> sklearn.base <span class="keyword">import</span> BaseEstimator, RegressorMixin, TransformerMixin, clone</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StackingModels</span><span class="params">(BaseEstimator, RegressorMixin, TransformerMixin)</span>:</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, base_models, meta_model, n_folds=<span class="number">3</span>)</span>:</span></span><br><span class="line">		self.base_models = base_models</span><br><span class="line">		self.meta_model = meta_model</span><br><span class="line">		self.n_folds = n_folds</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">fit</span><span class="params">(self, X, y)</span>:</span></span><br><span class="line">		<span class="comment"># self.base_models_是用来保存每折的训练模型，predect时对测试集使用</span></span><br><span class="line">		self.base_models_ = [list() <span class="keyword">for</span> x <span class="keyword">in</span> self.base_models]</span><br><span class="line">		self.meta_model_ = clone(self.meta_model)</span><br><span class="line">		kfold = KFold(n_splits=self.n_folds, shuffle=<span class="keyword">True</span>, random_state=<span class="number">999</span>)</span><br><span class="line"></span><br><span class="line">		<span class="comment"># 每个模型做cv验证，并得到每次的测试集预测结果（总的结果为整个数据集）</span></span><br><span class="line">		cv_fold_predictions = np.zeros((X.shape[<span class="number">0</span>], len(self.base_models)))</span><br><span class="line">		<span class="keyword">for</span> i, model <span class="keyword">in</span> enumerate(self.base_models):</span><br><span class="line">			<span class="keyword">for</span> train_index, test_index <span class="keyword">in</span> kfold.split(X, y):</span><br><span class="line">				clf = clone(model)</span><br><span class="line">				clf.fit(X[train_index], y[train_index])</span><br><span class="line">				self.base_models_[i].append(clf)</span><br><span class="line">				y_pred = clf.predict(X[test_index])</span><br><span class="line">				cv_fold_predictions[test_index,i] = y_pred</span><br><span class="line"></span><br><span class="line">		<span class="comment"># 使用次级模型拟合次级训练集，不写在下面是因为fit的时间都计算在fit函数中</span></span><br><span class="line">		self.meta_model_.fit(cv_fold_predictions, y)</span><br><span class="line">		<span class="keyword">return</span> self</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(self, X)</span>:</span></span><br><span class="line">		meta_features = np.column_stack([np.column_stack([model.predict(X) <span class="keyword">for</span> model <span class="keyword">in</span> base_models]).mean(axis=<span class="number">1</span>) <span class="keyword">for</span> base_models <span class="keyword">in</span> self.base_models_])</span><br><span class="line">		<span class="keyword">return</span> self.meta_model_.predict(meta_features)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用简介</span></span><br><span class="line"><span class="comment"># from stacking_test import StackingModels</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># rf = RandomForestRegressor()</span></span><br><span class="line"><span class="comment"># lr = ......</span></span><br><span class="line"><span class="comment"># base_models = [rf,lr,knn,...]</span></span><br><span class="line"><span class="comment"># 选择二阶训练的模型，比如线性回归</span></span><br><span class="line"><span class="comment"># meta_model = LinearRegression()</span></span><br><span class="line"><span class="comment"># train_X, test_X, train_y, test_y = train_test_split(df_X, df_y, test_size=0.25, random_state=999)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 传入融合模型列表、元模型、折数</span></span><br><span class="line"><span class="comment"># sm = StackingModels(base_models, meta_model, n_folds=5)</span></span><br><span class="line"><span class="comment"># 将DataFrame转换为ndarray格式</span></span><br><span class="line"><span class="comment"># sm.fit(train_X.get_values(),train_y.get_values())</span></span><br><span class="line"><span class="comment"># tree_pred = sm.predict(test_X.get_values())</span></span><br></pre></td></tr></table></figure>
+<h4 id="5-文末"><a href="#5-文末" class="headerlink" title="5. 文末"></a>5. 文末</h4><p>深刻理解第 3 点后，再理解第 4 点的代码实现就算差不多掌握了 Stacking 的集成原理。集成算法的使用当下应当是大势所趋，所以多掌握一种思想也未尝不是好事呢。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Stacking/" rel="tag"># Stacking</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/19/虚拟环境离线安装Prophet/" rel="next" title="虚拟环境离线安装Prophet">
+                <i class="fa fa-chevron-left"></i> 虚拟环境离线安装Prophet
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/Favorite_CAT.png" alt="DHui">
+            
+              <p class="site-author-name" itemprop="name">DHui</p>
+              <p class="site-description motion-element" itemprop="description">--悄悄是别离的笙箫，沉默是今晚的康桥.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/na-hai-95/activities" target="_blank" title="Zhihu">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Zhihu</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/daihuidai" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-简介"><span class="nav-number">1.</span> <span class="nav-text">1. 简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Stacking-思想"><span class="nav-number">2.</span> <span class="nav-text">2. Stacking 思想</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-实现方式"><span class="nav-number">3.</span> <span class="nav-text">3. 实现方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-函数实现与封装"><span class="nav-number">4.</span> <span class="nav-text">4. 函数实现与封装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-文末"><span class="nav-number">5.</span> <span class="nav-text">5. 文末</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DHui</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Nothing</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Nothing  </div>
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"live2d-widget-model-koharu"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
