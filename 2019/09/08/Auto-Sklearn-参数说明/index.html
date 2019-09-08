@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Auto-Sklearn,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="万壑松风知客来，摇扇抚琴待留声  说明：对 auto-sklearn 的所有参数做一个记录，旨在帮助使用者能快速了解、自定义 auto-sklearn，从而达到尽量充分的使用该工具  1. Auto-Sklearn本文只说参数，不做介绍，介绍可参考另一篇文章。由于项目原因这里以回归问题作为记录主题进行阐述，其中所有参数的表述由本人参考官方文档和较为专业的文献得出，所以有疑问者可以从官方文档找寻答案">
+<meta name="keywords" content="Auto-Sklearn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Auto-Sklearn-参数说明">
+<meta property="og:url" content="http://yoursite.com/2019/09/08/Auto-Sklearn-参数说明/index.html">
+<meta property="og:site_name" content="不自在">
+<meta property="og:description" content="万壑松风知客来，摇扇抚琴待留声  说明：对 auto-sklearn 的所有参数做一个记录，旨在帮助使用者能快速了解、自定义 auto-sklearn，从而达到尽量充分的使用该工具  1. Auto-Sklearn本文只说参数，不做介绍，介绍可参考另一篇文章。由于项目原因这里以回归问题作为记录主题进行阐述，其中所有参数的表述由本人参考官方文档和较为专业的文献得出，所以有疑问者可以从官方文档找寻答案">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-09-08T07:48:35.566Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Auto-Sklearn-参数说明">
+<meta name="twitter:description" content="万壑松风知客来，摇扇抚琴待留声  说明：对 auto-sklearn 的所有参数做一个记录，旨在帮助使用者能快速了解、自定义 auto-sklearn，从而达到尽量充分的使用该工具  1. Auto-Sklearn本文只说参数，不做介绍，介绍可参考另一篇文章。由于项目原因这里以回归问题作为记录主题进行阐述，其中所有参数的表述由本人参考官方文档和较为专业的文献得出，所以有疑问者可以从官方文档找寻答案">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/09/08/Auto-Sklearn-参数说明/">
+
+
+
+
+
+  <title>Auto-Sklearn-参数说明 | 不自在</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">不自在</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">You Konw Nothing</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/08/Auto-Sklearn-参数说明/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DHui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/Favorite_CAT.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不自在">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Auto-Sklearn-参数说明</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-08T15:45:56+08:00">
+                2019-09-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><em>万壑松风知客来，摇扇抚琴待留声</em></p>
+<blockquote>
+<p><small>说明：对 auto-sklearn 的所有参数做一个记录，旨在帮助使用者能快速了解、自定义 auto-sklearn，从而达到尽量充分的使用该工具</small></p>
+</blockquote>
+<h4 id="1-Auto-Sklearn"><a href="#1-Auto-Sklearn" class="headerlink" title="1. Auto-Sklearn"></a>1. Auto-Sklearn</h4><p>本文只说参数，不做介绍，介绍可参考另一篇<a href="https://daihuidai.github.io/2019/09/08/Auto-Sklearn-%E4%BD%BF%E7%94%A8%E7%AE%80%E4%BB%8B/" target="_blank" rel="noopener">文章</a>。由于项目原因这里以回归问题作为记录主题进行阐述，其中所有参数的表述由本人参考<a href="https://automl.github.io/auto-sklearn/master/api.html#regression" target="_blank" rel="noopener">官方文档</a>和较为专业的文献得出，所以有疑问者可以从官方文档找寻答案。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Regression</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">autosklearn</span>.<span class="title">regression</span>.<span class="title">AutoSklearnRegressor</span><span class="params">(time_left_for_this_task=<span class="number">3600</span>, per_run_time_limit=<span class="number">360</span>, initial_configurations_via_metalearning=<span class="number">25</span>, ensemble_size: int = <span class="number">50</span>, ensemble_nbest=<span class="number">50</span>, ensemble_memory_limit=<span class="number">1024</span>, seed=<span class="number">1</span>, ml_memory_limit=<span class="number">3072</span>, include_estimators=None, exclude_estimators=None, include_preprocessors=None, exclude_preprocessors=None, resampling_strategy=<span class="string">'holdout'</span>, resampling_strategy_arguments=None, tmp_folder=None, output_folder=None, delete_tmp_folder_after_terminate=True, delete_output_folder_after_terminate=True, shared_mode=False, n_jobs: Optional[int] = None, disable_evaluator_output=False, get_smac_object_callback=None, smac_scenario_args=None, logging_config=None, metadata_directory=None)</span></span></span><br></pre></td></tr></table></figure>
+<h4 id="2-参数详解"><a href="#2-参数详解" class="headerlink" title="2. 参数详解"></a>2. 参数详解</h4><h5 id="2-1-time-left-for-this-task-int-optional-default-3600"><a href="#2-1-time-left-for-this-task-int-optional-default-3600" class="headerlink" title="2.1. time_left_for_this_task: int, optional (default=3600)"></a>2.1. time_left_for_this_task: int, optional (default=3600)</h5><p>（目前理解两个时间参数是独立的）。auto-sklearn 整体运行时间，以秒为时间单位限制来搜索合适的模型们。通过增加这个值，auto-sklearn 将会有更高的机会找到更好的模型。官方给出的建议时间为 24 小时，也就是 <code>time_left_for_this_task=86400</code> 。</p>
+<blockquote>
+<p><small>说明：当时间不够时，auto-sklearn 会给出一个 metalearning 的值。可能这个值不是 SMAC 算法能给出的最好结果，但依旧是一个效果不错的超参数选择。</small></p>
+</blockquote>
+<h5 id="2-2-per-run-time-limit-int-optional-default-360"><a href="#2-2-per-run-time-limit-int-optional-default-360" class="headerlink" title="2.2. per_run_time_limit: int, optional (default=360)"></a>2.2. per_run_time_limit: int, optional (default=360)</h5><p>（目前理解两个时间参数是独立的）调用单次机器学习模型的时间（单位秒）限制。如果该机器学习算法超过这个时间限制，模型拟合将会被终止。将此值设置得足够高，以便典型的机器学习算法可以拟合的更好。官方给出的每个模型建议时间为 1 小时，也就是 <code>per_run_time_limit=3600</code> 。</p>
+<blockquote>
+<p><small>说明：当时间不够时，auto-sklearn 会给出一个 metalearning 的值。可能这个值不是 SMAC 算法能给出的最好结果，但依旧是一个效果不错的超参数选择。</small></p>
+</blockquote>
+<h5 id="2-3-（理解模糊）-initial-configurations-via-metalearning-int-optional-default-25"><a href="#2-3-（理解模糊）-initial-configurations-via-metalearning-int-optional-default-25" class="headerlink" title="2.3.（理解模糊） initial_configurations_via_metalearning: int, optional (default=25)"></a>2.3.（理解模糊） initial_configurations_via_metalearning: int, optional (default=25)</h5><p>（<a href="https://github.com/automl/auto-sklearn/issues/399" target="_blank" rel="noopener">issues</a>）使用一定的配置数量，初始化超参数优化算法，这些配置在先前看到的数据集上运行良好，官方测试 25 最好。通过元学习选择的配置数量以热启动 SMAC 算法。如果超参数优化算法应从头开始，则禁用设置为 0。</p>
+<p>auto-sklearn 支持在共享文件系统上共享数据共享并行执行。在这种模式下，SMAC 算法通过每次迭代后将其写入磁盘，共享其模型的训练数据。在每次迭代开始时，SMAC 都会加载所有新发现的数据点。在示例目录中可以找到一个示例。将元学习的初始配置设置为零，使得 auto-sklearn 使用常规的 SMAC 算法来表示新的超参数配置。</p>
+<h5 id="2-4-ensemble-size-int-optional-default-50"><a href="#2-4-ensemble-size-int-optional-default-50" class="headerlink" title="2.4. ensemble_size: int, optional (default=50)"></a>2.4. ensemble_size: int, optional (default=50)</h5><p>设定模型集成数量。从 auto-sklearn 的模型库中通过集成选择，选择添加到集成模型中的的模型数量。Models are drawn with replacement。</p>
+<h5 id="2-5-ensemble-nbest-int-optional-default-50"><a href="#2-5-ensemble-nbest-int-optional-default-50" class="headerlink" title="2.5. ensemble_nbest: int, optional (default=50)"></a>2.5. ensemble_nbest: int, optional (default=50)</h5><p>当构建一个集成模型时，只考虑 n 个最好的模型。从集合选择中获取最大化，实现模型库修剪。</p>
+<h5 id="2-6-ensemble-memory-limit-int-optional-1024"><a href="#2-6-ensemble-memory-limit-int-optional-1024" class="headerlink" title="2.6. ensemble_memory_limit: int, optional (1024)"></a>2.6. ensemble_memory_limit: int, optional (1024)</h5><p>集成构建过程的内存限制（单位MB）。如果达到内存限制，auto-sklearn 将减少所考虑模型的数量（ensemble_nbest）。</p>
+<blockquote>
+<p><small>说明：我们电脑的配置完全够用了。我忘了从哪里看到的，目前的电脑内存 8G 足够，给出 3-4G 就行，仅供参考。</small></p>
+</blockquote>
+<h5 id="2-7-（理解模糊）seed-int-optional-default-1"><a href="#2-7-（理解模糊）seed-int-optional-default-1" class="headerlink" title="2.7. （理解模糊）seed: int, optional (default=1)"></a>2.7. （理解模糊）seed: int, optional (default=1)</h5><p>设定 SMAC 的种子，将确定输出的文件名。</p>
+<h5 id="2-8-ml-memory-limit-int-optional-3072"><a href="#2-8-ml-memory-limit-int-optional-3072" class="headerlink" title="2.8. ml_memory_limit: int, optional (3072)"></a>2.8. ml_memory_limit: int, optional (3072)</h5><p>机器学习算法的内存限制（MB）。如果 auto-sklearn 尝试分配超过 ml_memory_limit MB，则会停止使用机器学习算法。</p>
+<h5 id="2-9-include-estimators-list-optional-None"><a href="#2-9-include-estimators-list-optional-None" class="headerlink" title="2.9. include_estimators: list, optional (None)"></a>2.9. include_estimators: list, optional (None)</h5><p>如果为 None，将尝试使用所有可能的模型，否则使用指定列表中的一组估计器。</p>
+<ul>
+<li><p>16 classifiers</p>
+<p>（可以被指定或者筛选，include_estimators=[“random_forest”, ]）</p>
+<ul>
+<li>adaboost, bernoulli_nb, decision_tree, extra_trees, gaussian_nb, gradient_boosting, k_nearest_neighbors, lda, liblinear_svc, libsvm_svc, multinomial_nb, passive_aggressive, qda, random_forest, sgd, xgradient_boosting</li>
+</ul>
+</li>
+<li><p>13 regressors</p>
+<p>（可以被指定或者筛选，exclude_estimators=None）</p>
+<ul>
+<li>adaboost, ard_regression, decision_tree, extra_trees, gaussian_process, gradient_boosting, k_nearest_neighbors, liblinear_svr, libsvm_svr, random_forest, ridge_regression, sgd, xgradient_boosting</li>
+</ul>
+</li>
+</ul>
+<h5 id="2-10-exclude-estimators-list-optional-None"><a href="#2-10-exclude-estimators-list-optional-None" class="headerlink" title="2.10. exclude_estimators: list, optional (None)"></a>2.10. exclude_estimators: list, optional (None)</h5><p>如果为 None，将尝试使用所有可能的模型，否则不使用指定列表中的一组估计器。与参数 include_estimators 不兼容。</p>
+<h5 id="2-11-include-preprocessors-list-optional-None"><a href="#2-11-include-preprocessors-list-optional-None" class="headerlink" title="2.11. include_preprocessors:  list, optional (None)"></a>2.11. include_preprocessors:  list, optional (None)</h5><p>如果为 None，将会使用所有可能的预处理器，否则使用指定的一组预处理器。</p>
+<ul>
+<li>18 feature preprocessing methods（这些过程可以被手动关闭全部或者部分，include_preprocessors=[“no_preprocessing”, ]），如下：<ul>
+<li>densifier, extra_trees_preproc_for_classification, extra_trees_preproc_for_regression, fast_ica,feature_agglomeration, kernel_pca, kitchen_sinks, liblinear_svc_preprocessor, no_preprocessing, nystroem_sampler, pca, polynomial, random_trees_embedding, select_percentile, select_percentile_classification, select_percentile_regression, select_rates, truncatedSVD</li>
+</ul>
+</li>
+</ul>
+<h5 id="2-12-exclude-preprocessors-list-optional-None"><a href="#2-12-exclude-preprocessors-list-optional-None" class="headerlink" title="2.12. exclude_preprocessors: list, optional (None)"></a>2.12. exclude_preprocessors: list, optional (None)</h5><p>如果为 None，将会使用所有可能的预处理器，否则不使用指定的一组预处理器。与参数 include_preprocessors不兼容。</p>
+<h5 id="2-13-resampling-strategy-string-or-object-optional-‘holdout’"><a href="#2-13-resampling-strategy-string-or-object-optional-‘holdout’" class="headerlink" title="2.13. resampling_strategy: string or object, optional (‘holdout’)"></a>2.13. resampling_strategy: string or object, optional (‘holdout’)</h5><p>重采样策略。防止过拟合的措施，需要与 <code>‘resampling_strategy_arguments’</code>（超参数：重采样策略参数）组合使用，如下：</p>
+<ul>
+<li><p>‘holdout’: 67:33 (train:test) 划分</p>
+</li>
+<li><p>‘holdout-iterative-fit’: 67:33 (train:test) 划分, calls iterative fit where possible</p>
+</li>
+<li><p>cv’: 交叉验证, 需要参数 ‘folds’</p>
+</li>
+<li><p>‘partial-cv’: crossvalidation with intensification, requires ‘folds’</p>
+</li>
+<li><p><strong>BaseCrossValidator object: any BaseCrossValidator class found</strong></p>
+<p>in scikit-learn model_selection module</p>
+</li>
+<li><p><strong>_RepeatedSplits object: any _RepeatedSplits class found</strong></p>
+<p>in scikit-learn model_selection module</p>
+</li>
+<li><p><strong>BaseShuffleSplit object: any BaseShuffleSplit class found</strong></p>
+<p>in scikit-learn model_selection module</p>
+</li>
+</ul>
+<h5 id="2-14-resampling-strategy-arguments-dict-optional-if-‘holdout’-train-size-default-0-67"><a href="#2-14-resampling-strategy-arguments-dict-optional-if-‘holdout’-train-size-default-0-67" class="headerlink" title="2.14. resampling_strategy_arguments: dict, optional if ‘holdout’ (train_size default=0.67)"></a>2.14. resampling_strategy_arguments: dict, optional if ‘holdout’ (train_size default=0.67)</h5><p>重采样策略参数。需要根据 <code>resampling_strategy</code> 参数的选择添加字典参数（也就是对前一个参数设置的参数）</p>
+<ul>
+<li><code>train_size</code> 训练数据集划分的比例，应该在浮点数 <code>0-1</code> 之间。</li>
+<li><code>shuffle</code> 确定数据样本在划分成训练集与验证集之前是否随机打乱。</li>
+</ul>
+<p>可用参数设置样例如下：</p>
+<ul>
+<li><p>‘holdout’: {‘train_size’: float}</p>
+</li>
+<li><p>‘holdout-iterative-fit’: {‘train_size’: float}</p>
+</li>
+<li><p>‘cv’: {‘folds’: int}</p>
+</li>
+<li><p>‘partial-cv’: {‘folds’: int, ‘shuffle’: bool}</p>
+</li>
+<li><p>BaseCrossValidator or _RepeatedSplits or BaseShuffleSplit object: all arguments</p>
+<p>required by chosen class as specified in scikit-learn documentation. If arguments are not provided, scikit-learn defaults are used. If no defaults are available, an exception is raised. Refer to the ‘n_splits’ argument as ‘folds’.</p>
+</li>
+</ul>
+<blockquote>
+<p><small>强调说明：如果使用这两个参数的话,在 <strong>fit</strong> 完毕,选择出最佳模型之后,还需要 <strong>refit</strong> 一次,这样原来的模型才能根据新的数据进行调整,然后才能进行预测,直接使用 <strong>refit</strong> 命令无法进行预测,而只是用fit命令,不使用 <strong>refit</strong> 命令也会报下面的错</small></p>
+</blockquote>
+<h5 id="2-15-tmp-folder-string-optional-None"><a href="#2-15-tmp-folder-string-optional-None" class="headerlink" title="2.15. tmp_folder: string, optional (None)"></a>2.15. tmp_folder: string, optional (None)</h5><p>用于存储配置输出和日志文件的文件夹，如果为 None 自动使用 <code>/tmp/autosklearn_tmp_$pid_$random_number</code>。可以定义文件存放路径，为防止删除需要设置 <code>delete_tmp_folder_after_terminate</code> 参数为 False。</p>
+<h5 id="2-16-output-folder-string-optional-None"><a href="#2-16-output-folder-string-optional-None" class="headerlink" title="2.16. output_folder: string, optional (None)"></a>2.16. output_folder: string, optional (None)</h5><p>用于存储可选测试集预测的文件夹，如果为 None 自动使用 <code>/tmp/autosklearn_output_$pid_$random_number</code>。可以定义文件存放路径，为防止删除需要设置 <code>delete_output_folder_after_terminate</code> 参数为 False。</p>
+<h5 id="2-17-delete-tmp-folder-after-terminate-string-optional-True"><a href="#2-17-delete-tmp-folder-after-terminate-string-optional-True" class="headerlink" title="2.17. delete_tmp_folder_after_terminate: string, optional (True)"></a>2.17. delete_tmp_folder_after_terminate: string, optional (True)</h5><p>完成后删除 tmp_folder。 如果 tmp_folder 为 None，则将始终删除 tmp_dir，如果需要保留文件夹数据则设置为 False。</p>
+<h5 id="2-18-delete-output-folder-after-terminate-bool-optional-True"><a href="#2-18-delete-output-folder-after-terminate-bool-optional-True" class="headerlink" title="2.18. delete_output_folder_after_terminate: bool, optional (True)"></a>2.18. delete_output_folder_after_terminate: bool, optional (True)</h5><p>完成后删除 output_folder。 如果 output_folder 为 None，则将始终删除 output_dir，如果需要保留文件夹数据则设置为 False。</p>
+<h5 id="2-19-shared-mode-bool-optional-False"><a href="#2-19-shared-mode-bool-optional-False" class="headerlink" title="2.19. shared_mode: bool, optional (False)"></a>2.19. shared_mode: bool, optional (False)</h5><p>默认为 False，设置为 True 后在共享模型节点中运行 SMAC，即SMAC共享模型。 这仅在给定参数 tmp_folder 和 output_folder 并且 delete_tmp_folder_after_terminate 和 delete_output_folder_after_terminate 都设置为 False 时有效。 不能与 n_jobs 一起使用。</p>
+<h5 id="2-20-n-jobs-int-optional-experimental"><a href="#2-20-n-jobs-int-optional-experimental" class="headerlink" title="2.20. n_jobs: int, optional, experimental"></a>2.20. n_jobs: int, optional, experimental</h5><p>fit() 并行运行的作业数。 不能与 <code>shared_mode</code> 一起使用。-1 表示使用所有处理器（最好不要使用 -1 参数，容易报超列表长度错误）。 默认情况下，auto-sklearn 使用单个核心来拟合机器学习模型，使用单个核心来拟合整体。 集成模型不受 n_jobs 的影响，但可以通过整体中的模型数量来控制。 与大多数 scikit-learn 模型相比，构造函数中给出的 n_jobs 不适用于 predict() 方法。</p>
+<h4 id="3-fit-说明"><a href="#3-fit-说明" class="headerlink" title="3. fit 说明"></a>3. fit 说明</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fit(self, X, y, X_test=<span class="keyword">None</span>, y_test=<span class="keyword">None</span>, metric=<span class="keyword">None</span>, feat_type=<span class="keyword">None</span>, dataset_name=<span class="keyword">None</span>)</span><br></pre></td></tr></table></figure>
+<p>通过 auto-sklearn 拟合给定的训练集（X，y）。与 sklearn 的接口使用极其的相似，但是内部实现不同的是，auto-sklearn 训练的是一堆机器学习模型，包括了数据预处理算法。</p>
+<h5 id="3-1-X-array-like-or-sparse-matrix-of-shape-n-samples-n-features"><a href="#3-1-X-array-like-or-sparse-matrix-of-shape-n-samples-n-features" class="headerlink" title="3.1. X: array-like or sparse matrix of shape = [n_samples, n_features]"></a>3.1. X: array-like or sparse matrix of shape = [n_samples, n_features]</h5><p>输入的训练样本。</p>
+<h5 id="3-2-y-array-like-shape-n-samples"><a href="#3-2-y-array-like-shape-n-samples" class="headerlink" title="3.2. y: array-like, shape = [n_samples]"></a>3.2. y: array-like, shape = [n_samples]</h5><p>回归目标值（分类则是分类目标值）。</p>
+<h5 id="3-3-X-test-array-like-or-sparse-matrix-of-shape-n-samples-n-features"><a href="#3-3-X-test-array-like-or-sparse-matrix-of-shape-n-samples-n-features" class="headerlink" title="3.3. X_test: array-like or sparse matrix of shape = [n_samples, n_features]"></a>3.3. X_test: array-like or sparse matrix of shape = [n_samples, n_features]</h5><p>输入的测试数据样本。这将用于保存所有模型的测试预测结果，这些结果将用来评估 auto-sklearn 随时间变化其性能的变化。</p>
+<h5 id="3-4-y-test-array-like-shape-n-samples"><a href="#3-4-y-test-array-like-shape-n-samples" class="headerlink" title="3.4. y_test: array-like, shape = [n_samples]"></a>3.4. y_test: array-like, shape = [n_samples]</h5><p>回归目标值。这将用于计算所有模型在测试集上的预测误差。这些结果将用来评估 auto-sklearn 随时间变化其性能的变化。</p>
+<h5 id="3-5-metric-callable-optional-default-’autosklearn-metrics-r2’"><a href="#3-5-metric-callable-optional-default-’autosklearn-metrics-r2’" class="headerlink" title="3.5. metric: callable, optional (default=’autosklearn.metrics.r2’)"></a>3.5. metric: callable, optional (default=’autosklearn.metrics.r2’)</h5><p>通过 <a href="https://automl.github.io/auto-sklearn/master/api.html#metrics" target="_blank" rel="noopener">autosklearn.metrics.make_scorer()</a> 方法创建的 autosklearn.metrics.Scorer 实例。也就是优化函数，回归默认为 R2。参数相关选项即说明如下：</p>
+<h6 id="3-5-1-分类指标："><a href="#3-5-1-分类指标：" class="headerlink" title="3.5.1 分类指标："></a>3.5.1 分类指标：</h6><blockquote>
+<p><small>默认的 autosklearn.metrics.f1，autosklearn.metrics.precision 和 autosklearn.metrics.recall 内置指标仅适用于二进制分类。为了将它们应用于多标签和多类分类，请使用相应的度量标准和适当的平均机制，例如autosklearn.metrics.f1_macro。有关如何使用这些指标的更多信息，请阅读此<a href="http://scikit-learn.org/stable/modules/model_evaluation.html#precision-recall-and-f-measures" target="_blank" rel="noopener">scikit-learn</a>文档。</small></p>
+</blockquote>
+<ul>
+<li><code>autosklearn.metrics.accuracy</code></li>
+<li><code>autosklearn.metrics.balanced_accuracy</code></li>
+<li><code>autosklearn.metrics.f1</code></li>
+<li><code>autosklearn.metrics.f1_macro</code></li>
+<li><code>autosklearn.metrics.f1_micro</code></li>
+<li><code>autosklearn.metrics.f1_samples</code></li>
+<li><code>autosklearn.metrics.f1_weighted</code></li>
+<li><code>autosklearn.metrics.roc_auc</code></li>
+<li><code>autosklearn.metrics.precision</code></li>
+<li><code>autosklearn.metrics.precision_macro</code></li>
+<li><code>autosklearn.metrics.precision_micro</code></li>
+<li><code>autosklearn.metrics.precision_samples</code></li>
+<li><code>autosklearn.metrics.precision_weighted</code></li>
+<li><code>autosklearn.metrics.average_precision</code></li>
+<li><code>autosklearn.metrics.recall</code></li>
+<li><code>autosklearn.metrics.recall_macro</code></li>
+<li><code>autosklearn.metrics.recall_micro</code></li>
+<li><code>autosklearn.metrics.recall_samples</code></li>
+<li><code>autosklearn.metrics.recall_weighted</code></li>
+<li><code>autosklearn.metrics.log_loss</code></li>
+<li><code>autosklearn.metrics.pac_score</code></li>
+</ul>
+<h6 id="3-5-2-回归指标："><a href="#3-5-2-回归指标：" class="headerlink" title="3.5.2 回归指标："></a>3.5.2 回归指标：</h6><ul>
+<li><code>autosklearn.metrics.r2</code></li>
+<li><code>autosklearn.metrics.mean_squared_error</code></li>
+<li><code>autosklearn.metrics.mean_absolute_error</code></li>
+<li><code>autosklearn.metrics.median_absolute_error</code></li>
+</ul>
+<h4 id="4-refit-说明"><a href="#4-refit-说明" class="headerlink" title="4. refit 说明"></a>4. refit 说明</h4><p>根据新数据重新调整找到的所有模型。</p>
+<blockquote>
+<p><small>说明：使用 Auto-Sklearn 的分类或回归函数中的 <code>resampling_strategy</code> 和 <code>resampling_strategy_arguments</code>  这两个参数定义交叉验证时，必须要使用 refit 函数。</small></p>
+<p><small>在训练期间，auto-sklearn 会在数据集上为每个模型拟合 k 次，但不保留任何经过训练的模型，因此不能用于预测新的数据点。This methods fits all models found during a call to fit on the data given。该方法还可以与重采样策略 <code>holdout</code> 一起使用，以避免仅使用 66% 的训练数据来拟合最终模型。</small></p>
+</blockquote>
+<h5 id="4-1-Parameters"><a href="#4-1-Parameters" class="headerlink" title="4.1. Parameters"></a>4.1. Parameters</h5><p>X: array-like or sparse matrix of shape = [n_samples, n_features]</p>
+<p>输入的训练样本。</p>
+<p>y: array-like, shape = [n_samples] or [n_samples, n_outputs]</p>
+<p>训练样本目标值。</p>
+<h5 id="4-2-Return"><a href="#4-2-Return" class="headerlink" title="4.2. Return"></a>4.2. Return</h5><p>self。</p>
+<h4 id="5-get-models-with-weights-self-说明"><a href="#5-get-models-with-weights-self-说明" class="headerlink" title="5. get_models_with_weights(self) 说明"></a>5. get_models_with_weights(self) 说明</h4><p>返回 auto-sklearn 找到的最终集成模型的列表。</p>
+<p>Returns: [(weight_1,model_1),…,(weight_n,model_n)]</p>
+<h4 id="6-get-params-self-deep-True-说明"><a href="#6-get-params-self-deep-True-说明" class="headerlink" title="6. get_params(self, deep=True) 说明"></a>6. get_params(self, deep=True) 说明</h4><p>得到估计模型的参数。</p>
+<h5 id="6-1-Parameters-deep-boolean-optional"><a href="#6-1-Parameters-deep-boolean-optional" class="headerlink" title="6.1. Parameters: deep: boolean, optional"></a>6.1. Parameters: deep: boolean, optional</h5><p>如果为True，将返回此估计器的参数并包含作为估算器的子对象。</p>
+<h5 id="6-2-Return-params-mapping-of-string-to-any"><a href="#6-2-Return-params-mapping-of-string-to-any" class="headerlink" title="6.2. Return: params: mapping of string to any"></a>6.2. Return: params: mapping of string to any</h5><p>参数名字映射到它们的值</p>
+<h4 id="7-predict-self-X-batch-size-None-n-jobs-1-说明"><a href="#7-predict-self-X-batch-size-None-n-jobs-1-说明" class="headerlink" title="7. predict(self, X, batch_size=None, n_jobs=1) 说明"></a>7. predict(self, X, batch_size=None, n_jobs=1) 说明</h4><p>对 X 数据样本进行预测，得到其目标值。</p>
+<h5 id="7-1-Parameters-X-array-like-or-sparse-matrix-of-shape-n-samples-n-features"><a href="#7-1-Parameters-X-array-like-or-sparse-matrix-of-shape-n-samples-n-features" class="headerlink" title="7.1. Parameters: X: array-like or sparse matrix of shape = [n_samples, n_features]"></a>7.1. Parameters: X: array-like or sparse matrix of shape = [n_samples, n_features]</h5><h5 id="7-2-Returns-y-array-of-shape-n-samples-or-n-samples-n-outputs"><a href="#7-2-Returns-y-array-of-shape-n-samples-or-n-samples-n-outputs" class="headerlink" title="7.2. Returns: y: array of shape = [n_samples] or [n_samples, n_outputs]"></a>7.2. Returns: y: array of shape = [n_samples] or [n_samples, n_outputs]</h5><p>返回预测结果。</p>
+<h4 id="8-show-models-self"><a href="#8-show-models-self" class="headerlink" title="8. show_models(self)"></a>8. show_models(self)</h4><p>返回通过 auto-sklearn 找到的最终集成模型。</p>
+<h4 id="9-结语"><a href="#9-结语" class="headerlink" title="9. 结语"></a>9. 结语</h4><p>后续如果有相关内容将进行补充和说明。。。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Auto-Sklearn/" rel="tag"># Auto-Sklearn</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/08/Auto-Sklearn-使用简介/" rel="next" title="Auto-Sklearn-使用简介">
+                <i class="fa fa-chevron-left"></i> Auto-Sklearn-使用简介
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/Favorite_CAT.png" alt="DHui">
+            
+              <p class="site-author-name" itemprop="name">DHui</p>
+              <p class="site-description motion-element" itemprop="description">--玉山白雪飘零，燃烧少年的心.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/na-hai-95/activities" target="_blank" title="Zhihu">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Zhihu</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/daihuidai" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Auto-Sklearn"><span class="nav-number">1.</span> <span class="nav-text">1. Auto-Sklearn</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-参数详解"><span class="nav-number">2.</span> <span class="nav-text">2. 参数详解</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-time-left-for-this-task-int-optional-default-3600"><span class="nav-number">2.1.</span> <span class="nav-text">2.1. time_left_for_this_task: int, optional (default=3600)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-per-run-time-limit-int-optional-default-360"><span class="nav-number">2.2.</span> <span class="nav-text">2.2. per_run_time_limit: int, optional (default=360)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-（理解模糊）-initial-configurations-via-metalearning-int-optional-default-25"><span class="nav-number">2.3.</span> <span class="nav-text">2.3.（理解模糊） initial_configurations_via_metalearning: int, optional (default=25)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-4-ensemble-size-int-optional-default-50"><span class="nav-number">2.4.</span> <span class="nav-text">2.4. ensemble_size: int, optional (default=50)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-5-ensemble-nbest-int-optional-default-50"><span class="nav-number">2.5.</span> <span class="nav-text">2.5. ensemble_nbest: int, optional (default=50)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-6-ensemble-memory-limit-int-optional-1024"><span class="nav-number">2.6.</span> <span class="nav-text">2.6. ensemble_memory_limit: int, optional (1024)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-7-（理解模糊）seed-int-optional-default-1"><span class="nav-number">2.7.</span> <span class="nav-text">2.7. （理解模糊）seed: int, optional (default=1)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-8-ml-memory-limit-int-optional-3072"><span class="nav-number">2.8.</span> <span class="nav-text">2.8. ml_memory_limit: int, optional (3072)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-9-include-estimators-list-optional-None"><span class="nav-number">2.9.</span> <span class="nav-text">2.9. include_estimators: list, optional (None)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-10-exclude-estimators-list-optional-None"><span class="nav-number">2.10.</span> <span class="nav-text">2.10. exclude_estimators: list, optional (None)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-11-include-preprocessors-list-optional-None"><span class="nav-number">2.11.</span> <span class="nav-text">2.11. include_preprocessors:  list, optional (None)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-12-exclude-preprocessors-list-optional-None"><span class="nav-number">2.12.</span> <span class="nav-text">2.12. exclude_preprocessors: list, optional (None)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-13-resampling-strategy-string-or-object-optional-‘holdout’"><span class="nav-number">2.13.</span> <span class="nav-text">2.13. resampling_strategy: string or object, optional (‘holdout’)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-14-resampling-strategy-arguments-dict-optional-if-‘holdout’-train-size-default-0-67"><span class="nav-number">2.14.</span> <span class="nav-text">2.14. resampling_strategy_arguments: dict, optional if ‘holdout’ (train_size default=0.67)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-15-tmp-folder-string-optional-None"><span class="nav-number">2.15.</span> <span class="nav-text">2.15. tmp_folder: string, optional (None)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-16-output-folder-string-optional-None"><span class="nav-number">2.16.</span> <span class="nav-text">2.16. output_folder: string, optional (None)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-17-delete-tmp-folder-after-terminate-string-optional-True"><span class="nav-number">2.17.</span> <span class="nav-text">2.17. delete_tmp_folder_after_terminate: string, optional (True)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-18-delete-output-folder-after-terminate-bool-optional-True"><span class="nav-number">2.18.</span> <span class="nav-text">2.18. delete_output_folder_after_terminate: bool, optional (True)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-19-shared-mode-bool-optional-False"><span class="nav-number">2.19.</span> <span class="nav-text">2.19. shared_mode: bool, optional (False)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-20-n-jobs-int-optional-experimental"><span class="nav-number">2.20.</span> <span class="nav-text">2.20. n_jobs: int, optional, experimental</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-fit-说明"><span class="nav-number">3.</span> <span class="nav-text">3. fit 说明</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-X-array-like-or-sparse-matrix-of-shape-n-samples-n-features"><span class="nav-number">3.1.</span> <span class="nav-text">3.1. X: array-like or sparse matrix of shape = [n_samples, n_features]</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-y-array-like-shape-n-samples"><span class="nav-number">3.2.</span> <span class="nav-text">3.2. y: array-like, shape = [n_samples]</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-X-test-array-like-or-sparse-matrix-of-shape-n-samples-n-features"><span class="nav-number">3.3.</span> <span class="nav-text">3.3. X_test: array-like or sparse matrix of shape = [n_samples, n_features]</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-4-y-test-array-like-shape-n-samples"><span class="nav-number">3.4.</span> <span class="nav-text">3.4. y_test: array-like, shape = [n_samples]</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-5-metric-callable-optional-default-’autosklearn-metrics-r2’"><span class="nav-number">3.5.</span> <span class="nav-text">3.5. metric: callable, optional (default=’autosklearn.metrics.r2’)</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#3-5-1-分类指标："><span class="nav-number">3.5.1.</span> <span class="nav-text">3.5.1 分类指标：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-5-2-回归指标："><span class="nav-number">3.5.2.</span> <span class="nav-text">3.5.2 回归指标：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-refit-说明"><span class="nav-number">4.</span> <span class="nav-text">4. refit 说明</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#4-1-Parameters"><span class="nav-number">4.1.</span> <span class="nav-text">4.1. Parameters</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-2-Return"><span class="nav-number">4.2.</span> <span class="nav-text">4.2. Return</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-get-models-with-weights-self-说明"><span class="nav-number">5.</span> <span class="nav-text">5. get_models_with_weights(self) 说明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-get-params-self-deep-True-说明"><span class="nav-number">6.</span> <span class="nav-text">6. get_params(self, deep=True) 说明</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#6-1-Parameters-deep-boolean-optional"><span class="nav-number">6.1.</span> <span class="nav-text">6.1. Parameters: deep: boolean, optional</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-2-Return-params-mapping-of-string-to-any"><span class="nav-number">6.2.</span> <span class="nav-text">6.2. Return: params: mapping of string to any</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-predict-self-X-batch-size-None-n-jobs-1-说明"><span class="nav-number">7.</span> <span class="nav-text">7. predict(self, X, batch_size=None, n_jobs=1) 说明</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#7-1-Parameters-X-array-like-or-sparse-matrix-of-shape-n-samples-n-features"><span class="nav-number">7.1.</span> <span class="nav-text">7.1. Parameters: X: array-like or sparse matrix of shape = [n_samples, n_features]</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-2-Returns-y-array-of-shape-n-samples-or-n-samples-n-outputs"><span class="nav-number">7.2.</span> <span class="nav-text">7.2. Returns: y: array of shape = [n_samples] or [n_samples, n_outputs]</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-show-models-self"><span class="nav-number">8.</span> <span class="nav-text">8. show_models(self)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-结语"><span class="nav-number">9.</span> <span class="nav-text">9. 结语</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DHui</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Nothing</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Nothing  </div>
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"live2d-widget-model-koharu"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
