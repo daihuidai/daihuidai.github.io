@@ -93,7 +93,7 @@
 <meta property="og:image" content="https://gitee.com/daihuidai/First_Image_Bed/raw/master/OpenCV/3.jpg">
 <meta property="og:image" content="https://gitee.com/daihuidai/First_Image_Bed/raw/master/OpenCV/4.jpg">
 <meta property="og:image" content="https://gitee.com/daihuidai/First_Image_Bed/raw/master/OpenCV/5.jpg">
-<meta property="og:updated_time" content="2019-09-11T10:06:37.346Z">
+<meta property="og:updated_time" content="2019-09-11T11:32:25.817Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OpenCV对图像特征提取">
 <meta name="twitter:description" content="万壑松风知客来，摇扇抚琴待留声 1. 文起随着深度学习的兴起，借由搭建神经网络完成的图像识别技术也越来越成熟，并由此产出了许多科技产品，例如生活中常见的人脸识别。当然随着技术的成熟，在如今这个鼓励、热衷开源的时代自然会出现许多普通人就能使用的强大工具——OpenCV 2. OpenCV 简介OpenCV 全称 Open Source Computer Vision Library（即：开源计算机视">
@@ -493,7 +493,7 @@
 </table>
 <p>通过轮廓列表找到了某一个轮廓后，如果绘制则需要使用 drawContours() 函数处理。传入的参数分别是：原图像、轮廓点矩阵、如何绘制（-1绘制所有点）、绘制线条颜色（原图像是灰度图则只有黑白线条）、线条粗细。返回值 image 是原图像与轮廓点结合处理后的图像矩阵。</p>
 <p>返回值 contours 是一个列表，每一个元素表示检测到的一个轮廓点信息，轮廓的检测与传入的图像情况有很大关系，所以需要传入一个处理达标的图像。列表越长说明检测到的轮廓越多，某些轮廓可能只是一个小区域的几个点，此时如果需要选择最大的轮廓，一个方法可以循环列表找到当前轮廓最大的外界矩阵，判断矩阵大小从而找到最大轮廓。</p>
-<p>返回值 hierarchy 是轮廓点的信息，这个暂不做详细说明。</p>
+<p>返回值 hierarchy 是轮廓点的信息，包含了图像的拓扑信息，作为轮廓数量的表示 hierarchy 包含了很多元素，每个轮廓 contours[i] 对应 hierarchy 中 hierarchy[i][0]~hierarchy[i][3]，分别表示后一个轮廓，前一个轮廓，父轮廓，内嵌轮廓的索引，如果没有对应项，则相应的 hierarchy[i] 设置为负数。</p>
 <p><strong>五：周长、面积</strong></p>
 <blockquote>
 <p><small>当拿到了图像的轮廓信息后，就可以通过使用对应函数获取图像的周长、面积了。</small></p>
@@ -507,6 +507,7 @@
 <p>minAreaRect() 函数可以获取轮廓 cnt 的最小外接矩阵的（中心(x,y)，(宽,高)，旋转角度）；boxPoints() 函数获取最小外接矩阵的四个顶点（顺时针[w,h]：左下角、左上角、右上角、右下角）。</p>
 <h4 id="4-文末"><a href="#4-文末" class="headerlink" title="4. 文末"></a>4. 文末</h4><p>所以技术共享是提高人类发展的高速通道，开源是大势所趋。以上只是 OpenCV 的冰山一角，更多的使用接口可以查询官方资料。使用过程中需要注意的是，不同接口函数使用的阈值参数需要根据实际情况调整到较好程度才能得到一个不错的结果，并且这个结果很可能会影响下一个阶段的图像处理，所以这点尤为重要。</p>
 <p>参考：<a href="https://www.kancloud.cn/aollo/aolloopencv/271603" target="_blank" rel="noopener">OpenCV官方教程中文版 for Python</a></p>
+<p>参考：<a href="https://blog.csdn.net/keith_bb/article/details/70185209" target="_blank" rel="noopener">opencv学习(四十)之寻找图像轮廓findContours()</a></p>
 
       
     </div>
