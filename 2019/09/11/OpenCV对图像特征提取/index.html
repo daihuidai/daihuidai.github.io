@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="OpenCV,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="万壑松风知客来，摇扇抚琴待留声 1. 文起随着深度学习的兴起，借由搭建神经网络完成的图像识别技术也越来越成熟，并由此产出了许多科技产品，例如生活中常见的人脸识别。当然随着技术的成熟，在如今这个鼓励、热衷开源的时代自然会出现许多普通人就能使用的强大工具——OpenCV 2. OpenCV 简介OpenCV 全称 Open Source Computer Vision Library（即：开源计算机视">
+<meta name="keywords" content="OpenCV">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenCV对图像特征提取">
+<meta property="og:url" content="http://yoursite.com/2019/09/11/OpenCV对图像特征提取/index.html">
+<meta property="og:site_name" content="不自在">
+<meta property="og:description" content="万壑松风知客来，摇扇抚琴待留声 1. 文起随着深度学习的兴起，借由搭建神经网络完成的图像识别技术也越来越成熟，并由此产出了许多科技产品，例如生活中常见的人脸识别。当然随着技术的成熟，在如今这个鼓励、热衷开源的时代自然会出现许多普通人就能使用的强大工具——OpenCV 2. OpenCV 简介OpenCV 全称 Open Source Computer Vision Library（即：开源计算机视">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://gitee.com/daihuidai/First_Image_Bed/raw/master/OpenCV/0.jpg">
+<meta property="og:image" content="https://gitee.com/daihuidai/First_Image_Bed/raw/master/OpenCV/1.jpg">
+<meta property="og:image" content="https://gitee.com/daihuidai/First_Image_Bed/raw/master/OpenCV/2.jpg">
+<meta property="og:image" content="https://gitee.com/daihuidai/First_Image_Bed/raw/master/OpenCV/3.jpg">
+<meta property="og:image" content="https://gitee.com/daihuidai/First_Image_Bed/raw/master/OpenCV/4.jpg">
+<meta property="og:image" content="https://gitee.com/daihuidai/First_Image_Bed/raw/master/OpenCV/5.jpg">
+<meta property="og:updated_time" content="2019-09-11T10:04:34.561Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OpenCV对图像特征提取">
+<meta name="twitter:description" content="万壑松风知客来，摇扇抚琴待留声 1. 文起随着深度学习的兴起，借由搭建神经网络完成的图像识别技术也越来越成熟，并由此产出了许多科技产品，例如生活中常见的人脸识别。当然随着技术的成熟，在如今这个鼓励、热衷开源的时代自然会出现许多普通人就能使用的强大工具——OpenCV 2. OpenCV 简介OpenCV 全称 Open Source Computer Vision Library（即：开源计算机视">
+<meta name="twitter:image" content="https://gitee.com/daihuidai/First_Image_Bed/raw/master/OpenCV/0.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/09/11/OpenCV对图像特征提取/">
+
+
+
+
+
+  <title>OpenCV对图像特征提取 | 不自在</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">不自在</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">You Konw Nothing</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/11/OpenCV对图像特征提取/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DHui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/Favorite_CAT.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不自在">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">OpenCV对图像特征提取</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-11T17:58:30+08:00">
+                2019-09-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><em>万壑松风知客来，摇扇抚琴待留声</em></p>
+<h4 id="1-文起"><a href="#1-文起" class="headerlink" title="1. 文起"></a>1. 文起</h4><p>随着深度学习的兴起，借由搭建神经网络完成的图像识别技术也越来越成熟，并由此产出了许多科技产品，例如生活中常见的人脸识别。当然随着技术的成熟，在如今这个鼓励、热衷开源的时代自然会出现许多普通人就能使用的强大工具——OpenCV</p>
+<h4 id="2-OpenCV-简介"><a href="#2-OpenCV-简介" class="headerlink" title="2. OpenCV 简介"></a>2. OpenCV 简介</h4><p><a href="https://zh.wikipedia.org/wiki/OpenCV" target="_blank" rel="noopener">OpenCV</a> 全称 Open Source Computer Vision Library（即：开源计算机视觉库），是一个跨平台的计算机视觉库，高效维护的 GitHub 项目地址在<a href="https://github.com/opencv/opencv" target="_blank" rel="noopener">这里</a>。OpenCV 由因特尔公司发起并参与开发，可以在商业和研究领域免费使用。</p>
+<p>OpenCV 可用于开发实时的图像处理、计算机视觉以及模式识别程序。由于它使用 C++ 语言编写，所以主要接口也是 C++ ，但依然保留了大量的 C 语言接口。同时目前也提供了其它如：Python、Java、MATLAB、C#、Ch、Ruby 等语言的接口，所以方便了许多程序员使用 OpenCV。</p>
+<p>OpenCV 对大多数操作系统都支持如：Windows、Android、Maemo、FreeBSD、OpenBSD、IOS、Linux、Mac OS。不过在 Windows 上使用可能会需要做一点编译上的处理，这个可以在具体使用时查询处理方法。</p>
+<p>OpenCV 可用于解决如下领域问题：</p>
+<ul>
+<li>增强实现</li>
+<li>人脸识别</li>
+<li>手势识别</li>
+<li>人机交互</li>
+<li>动作识别</li>
+<li>运动跟踪</li>
+<li>物体识别</li>
+<li>图像分割</li>
+<li>机器人</li>
+</ul>
+<p>OpenCV 真的是功能强大。有了 OpenCV 对于一个深度学习不是特别了解的人，不用亲自搭建神经网络也可以高效完成图像处理任务。这里对 OpenCV 做了简单介绍，下面以 OpenCV 的一个小点进行介绍。</p>
+<h4 id="3-特征提取"><a href="#3-特征提取" class="headerlink" title="3. 特征提取"></a>3. 特征提取</h4><blockquote>
+<p><small>说明：不论是深度学习，还是在传统机器学习中，提取对象的特征往往是最重要的，因为将抽象的物体转换为一个个具体的特征，这样会大大方便、加快后续的模型学习。所以这里将介绍如何通过 Python 调用 OpenCV 接口来提取图像的各种特征。</small></p>
+</blockquote>
+<p><strong>opencv-python 版本： 4.1.1.26</strong></p>
+<p>原始图像如下：</p>
+<p><img width="300px" src="https://gitee.com/daihuidai/First_Image_Bed/raw/master/OpenCV/0.jpg"></p>
+<p><strong>一：读取图像：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"></span><br><span class="line"><span class="comment"># np. set_printoptions(threshold=np.inf)</span></span><br><span class="line"></span><br><span class="line">img = cv2.imread(<span class="string">'heart.jpg'</span>, <span class="number">0</span>)</span><br><span class="line">cv2.imshow(<span class="string">'heart'</span>, img)</span><br><span class="line">cv2.waitKey()</span><br><span class="line">cv2.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+<p><img width="300px" src="https://gitee.com/daihuidai/First_Image_Bed/raw/master/OpenCV/1.jpg"></p>
+<p>使用 cv2 的 <code>imread()</code> 函数读取图像，第一个参数传入图片路径，第二个参数告诉函数如何读取图片。默认值为 1 表示以原始图像读取（包括 alpha 通道）；0 表示以灰度图像读取，后续操作需要单通道的会读取。其它读取模式可以参考其它资料。</p>
+<p>显示图像使用 imshow() 函数，不过后续需要添加 <code>waitKey()</code> 函数等待操作，否则显示不会持久，最后添加  <code>destroyAllWindows()</code> 函数关闭所有创建窗口是一个好习惯。</p>
+<p>返回值 img 是读取的图像信息。</p>
+<p><strong>二：二值化矩阵</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 二值化</span></span><br><span class="line">ret, thresh = cv2.threshold(src=img, thresh=<span class="number">200</span>, maxval=<span class="number">255</span>, type=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">cv2.imshow(<span class="string">'heart'</span>, thresh)</span><br><span class="line">cv2.waitKey()</span><br><span class="line">cv2.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+<p><img width="300px" src="https://gitee.com/daihuidai/First_Image_Bed/raw/master/OpenCV/2.jpg"></p>
+<p>threshold() 函数可以对图像进行二值化处理，二值化处理的目的在于可以方便后续对图像的处理，例如将图片中目标转换为白色，背景转换为黑色，那 OpenCV 就可以更好的在黑色背景中寻找白色目标。</p>
+<p><code>src</code> 给定图像数组矩阵（现在这个版本既可以对单通道矩阵做处理，也可以处理多通道），<code>thresh</code> 给定阈值，<code>maxval</code> 给定填充值，<code>type</code> 是二值化模式选择（模式决定了如何二值化矩阵）。</p>
+<p>返回值 ret 是阈值，thresh 是二值化后的矩阵信息。</p>
+<p>阈值类型表：</p>
+<table>
+<thead>
+<tr>
+<th>阈值</th>
+<th>小于阈值的像素点</th>
+<th>大于阈值的像素点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>置0</td>
+<td>置填充色</td>
+</tr>
+<tr>
+<td>1</td>
+<td>置填充色</td>
+<td>置0</td>
+</tr>
+<tr>
+<td>2</td>
+<td>保持原色</td>
+<td>置灰色</td>
+</tr>
+<tr>
+<td>3</td>
+<td>置0</td>
+<td>保持原色</td>
+</tr>
+<tr>
+<td>4</td>
+<td>保持原色</td>
+<td>置0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>三：边缘检测</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 边缘检测</span></span><br><span class="line">canny = cv2.Canny(image=thresh, threshold1=<span class="number">200</span>, threshold2=<span class="number">300</span>, apertureSize=<span class="number">3</span>, L2gradient=<span class="keyword">False</span>)</span><br><span class="line"></span><br><span class="line">cv2.imshow(<span class="string">'heart'</span>, canny)</span><br><span class="line">cv2.waitKey()</span><br><span class="line">cv2.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+<p><img width="300px" src="https://gitee.com/daihuidai/First_Image_Bed/raw/master/OpenCV/3.jpg"></p>
+<p>Canny 是一种边缘检测的方法，使用 Canny() 函数可以调用该方法。<code>image</code> 传入图像，<code>threshold1</code> 和 <code>threshold2</code> 分别传入 minVal 和 maxVal 。当图像的灰度梯度高于 maxVal 时被认为是真的边界，那些低于 minVal 的边界会被抛弃。如果介于两者之间的话，就要看这个点是否与某个被确定为真正边界点相连，如果是，就认为它也是边界点，如果不是就抛弃。</p>
+<p><code>apertureSize</code> 用来设置计算图像梯度的 Sobel 卷积核的大小（3、5、7），默认值为3。<code>L2gradient</code> 设定求梯度大小的方程，默认为 False。</p>
+<p>返回值 canny 是边缘点的图像矩阵信息。</p>
+<p><strong>四：轮廓检测</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 找轮廓</span></span><br><span class="line">contours,hierarchy = cv2.findContours(image=canny,mode=cv2.RETR_TREE,method=cv2.CHAIN_APPROX_NONE)</span><br><span class="line"><span class="comment"># 画轮廓，需要先将轮廓信息与图像结合后绘制</span></span><br><span class="line">cnt = contours[<span class="number">0</span>]</span><br><span class="line">image = cv2.drawContours(img,cnt,<span class="number">-1</span>,(<span class="number">0</span>,<span class="number">255</span>,<span class="number">0</span>),<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">cv2.imshow(<span class="string">'heart'</span>, image)</span><br><span class="line">cv2.waitKey()</span><br><span class="line">cv2.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+<p><img width="300px" src="https://gitee.com/daihuidai/First_Image_Bed/raw/master/OpenCV/4.jpg"></p>
+<p>findContours() 函数可以帮助我们找寻图像轮廓位置信息。<code>image</code> 传入图像信息，这里我是用的是上面边缘检测后的边缘图像 canny，当然你也可以传入二值化后的图像 thresh，canny 可能比 thresh 更适合。</p>
+<p><code>mode</code> 选择轮廓的检索模式：</p>
+<table>
+<thead>
+<tr>
+<th>检索模式</th>
+<th>模式功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cv2.RETR_EXTERNAL</td>
+<td>表示只检测外轮廓</td>
+</tr>
+<tr>
+<td>cv2.RETR_LIST</td>
+<td>检测的轮廓不建立等级关系</td>
+</tr>
+<tr>
+<td>cv2.RETR_CCOMP</td>
+<td>建立两个等级的轮廓，上面的一层为外边界，里面的一层为内孔的边界信息。如果内孔内还有一个连通物体，这个物体的边界也在顶层。</td>
+</tr>
+<tr>
+<td>cv2.RETR_TREE</td>
+<td>建立一个等级树结构的轮廓。</td>
+</tr>
+</tbody>
+</table>
+<p><code>method</code> 为轮廓的近似方法：</p>
+<table>
+<thead>
+<tr>
+<th>近似方法</th>
+<th>方法功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cv2.CHAIN_APPROX_NONE</td>
+<td>存储所有的轮廓点，相邻的两个点的像素位置差不超过1，即max(abs(x1-x2)，abs(y2-y1))==1</td>
+</tr>
+<tr>
+<td>cv2.CHAIN_APPROX_SIMPLE</td>
+<td>压缩水平方向，垂直方向，对角线方向的元素，只保留该方向的终点坐标，例如一个矩形轮廓只需4个点来保存轮廓信息</td>
+</tr>
+<tr>
+<td>cv2.CHAIN_APPROX_TC89_L1</td>
+<td>使用 teh-Chinl chain 近似算法</td>
+</tr>
+<tr>
+<td>cv2.CHAIN_APPROX_TC89_KCOS</td>
+<td>使用 teh-Chinl chain 近似算法</td>
+</tr>
+</tbody>
+</table>
+<p>通过轮廓列表找到了某一个轮廓后，如果绘制则需要使用 drawContours() 函数处理。传入的参数分别是：原图像、轮廓点矩阵、如何绘制（-1绘制所有点）、绘制线条颜色（原图像是灰度图则只有黑白线条）、线条粗细。返回值 image 是原图像与轮廓点结合处理后的图像矩阵。</p>
+<p>返回值 contours 是一个列表，每一个元素表示检测到的一个轮廓点信息，轮廓的检测与传入的图像情况有很大关系，所以需要传入一个处理达标的图像。列表越长说明检测到的轮廓越多，某些轮廓可能只是一个小区域的几个点，此时如果需要选择最大的轮廓，一个方法可以循环列表找到当前轮廓最大的外界矩阵，判断矩阵大小从而找到最大轮廓。</p>
+<p>返回值 hierarchy 是轮廓点的信息，这个暂不做详细说明。</p>
+<p><strong>五：周长、面积</strong></p>
+<blockquote>
+<p><small>当拿到了图像的轮廓信息后，就可以通过使用对应函数获取图像的周长、面积了。</small></p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 周长获取</span></span><br><span class="line">perimeter = cv2.arcLength(cnt, <span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 面积获取</span></span><br><span class="line">area = cv2.contourArea(cnt)</span><br><span class="line">print(<span class="string">'周长：&#123;&#125;，面积：&#123;&#125;'</span>.format(perimeter, area))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 周长：863.0264731645584，面积：40656.5</span></span><br></pre></td></tr></table></figure>
+<p>arcLength() 函数可以通过轮廓信息获取图像的周长，第一个参数传入轮廓数组矩阵，第二参数可以用来指定对象的形状是闭合的（True），还是打开的（一条曲线）。</p>
+<p>contourArea() 函数可以用过轮廓信息获取图像面积。</p>
+<p><strong>六：外接最小矩阵</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">minAreaRect = cv2.minAreaRect(cnt)</span><br><span class="line">boxpoint = cv2.boxPoints(minAreaRect)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果需要绘制外接矩阵，则需要处理四个顶点数组的格式</span></span><br><span class="line">boxpoint = [np.int0(boxpoint)]</span><br><span class="line"><span class="comment"># 同样需要用drawContours函数结合原图与外接矩阵</span></span><br><span class="line">image = cv2.drawContours(thresh,boxpoint,<span class="number">-1</span>,(<span class="number">255</span>,<span class="number">255</span>,<span class="number">255</span>),<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">cv2.imshow(<span class="string">'heart'</span>, image)</span><br><span class="line">cv2.waitKey()</span><br><span class="line">cv2.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+<p><img width="300px" src="https://gitee.com/daihuidai/First_Image_Bed/raw/master/OpenCV/5.jpg"></p>
+<p>minAreaRect() 函数可以获取轮廓 cnt 的最小外接矩阵的（中心(x,y)，(宽,高)，旋转角度）；boxPoints() 函数获取最小外接矩阵的四个顶点（顺时针[w,h]：左下角、左上角、右上角、右下角）。</p>
+<h4 id="4-文末"><a href="#4-文末" class="headerlink" title="4. 文末"></a>4. 文末</h4><p>所以技术共享是提高人类发展的高速通道，开源是大势所趋。以上只是 OpenCV 的冰山一角，更多的使用接口可以查询官方资料。使用过程中需要注意的是，不同接口函数使用的阈值参数需要根据实际情况调整到较好程度才能得到一个不错的结果，并且这个结果很可能会影响下一个阶段的图像处理，所以这点尤为重要。</p>
+<p>参考：<a href="https://www.kancloud.cn/aollo/aolloopencv/271603" target="_blank" rel="noopener">OpenCV官方教程中文版 for Python</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/OpenCV/" rel="tag"># OpenCV</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/08/Auto-Sklearn-代码样例/" rel="next" title="Auto-Sklearn-代码样例">
+                <i class="fa fa-chevron-left"></i> Auto-Sklearn-代码样例
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/Favorite_CAT.png" alt="DHui">
+            
+              <p class="site-author-name" itemprop="name">DHui</p>
+              <p class="site-description motion-element" itemprop="description">--玉山白雪飘零，燃烧少年的心.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/na-hai-95/activities" target="_blank" title="Zhihu">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Zhihu</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/daihuidai" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-文起"><span class="nav-number">1.</span> <span class="nav-text">1. 文起</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-OpenCV-简介"><span class="nav-number">2.</span> <span class="nav-text">2. OpenCV 简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-特征提取"><span class="nav-number">3.</span> <span class="nav-text">3. 特征提取</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-文末"><span class="nav-number">4.</span> <span class="nav-text">4. 文末</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DHui</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Nothing</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Nothing  </div>
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"live2d-widget-model-koharu"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+</html>
