@@ -79,19 +79,19 @@
 
 
 
-<meta name="description" content="万壑松风知客来，摇扇抚琴待留声 1. 简介集成算法作为机器学习中的一大亮点，并且在多数场景下得到了很好的实践效果，例如 Kaggle、天池等很多比赛中选手最后都会将众多较优模型进行集成，得到其融合效果，往往这种方法等得到更优的结果。 目前集成算法大致包括了 Bagging（袋装）、Boosting（提升）、Stacking（堆叠）、Blending（混合）等几个大的思想。其中袋装以随机森林作为代表">
+<meta name="description" content="万壑松风知客来，摇扇抚琴待留声 1. 文起集成算法作为机器学习中的一大亮点，并且在多数场景下得到了很好的实践效果，例如 Kaggle、天池等很多比赛中选手最后都会将众多较优模型进行集成，得到其融合效果，往往这种方法等得到更优的结果。 目前集成算法大致包括了 Bagging（袋装）、Boosting（提升）、Stacking（堆叠）、Blending（混合）等几个大的思想。其中袋装以随机森林作为代表">
 <meta name="keywords" content="Stacking">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Stacking">
 <meta property="og:url" content="http://yoursite.com/2019/08/26/Stacking/index.html">
 <meta property="og:site_name" content="不自在">
-<meta property="og:description" content="万壑松风知客来，摇扇抚琴待留声 1. 简介集成算法作为机器学习中的一大亮点，并且在多数场景下得到了很好的实践效果，例如 Kaggle、天池等很多比赛中选手最后都会将众多较优模型进行集成，得到其融合效果，往往这种方法等得到更优的结果。 目前集成算法大致包括了 Bagging（袋装）、Boosting（提升）、Stacking（堆叠）、Blending（混合）等几个大的思想。其中袋装以随机森林作为代表">
+<meta property="og:description" content="万壑松风知客来，摇扇抚琴待留声 1. 文起集成算法作为机器学习中的一大亮点，并且在多数场景下得到了很好的实践效果，例如 Kaggle、天池等很多比赛中选手最后都会将众多较优模型进行集成，得到其融合效果，往往这种方法等得到更优的结果。 目前集成算法大致包括了 Bagging（袋装）、Boosting（提升）、Stacking（堆叠）、Blending（混合）等几个大的思想。其中袋装以随机森林作为代表">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://gitee.com/daihuidai/First_Image_Bed/raw/master/Stacking/1.jpg">
-<meta property="og:updated_time" content="2019-08-26T07:22:23.435Z">
+<meta property="og:updated_time" content="2019-09-12T01:31:54.514Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Stacking">
-<meta name="twitter:description" content="万壑松风知客来，摇扇抚琴待留声 1. 简介集成算法作为机器学习中的一大亮点，并且在多数场景下得到了很好的实践效果，例如 Kaggle、天池等很多比赛中选手最后都会将众多较优模型进行集成，得到其融合效果，往往这种方法等得到更优的结果。 目前集成算法大致包括了 Bagging（袋装）、Boosting（提升）、Stacking（堆叠）、Blending（混合）等几个大的思想。其中袋装以随机森林作为代表">
+<meta name="twitter:description" content="万壑松风知客来，摇扇抚琴待留声 1. 文起集成算法作为机器学习中的一大亮点，并且在多数场景下得到了很好的实践效果，例如 Kaggle、天池等很多比赛中选手最后都会将众多较优模型进行集成，得到其融合效果，往往这种方法等得到更优的结果。 目前集成算法大致包括了 Bagging（袋装）、Boosting（提升）、Stacking（堆叠）、Blending（混合）等几个大的思想。其中袋装以随机森林作为代表">
 <meta name="twitter:image" content="https://gitee.com/daihuidai/First_Image_Bed/raw/master/Stacking/1.jpg">
 
 
@@ -350,7 +350,7 @@
 
       
         <p><em>万壑松风知客来，摇扇抚琴待留声</em></p>
-<h4 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h4><p>集成算法作为机器学习中的一大亮点，并且在多数场景下得到了很好的实践效果，例如 Kaggle、天池等很多比赛中选手最后都会将众多较优模型进行集成，得到其融合效果，往往这种方法等得到更优的结果。</p>
+<h4 id="1-文起"><a href="#1-文起" class="headerlink" title="1. 文起"></a>1. 文起</h4><p>集成算法作为机器学习中的一大亮点，并且在多数场景下得到了很好的实践效果，例如 Kaggle、天池等很多比赛中选手最后都会将众多较优模型进行集成，得到其融合效果，往往这种方法等得到更优的结果。</p>
 <p>目前集成算法大致包括了 Bagging（袋装）、Boosting（提升）、Stacking（堆叠）、Blending（混合）等几个大的思想。其中袋装以随机森林作为代表，提升以梯度提升一些列为代表。本文对这两个算法暂时不做介绍，重点说说堆叠的集成方式。</p>
 <h4 id="2-Stacking-思想"><a href="#2-Stacking-思想" class="headerlink" title="2. Stacking 思想"></a>2. Stacking 思想</h4><p>通过结合策略，可以将个体学习器进行集成在一起。对于分类问题，可以通过投票法选择出得票最多的类；对于回归问题，可以通过平均法求所有学习器输出结果的平均值。Stacking 与前面两种方式不同，通过一个机器学习器将其它多个个体机器学习器的预测结果结合作为样本数据来进行训练、预测。</p>
 <p>相比于同质集成算法 Bagging、Boosting，Stacking 属于异质集成算法。在 Stacking 中个体学习器叫做初级学习器，用于结合的学习器叫做次级学习器或元学习器（meta-learner），次级学习器用于训练的数据叫做次级训练集。次级训练集是在训练集上用初级学习器得到的。你可以使用加入任何你觉得效果好的初级模型，并且次级模型也是可以任意选择的。</p>
@@ -559,7 +559,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-简介"><span class="nav-number">1.</span> <span class="nav-text">1. 简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Stacking-思想"><span class="nav-number">2.</span> <span class="nav-text">2. Stacking 思想</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-实现方式"><span class="nav-number">3.</span> <span class="nav-text">3. 实现方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-函数实现与封装"><span class="nav-number">4.</span> <span class="nav-text">4. 函数实现与封装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-文末"><span class="nav-number">5.</span> <span class="nav-text">5. 文末</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-文起"><span class="nav-number">1.</span> <span class="nav-text">1. 文起</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Stacking-思想"><span class="nav-number">2.</span> <span class="nav-text">2. Stacking 思想</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-实现方式"><span class="nav-number">3.</span> <span class="nav-text">3. 实现方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-函数实现与封装"><span class="nav-number">4.</span> <span class="nav-text">4. 函数实现与封装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-文末"><span class="nav-number">5.</span> <span class="nav-text">5. 文末</span></a></li></ol></div>
             
 
           </div>
@@ -806,7 +806,7 @@
         }
       });
     </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -814,5 +814,5 @@
 
   
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"live2d-widget-model-koharu"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"live2d-widget-model-koharu"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html>
