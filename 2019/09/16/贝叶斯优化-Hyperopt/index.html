@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Scikit-Learn,贝叶斯优化,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="万壑松风知客来，摇扇抚琴待留声 1. 文起本篇文章记录通过 Python 调用第三方库，从而调用使用了贝叶斯优化原理的 Hyperopt 方法来进行超参数的优化选择。具体贝叶斯优化原理与相关介绍将在下一次文章中做较为详细的描述，可以参考这里。 Hyperopt 是 Python 的几个贝叶斯优化库中的一个。它使用 Tree Parzen Estimator（TPE），其它 Python 库还包括了">
+<meta name="keywords" content="Scikit-Learn,贝叶斯优化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="贝叶斯优化-Hyperopt">
+<meta property="og:url" content="http://yoursite.com/2019/09/16/贝叶斯优化-Hyperopt/index.html">
+<meta property="og:site_name" content="不自在">
+<meta property="og:description" content="万壑松风知客来，摇扇抚琴待留声 1. 文起本篇文章记录通过 Python 调用第三方库，从而调用使用了贝叶斯优化原理的 Hyperopt 方法来进行超参数的优化选择。具体贝叶斯优化原理与相关介绍将在下一次文章中做较为详细的描述，可以参考这里。 Hyperopt 是 Python 的几个贝叶斯优化库中的一个。它使用 Tree Parzen Estimator（TPE），其它 Python 库还包括了">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-09-16T11:35:04.425Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="贝叶斯优化-Hyperopt">
+<meta name="twitter:description" content="万壑松风知客来，摇扇抚琴待留声 1. 文起本篇文章记录通过 Python 调用第三方库，从而调用使用了贝叶斯优化原理的 Hyperopt 方法来进行超参数的优化选择。具体贝叶斯优化原理与相关介绍将在下一次文章中做较为详细的描述，可以参考这里。 Hyperopt 是 Python 的几个贝叶斯优化库中的一个。它使用 Tree Parzen Estimator（TPE），其它 Python 库还包括了">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/09/16/贝叶斯优化-Hyperopt/">
+
+
+
+
+
+  <title>贝叶斯优化-Hyperopt | 不自在</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">不自在</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">You Konw Nothing</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/16/贝叶斯优化-Hyperopt/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DHui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/Favorite_CAT.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不自在">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">贝叶斯优化-Hyperopt</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-16T19:32:22+08:00">
+                2019-09-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><em>万壑松风知客来，摇扇抚琴待留声</em></p>
+<h4 id="1-文起"><a href="#1-文起" class="headerlink" title="1. 文起"></a>1. 文起</h4><p>本篇文章记录通过 Python 调用第三方库，从而调用使用了贝叶斯优化原理的 Hyperopt 方法来进行超参数的优化选择。具体贝叶斯优化原理与相关介绍将在下一次文章中做较为详细的描述，可以参考这里。</p>
+<p>Hyperopt 是 Python 的几个贝叶斯优化库中的一个。它使用 Tree Parzen Estimator（TPE），其它 Python 库还包括了 Spearmint（高斯过程代理）和 SMAC（随机森林回归）。贝叶斯优化问题有四个部分：</p>
+<ol>
+<li>目标函数：使用的机器学习模型调用该组超参数在验证集上的损失。</li>
+<li>域空间：类似于网格搜索，传入超参数的搜索范围。</li>
+<li>参数搜索：构造替代函数并选择下一个超参数值进行评估的方法。</li>
+<li>存储结果：最小化函数在评估每组测试后的最优超参数存储结果。</li>
+</ol>
+<h4 id="2-Hyperopt-简单样例"><a href="#2-Hyperopt-简单样例" class="headerlink" title="2. Hyperopt 简单样例"></a>2. Hyperopt 简单样例</h4><blockquote>
+<p>说明：最简单的流程，实现以 XGBoost 作为调参模型，通过 hyperopt 完成上述贝叶斯优化的四个部分。</p>
+</blockquote>
+<p><strong>一：定义目标函数</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 准备数据</span></span><br><span class="line">train_X, test_X, train_y, test_y = train_test_split(df_scaler, df_y, test_size=<span class="number">0.3</span>, random_state=<span class="number">999</span>)</span><br><span class="line">data_train =xgb.DMatrix(train_X, train_y, silent=<span class="keyword">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义目标函数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">objective</span><span class="params">(params, n_folds=<span class="number">10</span>)</span>:</span></span><br><span class="line">    cv_results =xgb.cv(params, data_train, num_boost_round=<span class="number">1000</span>, nfold=n_folds, stratified=<span class="keyword">False</span>, shuffle=<span class="keyword">True</span>, metrics=<span class="string">'mae'</span>, early_stopping_rounds=<span class="number">10</span>)</span><br><span class="line">    mae = max(cv_results[<span class="string">'test-mae-mean'</span>])</span><br><span class="line">    loss = mae</span><br><span class="line">    <span class="keyword">return</span> loss</span><br></pre></td></tr></table></figure>
+<p>objective() 是目标函数（黑盒函数），作用是返回一个损失值，Hyperopt 也是根据这个损失值来逐步选择超参数的。后续的 fmin() 函数会最小化这个损失，所以你可以根据是最大化还是最小化问题来改变这个返回值。此处的目标函数十分基础并没有做过多的调整，可根据实际情况来做修改目标函数。</p>
+<p><strong>二：设置域空间</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> hyperopt <span class="keyword">import</span> hp</span><br><span class="line">space = &#123;</span><br><span class="line">    <span class="string">'learning_rate'</span>: hp.loguniform(<span class="string">'learning_rate'</span>,np.log(<span class="number">0.01</span>),np.log(<span class="number">0.4</span>)),</span><br><span class="line">    <span class="string">'max_depth'</span>: hp.choice(<span class="string">'max_depth'</span>,range(<span class="number">1</span>,<span class="number">8</span>,<span class="number">1</span>)),</span><br><span class="line">    <span class="string">'min_child_weight'</span>: hp.choice(<span class="string">'min_child_weight'</span>,range(<span class="number">1</span>,<span class="number">5</span>,<span class="number">1</span>)),</span><br><span class="line">    <span class="string">'reg_alpha'</span>: hp.uniform(<span class="string">'reg_alpha'</span>,<span class="number">0.0</span>,<span class="number">1.0</span>),</span><br><span class="line">    <span class="string">'subsample'</span>: hp.uniform(<span class="string">'subsample'</span>,<span class="number">0.5</span>,<span class="number">1.0</span>),</span><br><span class="line">    <span class="string">'colsample_bytree'</span>: hp.uniform(<span class="string">'colsample_bytree'</span>,<span class="number">0.6</span>,<span class="number">1.0</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>域空间，也就是给定超参数搜索的范围。这个可以通过 hyperopt 的 hp 方法实现，hp 方法有很多个参数选择的方式如：hp.loguniform（对数空间搜索）、hp.lognormal（对数正态分布）、hp.normal（正态分布）、hp.choice（列表选项搜索）、hp.uniform（连续均匀分布搜索）、hp.quniform（连续均匀分布整数搜索）。</p>
+<p>这里也只是简单的设置域空间，比如还可以通过 choice 方法构建列表从而实现对多个不同模型的筛选，这个在后续会有介绍。</p>
+<blockquote>
+<p><small>强调：如果使用参数名相同会报错 “hyperopt.exceptions.DuplicateLabel”，例如域空间中定义了 XGBoost、LightGBM 两种模型，由于它们的部分参数名相同所以如果使用同名参数将报错。<a href="https://github.com/hyperopt/hyperopt/issues/380" target="_blank" rel="noopener">解决方法</a>：可以修改内层名称，这个在后续代码中会说明。</small></p>
+</blockquote>
+<p><strong>三：参数搜索</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 参数搜索算法</span></span><br><span class="line"><span class="keyword">from</span> hyperopt <span class="keyword">import</span> tpe</span><br><span class="line">tpe_algorithm = tpe.suggest</span><br><span class="line"></span><br><span class="line"><span class="comment"># 寻找目标函数的最小值</span></span><br><span class="line"><span class="keyword">from</span> hyperopt <span class="keyword">import</span> fmin</span><br><span class="line">MAX_EVALS = <span class="number">500</span></span><br><span class="line">best = fmin(fn=objective, space=space, algo=tpe.suggest, max_evals=MAX_EVALS)</span><br></pre></td></tr></table></figure>
+<p>Hyperopt 中可以使用两种搜索算法：tpe（tpe.suggest）、rand（rand.suggest）。同时定义用来寻找目标函数返回最小损失值的 fmin() 函数，其中 max_evals 参数表示迭代次数。</p>
+<p><strong>四：存储结果</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 优化结果参数</span></span><br><span class="line">print(best)</span><br></pre></td></tr></table></figure>
+<p>best  就是 Hyperopt 返回最佳结果的参数。</p>
+<h4 id="3-Hyperopt-可以变复杂"><a href="#3-Hyperopt-可以变复杂" class="headerlink" title="3. Hyperopt 可以变复杂"></a>3. Hyperopt 可以变复杂</h4><p>上面使用几处简单的代码，实现了 Python 中调用 Hyperopt 来完成超参数选择的功能。任何方法都可以变得复杂，更何况 Hyperopt ，所以在上面代码的基础上稍加改变，实现一种稍微复杂点的 Hyperopt，从而完成较为强大的功能。</p>
+<blockquote>
+<p>说明：以下代码将实现，从 SVM、XGBoost、LightGBM、KNN、Linear 等多个不同模型中选择超参数，最终找到 Hyperopt 认为的最优参数。其中损失值为偏离度，并可以查看黑盒函数中的运行过程。</p>
+</blockquote>
+<p><strong>一：定义目标函数</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> cross_val_score</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_absolute_error</span><br><span class="line"><span class="keyword">from</span> sklearn.svm <span class="keyword">import</span> SVR</span><br><span class="line"><span class="keyword">import</span> xgboost <span class="keyword">as</span> xgb</span><br><span class="line"><span class="keyword">import</span> lightgbm <span class="keyword">as</span> lgb</span><br><span class="line"><span class="keyword">from</span> sklearn.neighbors <span class="keyword">import</span> KNeighborsRegressor</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br><span class="line"><span class="keyword">from</span> hyperopt <span class="keyword">import</span> STATUS_OK</span><br><span class="line"><span class="keyword">import</span> warnings</span><br><span class="line"></span><br><span class="line">warnings.filterwarnings(<span class="string">'ignore'</span>)</span><br><span class="line"></span><br><span class="line">df = pd.read_csv(<span class="string">'data.csv'</span>)</span><br><span class="line">features = df.iloc[:,:<span class="number">-1</span>]</span><br><span class="line">target = df.iloc[:,<span class="number">-1</span>]</span><br><span class="line">scaler = StandardScaler()</span><br><span class="line">features = scaler.fit_transform(features)</span><br><span class="line">train_X, test_X, train_y, test_y = train_test_split(features, target, test_size=<span class="number">0.25</span>, random_state=<span class="number">999</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算偏离度</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dod</span><span class="params">(real_values, pred_values)</span>:</span></span><br><span class="line">    dod_result = np.around((np.absolute(real_values - pred_values) / real_values).mean(), <span class="number">4</span>)</span><br><span class="line">    <span class="keyword">return</span> dod_result</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算传入模型的损失</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">objective</span><span class="params">(params)</span>:</span></span><br><span class="line">    model_name = params[<span class="string">'model_name'</span>]</span><br><span class="line">    <span class="keyword">del</span> params[<span class="string">'model_name'</span>]</span><br><span class="line">    <span class="keyword">if</span> model_name == <span class="string">'svm'</span>:</span><br><span class="line">        clf = SVR(**params)</span><br><span class="line">    <span class="keyword">elif</span> model_name == <span class="string">'xgboost'</span>:</span><br><span class="line">        clf = xgb.XGBRegressor(**params)</span><br><span class="line">    <span class="keyword">elif</span> model_name == <span class="string">'lightgbm'</span>:</span><br><span class="line">        clf = lgb.LGBMRegressor(**params)</span><br><span class="line">    <span class="keyword">elif</span> model_name == <span class="string">'knn'</span>:</span><br><span class="line">        clf = KNeighborsRegressor(**params)</span><br><span class="line">    <span class="keyword">elif</span> model_name == <span class="string">'linear'</span>:</span><br><span class="line">        clf = LinearRegression(**params)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    clf.fit(train_X, train_y)</span><br><span class="line">    pred = clf.predict(test_X)</span><br><span class="line">    loss = dod(test_y, pred)</span><br><span class="line"><span class="comment">#    偏离度是自己定义的方法，当然可以返回交叉验证的结果（loss是负值需要注意）</span></span><br><span class="line"><span class="comment">#    loss = cross_val_score(clf, train_X, train_y, cv=10, scoring='neg_mean_absolute_error').mean()</span></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">'loss'</span>:loss, <span class="string">'params'</span>:params, <span class="string">'status'</span>:STATUS_OK&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义总的目标函数</span></span><br><span class="line">count = <span class="number">0</span></span><br><span class="line">best_score = np.inf</span><br><span class="line">model_name = <span class="keyword">None</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fn</span><span class="params">(params)</span>:</span></span><br><span class="line">    <span class="keyword">global</span> model_name, best_score, count</span><br><span class="line">    count +=<span class="number">1</span></span><br><span class="line">    score = objective(params.copy())</span><br><span class="line">    loss = score[<span class="string">'loss'</span>]</span><br><span class="line">    <span class="keyword">if</span> loss &lt; best_score:</span><br><span class="line">        best_score = loss</span><br><span class="line">        model_name = params[<span class="string">'model_name'</span>]</span><br><span class="line">    <span class="keyword">if</span> count % <span class="number">50</span> == <span class="number">0</span>:</span><br><span class="line">        print(<span class="string">'iters:&#123;0&#125;, score:&#123;1&#125;'</span>.format(count, score))</span><br><span class="line">    <span class="keyword">return</span> loss</span><br></pre></td></tr></table></figure>
+<p><strong>二：设置域空间</strong></p>
+<blockquote>
+<p><small>说明：两个树模型有相同的参数名，所以在设置参数时需要区别参数名。</small></p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> hyperopt <span class="keyword">import</span> hp</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置域空间</span></span><br><span class="line">space = hp.choice(<span class="string">'regressor_type'</span>,[</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">'model_name'</span>: <span class="string">'svm'</span>,</span><br><span class="line">        <span class="string">'C'</span>: hp.uniform(<span class="string">'C'</span>,<span class="number">0</span>, <span class="number">10.0</span>),</span><br><span class="line">        <span class="string">'kernel'</span>: hp.choice(<span class="string">'kernel'</span>, [<span class="string">'linear'</span>, <span class="string">'rbf'</span>]),</span><br><span class="line">        <span class="string">'gamma'</span>: hp.uniform(<span class="string">'gamma'</span>, <span class="number">0</span>, <span class="number">20.0</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">'model_name'</span>: <span class="string">'xgboost'</span>,</span><br><span class="line">        <span class="string">'n_estimators'</span>: hp.choice(<span class="string">'xgb_n_estimators'</span>, range(<span class="number">50</span>,<span class="number">501</span>,<span class="number">2</span>)),</span><br><span class="line">        <span class="string">'learning_rate'</span>: hp.uniform(<span class="string">'xgb_learning_rate'</span>, <span class="number">0.01</span>, <span class="number">0.3</span>),</span><br><span class="line">        <span class="string">'max_depth'</span>: hp.choice(<span class="string">'xgb_max_depth'</span>, range(<span class="number">2</span>,<span class="number">8</span>,<span class="number">1</span>)),</span><br><span class="line">        <span class="string">'min_child_weight'</span>: hp.choice(<span class="string">'xgb_min_child_weight'</span>, range(<span class="number">1</span>,<span class="number">5</span>,<span class="number">1</span>)),</span><br><span class="line">        <span class="string">'reg_alpha'</span>: hp.uniform(<span class="string">'xgb_reg_alpha'</span>, <span class="number">0</span>, <span class="number">1.0</span>),</span><br><span class="line">        <span class="string">'subsample'</span>: hp.uniform(<span class="string">'xgb_subsample'</span>, <span class="number">0.5</span>, <span class="number">1.0</span>),</span><br><span class="line">        <span class="string">'colsample_bytree'</span>: hp.uniform(<span class="string">'xgb_colsample_bytree'</span>, <span class="number">0.6</span>, <span class="number">1.0</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">'model_name'</span>: <span class="string">'lightgbm'</span>,</span><br><span class="line">        <span class="string">'n_estimators'</span>: hp.choice(<span class="string">'lgb_n_estimators'</span>, range(<span class="number">50</span>,<span class="number">501</span>,<span class="number">2</span>)),</span><br><span class="line">        <span class="string">'learning_rate'</span>: hp.uniform(<span class="string">'lgb_learning_rate'</span>, <span class="number">0.01</span>, <span class="number">0.3</span>),</span><br><span class="line">        <span class="string">'max_depth'</span>: hp.choice(<span class="string">'lgb_max_depth'</span>, range(<span class="number">2</span>,<span class="number">8</span>,<span class="number">1</span>)),</span><br><span class="line">        <span class="string">'num_leaves'</span>: hp.choice(<span class="string">'lgb_num_leaves'</span>, range(<span class="number">20</span>, <span class="number">50</span>, <span class="number">1</span>)),</span><br><span class="line">        <span class="string">'min_child_weight'</span>: hp.choice(<span class="string">'lgb_min_child_weight'</span>, [<span class="number">0.001</span>,<span class="number">0.005</span>,<span class="number">0.01</span>,<span class="number">0.05</span>,<span class="number">0.1</span>]),</span><br><span class="line">        <span class="string">'min_child_samples'</span>: hp.choice(<span class="string">'lgb_min_child_samples'</span>, range(<span class="number">5</span>,<span class="number">51</span>,<span class="number">5</span>)),</span><br><span class="line">        <span class="string">'subsample'</span>: hp.uniform(<span class="string">'lgb_subsample'</span>, <span class="number">0.5</span>, <span class="number">1.0</span>),</span><br><span class="line">        <span class="string">'colsample_bytree'</span>: hp.uniform(<span class="string">'lgb_colsample_bytree'</span>, <span class="number">0.6</span>, <span class="number">1.0</span>),</span><br><span class="line">        <span class="string">'reg_alpha'</span>: hp.uniform(<span class="string">'lgb_reg_alpha'</span>, <span class="number">0</span>, <span class="number">1.0</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">'model_name'</span>: <span class="string">'knn'</span>,</span><br><span class="line">        <span class="string">'n_neighbors'</span>: hp.choice(<span class="string">'n_neighbors'</span>, range(<span class="number">2</span>,<span class="number">11</span>)),</span><br><span class="line">        <span class="string">'algorithm'</span>: hp.choice(<span class="string">'algorithm'</span>, [<span class="string">'auto'</span>,<span class="string">'ball_tree'</span>,<span class="string">'kd_tree'</span>,<span class="string">'brute'</span>])</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">'model_name'</span>: <span class="string">'linear'</span>,</span><br><span class="line">        <span class="string">'normalize'</span>: hp.choice(<span class="string">'normalize'</span>, [<span class="keyword">False</span>, <span class="keyword">True</span>])</span><br><span class="line">    &#125;</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+<p><strong>三：参数搜索</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设定搜索算法</span></span><br><span class="line"><span class="keyword">from</span> hyperopt <span class="keyword">import</span> tpe</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果有有必要，可以设置查看黑盒函数fn中的搜索情况（每次选择参数等）</span></span><br><span class="line"><span class="keyword">from</span> hyperopt <span class="keyword">import</span> Trials</span><br><span class="line">trials = Trials()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义搜索目标函数最小值函数</span></span><br><span class="line"><span class="keyword">from</span> hyperopt <span class="keyword">import</span> fmin</span><br><span class="line">MAX_EVALS = <span class="number">1500</span></span><br><span class="line">best_params = fmin(fn=fn, space=space, algo=tpe.suggest, max_evals=MAX_EVALS,trials=trials)</span><br><span class="line">print(<span class="string">'model_name: &#123;0&#125;, best_score: &#123;1&#125;'</span>.format(model_name, best_score))</span><br></pre></td></tr></table></figure>
+<p><strong>四：存储结果</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 最佳参数</span></span><br><span class="line">print(best_params)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看黑盒函数中的变化</span></span><br><span class="line">print(trials)	<span class="comment"># 可以通过循环依次打印结果</span></span><br></pre></td></tr></table></figure>
+<h4 id="4-文末"><a href="#4-文末" class="headerlink" title="4. 文末"></a>4. 文末</h4><p>Hyperopt 通过不同的设置可以变得更加完善和准确，从而在搜索参数上取得进一步成功。</p>
+<p>你需要注意一点，Hyperopt 并不是一个完全没有缺陷的方法，它也可能从一开始就陷入局部最优，所以相比于暴力的网格搜索它只是一种具有数学理论支撑的高级暴力搜索方法。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Scikit-Learn/" rel="tag"># Scikit-Learn</a>
+          
+            <a href="/tags/贝叶斯优化/" rel="tag"># 贝叶斯优化</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/11/OpenCV对图像特征提取/" rel="next" title="OpenCV对图像特征提取">
+                <i class="fa fa-chevron-left"></i> OpenCV对图像特征提取
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/Favorite_CAT.png" alt="DHui">
+            
+              <p class="site-author-name" itemprop="name">DHui</p>
+              <p class="site-description motion-element" itemprop="description">--最好的耐心都给了陌生人.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/na-hai-95/activities" target="_blank" title="Zhihu">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Zhihu</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/daihuidai" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-文起"><span class="nav-number">1.</span> <span class="nav-text">1. 文起</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Hyperopt-简单样例"><span class="nav-number">2.</span> <span class="nav-text">2. Hyperopt 简单样例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-Hyperopt-可以变复杂"><span class="nav-number">3.</span> <span class="nav-text">3. Hyperopt 可以变复杂</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-文末"><span class="nav-number">4.</span> <span class="nav-text">4. 文末</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DHui</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Nothing</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Nothing  </div>
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"live2d-widget-model-koharu"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+</html>
