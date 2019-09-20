@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="不自在">
 <meta property="og:description" content="万壑松风知客来，摇扇抚琴待留声 紧接第一篇 Git_tips 后的第二篇。都是比较小的问题，所以每篇的篇幅都不是很长，虽然内容少，但看着也舒服，还有。。。万丈高楼平地起。 简单描述问题：在平时使用仓库中你是否会遇到这样的问题，如果不建分支多台电脑都使用 master 对仓库进行修改，那么某个时刻可能会出现远程仓库处于一个最新的版本，而某台电脑上的本地仓库则处于落后一个或多个版本的状态。 如果该台电">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-19T12:27:34.685Z">
+<meta property="og:updated_time" content="2019-09-17T12:23:02.481Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git_tips-同步本地仓库">
 <meta name="twitter:description" content="万壑松风知客来，摇扇抚琴待留声 紧接第一篇 Git_tips 后的第二篇。都是比较小的问题，所以每篇的篇幅都不是很长，虽然内容少，但看着也舒服，还有。。。万丈高楼平地起。 简单描述问题：在平时使用仓库中你是否会遇到这样的问题，如果不建分支多台电脑都使用 master 对仓库进行修改，那么某个时刻可能会出现远程仓库处于一个最新的版本，而某台电脑上的本地仓库则处于落后一个或多个版本的状态。 如果该台电">
@@ -354,7 +354,7 @@
 <p>同步远程仓库可以分几个步骤来处理：</p>
 <h5 id="1：检查远程分支"><a href="#1：检查远程分支" class="headerlink" title="1：检查远程分支"></a>1：检查远程分支</h5><p><code>git remote -v</code></p>
 <p>在仓库中使用该命令来检查远程分支情况，接着会显示出每个远程库的名字，至少会看到一个名为 origin 的远程仓库， git默认使用该名字来表示你所克隆的原始仓库。</p>
-<h5 id="2：下载远程最新数据到本地"><a href="#2：下载远程最新数据到本地" class="headerlink" title="2：下载远程最新数据到本地"></a>2：下载远程最新数据到本地</h5><p><code>git fetch orgin master:temp</code></p>
+<h5 id="2：下载远程最新数据到本地"><a href="#2：下载远程最新数据到本地" class="headerlink" title="2：下载远程最新数据到本地"></a>2：下载远程最新数据到本地</h5><p><code>git fetch origin master:temp</code></p>
 <p>使用下载命令（fetch），在本地新建一个temp分支，并将远程 origin 仓库的 master 分支代码下载到本地 temp 分支下。</p>
 <h5 id="3：合并到本地"><a href="#3：合并到本地" class="headerlink" title="3：合并到本地"></a>3：合并到本地</h5><p><code>git merge temp</code></p>
 <p>在合并之前，可以使用 <code>git diff temp</code> 对比一下两者的代码修改差异，然后就觉得没问题就可以使用 merge 来合并代码了。</p>
@@ -800,7 +800,7 @@
         }
       });
     </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -808,5 +808,5 @@
 
   
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"live2d-widget-model-koharu"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"live2d-widget-model-koharu"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html>
