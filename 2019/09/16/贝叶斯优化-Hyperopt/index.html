@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="不自在">
 <meta property="og:description" content="万壑松风知客来，摇扇抚琴待留声 1. 文起本篇文章记录通过 Python 调用第三方库，从而调用使用了贝叶斯优化原理的 Hyperopt 方法来进行超参数的优化选择。具体贝叶斯优化原理与相关介绍将在下一次文章中做较为详细的描述，可以参考这里。 Hyperopt 是 Python 的几个贝叶斯优化库中的一个。它使用 Tree Parzen Estimator（TPE），其它 Python 库还包括了">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-16T11:35:04.425Z">
+<meta property="og:updated_time" content="2019-09-20T03:34:31.883Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="贝叶斯优化-Hyperopt">
 <meta name="twitter:description" content="万壑松风知客来，摇扇抚琴待留声 1. 文起本篇文章记录通过 Python 调用第三方库，从而调用使用了贝叶斯优化原理的 Hyperopt 方法来进行超参数的优化选择。具体贝叶斯优化原理与相关介绍将在下一次文章中做较为详细的描述，可以参考这里。 Hyperopt 是 Python 的几个贝叶斯优化库中的一个。它使用 Tree Parzen Estimator（TPE），其它 Python 库还包括了">
@@ -371,7 +371,7 @@
 </blockquote>
 <p><strong>三：参数搜索</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 参数搜索算法</span></span><br><span class="line"><span class="keyword">from</span> hyperopt <span class="keyword">import</span> tpe</span><br><span class="line">tpe_algorithm = tpe.suggest</span><br><span class="line"></span><br><span class="line"><span class="comment"># 寻找目标函数的最小值</span></span><br><span class="line"><span class="keyword">from</span> hyperopt <span class="keyword">import</span> fmin</span><br><span class="line">MAX_EVALS = <span class="number">500</span></span><br><span class="line">best = fmin(fn=objective, space=space, algo=tpe.suggest, max_evals=MAX_EVALS)</span><br></pre></td></tr></table></figure>
-<p>Hyperopt 中可以使用两种搜索算法：tpe（tpe.suggest）、rand（rand.suggest）。同时定义用来寻找目标函数返回最小损失值的 fmin() 函数，其中 max_evals 参数表示迭代次数。</p>
+<p>Hyperopt 中可以使用几种搜索算法：tpe（tpe.suggest）、随机 rand（rand.suggest）、模拟退火 anneal（anneal.suggest）。同时定义用来寻找目标函数返回最小损失值的 fmin() 函数，其中 max_evals 参数表示迭代次数。</p>
 <p><strong>四：存储结果</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 优化结果参数</span></span><br><span class="line">print(best)</span><br></pre></td></tr></table></figure>
 <p>best  就是 Hyperopt 返回最佳结果的参数。</p>
@@ -829,7 +829,7 @@
         }
       });
     </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 
@@ -837,5 +837,5 @@
 
   
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
 </html>
