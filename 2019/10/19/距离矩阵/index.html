@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="矩阵优化,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="万壑松风知客来，摇扇抚琴待留声 1. 文起好久没有写文章了，这段时间其实累积了很多想分享和记录的事，很想每一件都写下来，不过由于一篇文章需要仔细筹备相关的知识所以时间抽不出来，不过我会慢慢补上。 先从哪篇文章开始呢，我决定从最近刚遇到的一个问题开始做分享——距离矩阵，所以这是一篇讲通过矩阵来优化计算机运算的知识分享。 距离矩阵能够帮助你减少 for 循环的使用从而达到计算两个矩阵所有元素之间的距离">
+<meta name="keywords" content="矩阵优化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="距离矩阵">
+<meta property="og:url" content="http://yoursite.com/2019/10/19/距离矩阵/index.html">
+<meta property="og:site_name" content="不自在">
+<meta property="og:description" content="万壑松风知客来，摇扇抚琴待留声 1. 文起好久没有写文章了，这段时间其实累积了很多想分享和记录的事，很想每一件都写下来，不过由于一篇文章需要仔细筹备相关的知识所以时间抽不出来，不过我会慢慢补上。 先从哪篇文章开始呢，我决定从最近刚遇到的一个问题开始做分享——距离矩阵，所以这是一篇讲通过矩阵来优化计算机运算的知识分享。 距离矩阵能够帮助你减少 for 循环的使用从而达到计算两个矩阵所有元素之间的距离">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://gitee.com/daihuidai/First_Image_Bed/raw/7ca0ecb865c24f4767cead11c7959e2a4cf6ac5b/Distance_matrix/1.png">
+<meta property="og:image" content="https://gitee.com/daihuidai/First_Image_Bed/raw/7ca0ecb865c24f4767cead11c7959e2a4cf6ac5b/Distance_matrix/2.png">
+<meta property="og:image" content="https://gitee.com/daihuidai/First_Image_Bed/raw/7ca0ecb865c24f4767cead11c7959e2a4cf6ac5b/Distance_matrix/3.png">
+<meta property="og:updated_time" content="2019-10-19T16:00:19.504Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="距离矩阵">
+<meta name="twitter:description" content="万壑松风知客来，摇扇抚琴待留声 1. 文起好久没有写文章了，这段时间其实累积了很多想分享和记录的事，很想每一件都写下来，不过由于一篇文章需要仔细筹备相关的知识所以时间抽不出来，不过我会慢慢补上。 先从哪篇文章开始呢，我决定从最近刚遇到的一个问题开始做分享——距离矩阵，所以这是一篇讲通过矩阵来优化计算机运算的知识分享。 距离矩阵能够帮助你减少 for 循环的使用从而达到计算两个矩阵所有元素之间的距离">
+<meta name="twitter:image" content="https://gitee.com/daihuidai/First_Image_Bed/raw/7ca0ecb865c24f4767cead11c7959e2a4cf6ac5b/Distance_matrix/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/10/19/距离矩阵/">
+
+
+
+
+
+  <title>距离矩阵 | 不自在</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">不自在</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">You Konw Everything</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/19/距离矩阵/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DHui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/Favorite_CAT.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不自在">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">距离矩阵</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-19T23:57:57+08:00">
+                2019-10-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/10/19/距离矩阵/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/10/19/距离矩阵/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><em>万壑松风知客来，摇扇抚琴待留声</em></p>
+<h4 id="1-文起"><a href="#1-文起" class="headerlink" title="1. 文起"></a>1. 文起</h4><p>好久没有写文章了，这段时间其实累积了很多想分享和记录的事，很想每一件都写下来，不过由于一篇文章需要仔细筹备相关的知识所以时间抽不出来，不过我会慢慢补上。</p>
+<p>先从哪篇文章开始呢，我决定从最近刚遇到的一个问题开始做分享——距离矩阵，所以这是一篇讲通过矩阵来优化计算机运算的知识分享。</p>
+<p>距离矩阵能够帮助你减少 for 循环的使用从而达到计算两个矩阵所有元素之间的距离。尤其是 Python 中的一个科学计算包 Numpy，这种矩阵运算简直就是为它准备的。</p>
+<h4 id="2-问题描述"><a href="#2-问题描述" class="headerlink" title="2. 问题描述"></a>2. 问题描述</h4><p>机器学习的 KNN 算法实现原理：计算测试集每一个向量元素与训练集的每一个向量元素的距离，从中选择 K 个与之相近的样本，投票选择这些样本的目标值，从而得到预测结果。</p>
+<p>这个距离一般采用欧氏距离（勾股定理计算方式）。如果不采用一定优化措施，其实 KNN 是一个很耗费时间的算法，通过 for 循环测试集与训练集的每个样本之间都需要计算一次。当数据集达到一定数量后运算就会十分的缓慢，由此我们需要一个方法来取代循环，使用更高效的方式达到这个距离的运算。</p>
+<p>当两个过大的数据列表计算时，我们很容易联想到使用矩阵运算来代替。矩阵运算能够十分高效的处理这种由多个向量组成的数据。所以现在已经有了尝试解决的方案，下面来以具体数据来展开思考。</p>
+<h4 id="3-距离矩阵"><a href="#3-距离矩阵" class="headerlink" title="3. 距离矩阵"></a>3. 距离矩阵</h4><h5 id="3-1-场景"><a href="#3-1-场景" class="headerlink" title="3.1. 场景"></a>3.1. 场景</h5><p>（起点随机）两个人在一个棋盘上随意跳动，他们每一步的行走位置由横纵坐标表示。两个人跳一段时间后可以得到两个列表（长度可能不同），列表中的每个元素是一个长度为 2 的元组或列表，由此每个元素表示一个二维坐标信息，两个列表分别记录了两个人跳的每一步，长度则是代表了分别跳的步数。</p>
+<h5 id="3-2-问题"><a href="#3-2-问题" class="headerlink" title="3.2. 问题"></a>3.2. 问题</h5><p>现在需要计算这两组步数两两之间的欧几里得距离，从中找到这两个人相距最近的位置、最远的位置，或者其它按需求寻找的位置信息。</p>
+<h5 id="3-3-解决问题"><a href="#3-3-解决问题" class="headerlink" title="3.3. 解决问题"></a>3.3. 解决问题</h5><p>以上是一个比较简单的场景（这只是一个二维空间），一个位置信息仅需要两个数字就能表示。不过我们再简化一下这个问题，两个人跳的步长并不远都是三步。以列表形式表现为：A: [[1,2],[3,4],[5,6]]、B:[[2,2],[3,3],[4,4]]。</p>
+<p>根据上文的思路我们决定以矩阵的方式来解决该问题，所以首先就得将两个列表转换为矩阵的形式。每行样本表示一个位置坐标，由于是二维空间，所以每行只有两列（如果在 N 维空间，则每行有 N 列）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">A = np.array([[<span class="number">1</span>,<span class="number">2</span>],[<span class="number">3</span>,<span class="number">4</span>],[<span class="number">5</span>,<span class="number">6</span>]])</span><br><span class="line">B = np.array([[<span class="number">2</span>,<span class="number">2</span>],[<span class="number">3</span>,<span class="number">3</span>],[<span class="number">4</span>,<span class="number">4</span>]])</span><br><span class="line">A = A.reshape((<span class="number">-1</span>,<span class="number">2</span>))</span><br><span class="line">B = B.reshape((<span class="number">-1</span>,<span class="number">2</span>))</span><br><span class="line"><span class="comment"># A:</span></span><br><span class="line"><span class="comment"># [[1 2]</span></span><br><span class="line"><span class="comment">#  [3 4]</span></span><br><span class="line"><span class="comment">#  [5 6]]</span></span><br><span class="line"><span class="comment"># B:</span></span><br><span class="line"><span class="comment"># [[2 2]</span></span><br><span class="line"><span class="comment">#  [3 3]</span></span><br><span class="line"><span class="comment">#  [4 4]]</span></span><br></pre></td></tr></table></figure>
+<p>每行表示一个坐标信息，两两之间求距离，则共有 9 种组合情况，即可以表示成一个 3X3 的矩阵。矩阵的 0、1、2 分别代表了 A、B 矩阵的行索引，i 表示 A 矩阵的任意一行，j 表示 B 矩阵的任意一行。</p>
+<p><img width="200px" src="https://gitee.com/daihuidai/First_Image_Bed/raw/7ca0ecb865c24f4767cead11c7959e2a4cf6ac5b/Distance_matrix/1.png"></p>
+<p><strong>从单元格入手：</strong></p>
+<p>那么首先从最简单的一个单元格入手寻找规律。以该黄色单元格为例表示 A 矩阵的第 0 行（[1,2]）与 B 矩阵的第 1 行（[3,3]）求欧式距离：</p>
+<p>$dist(A_{0}\, B_{1}) = \sqrt{(A_{00}-B_{10})^{2} + (A_{01}-B_{11})^{2}}$ $=$ $\sqrt{(A_{00}^{2} + A_{01}^{2}) + (B_{10}^{2} + B_{11}^{2}) - 2\times (A_{00}B_{10} + A_{01}B_{11})}$</p>
+<p>$A_{00}^{2} + A_{01}^{2}$ 其实表示的是 A 矩阵第 0 行的<strong>所有</strong>元素求平方和（这里是二维，所以只有两个数[1,2]）。这种方式可以通过数学符号 $||$ (模) 来表示。$A_{00}B_{10} + A_{01}B_{11}$ 表示两个二维向量的对应位置相乘，可以通过矩阵相乘的方式表达。所以距离矩阵的第 0 行第 1 列化简可以表示为：</p>
+<p>$dist(A_{0}\, B_{1}) = \sqrt{\left | A_{0} \right |^{2} + \left | B_{1} \right |^{2} - 2\times A_{0}B_{1}^T}  \Rightarrow  \sqrt{\left | A_{i} \right |^{2} + \left | B_{j} \right |^{2} - 2\times A_{i}B_{j}^T}$（i、j 分别代表 A、B 的任意一行）</p>
+<p><strong>扩展到某一行：</strong></p>
+<p>上面已经求得了距离矩阵 [0,1] 位置处的距离表达公式，该公式已经可以扩展到距离矩阵的任何一个单元格，只需要根据所求行、列的位置，改变 A、B 的下标即可。</p>
+<p>这是一个规律，但还不够，我们做一点改变将这个公式从一个单元格表达式扩展到一行表达式，<strong>计算 A 矩阵的第 0 个向量与 B 矩阵的所有向量的距离，也就是距离矩阵的第 0 行</strong>：</p>
+<p><img width="200px" src="https://gitee.com/daihuidai/First_Image_Bed/raw/7ca0ecb865c24f4767cead11c7959e2a4cf6ac5b/Distance_matrix/2.png"></p>
+<blockquote>
+<p><small>简单解释下面公式扩展的一个理论知识，否则你可能会有疑惑。</small></p>
+</blockquote>
+<blockquote>
+<p>首先距离矩阵大小等于 A.shape[0] x B.shape[0]，所以一行有 B.shape[0] 个元素，这里 B.shape[0] = 3，扩展时需要保证这一行有 3 个元素。</p>
+<p>其次矩阵相加时，是对应位置一一相加。这两点是后面统一公式的条件。</p>
+</blockquote>
+<p>简单解释后继续我们的分析。下面分别列出了这三个位置对应的计算公式。</p>
+<p>$\sqrt{\left | A_{0} \right |^{2} + \left | B_{0} \right |^{2} - 2\times A_{0}B_{0}^T}$ $\sqrt{\left | A_{0} \right |^{2} + \left | B_{1} \right |^{2} - 2\times A_{0}B_{1}^T}$ $\sqrt{\left | A_{0} \right |^{2} + \left | B_{2} \right |^{2} - 2\times A_{0}B_{2}^T}$</p>
+<p>接着统一这一行的元素公式（也就是把单独计算的每个元素放到一个公式中，还记得上面所说的矩阵对应位置相加的原理吗）：</p>
+<p>$dist(A_{0}\, B) = \sqrt{(\left | A_{0} \right |^{2} \: \left | A_{0} \right |^{2} \: \left | A_{0} \right |^{2}) + (\left | B_{0} \right |^{2} \: \left | B_{1} \right |^{2} \: \left | B_{2} \right |^{2}) - 2\times A_{0}\left ( B_{0}^{T} \: B_{1}^{T} \: B_{2}^{T} \right )}$</p>
+<p>$dist(A_{0}\, B) = \sqrt{(\left | A_{0} \right |^{2} \: \left | A_{0} \right |^{2} \: \left | A_{0} \right |^{2}) + (\left | B_{0} \right |^{2} \: \left | B_{1} \right |^{2} \: \left | B_{2} \right |^{2}) - 2\times A_{0}B^{T}}$</p>
+<p>到此我们得到了计算距离矩阵一行的公式，如果要表示任意一行的话，稍微改变上面公式的元素下标即可（j=2 ，如果多维则 j 表示最高维数）：</p>
+<blockquote>
+<p>$dist(A_{i}\, B) = \sqrt{(\left | A_{i} \right |^{2} \: \left | A_{i} \right |^{2} \: \cdots  \:  \left | A_{i} \right |^{2}) + (\left | B_{0} \right |^{2} \: \left | B_{1} \right |^{2} \: \cdots  \: \left | B_{j} \right |^{2}) - 2\times A_{i}B^{T}}$</p>
+</blockquote>
+<p><strong>扩展到整个距离矩阵：</strong></p>
+<p>上面得到了某一行的距离矩阵公式，接下来要做的就是将行公式按列扩展，从而得到整个距离矩阵的表达式（将 i 从 0 表达到 A.shape[0]，这里也就是 3）。</p>
+<p><img width="200px" src="https://gitee.com/daihuidai/First_Image_Bed/raw/7ca0ecb865c24f4767cead11c7959e2a4cf6ac5b/Distance_matrix/3.png"></p>
+<p>同样以 A、B 矩阵为例，求这个 (3,3) 的距离矩阵的表达式如下：</p>
+<p>$dist(A \, B) = \sqrt{\begin{pmatrix}<br>\left | A_{0} \right |^{2} &amp; \left | A_{0} \right |^{2} &amp; \left | A_{0} \right |^{2}\<br>\left | A_{1} \right |^{2} &amp; \left | A_{1} \right |^{2} &amp; \left | A_{1} \right |^{2}\<br>\left | A_{2} \right |^{2} &amp; \left | A_{2} \right |^{2} &amp; \left | A_{2} \right |^{2}<br>\end{pmatrix}<br>+<br>\begin{pmatrix}<br>\left | B_{0} \right |^{2} &amp; \left | B_{1} \right |^{2} &amp; \left | B_{2} \right |^{2}\<br>\left | B_{0} \right |^{2} &amp; \left | B_{1} \right |^{2} &amp; \left | B_{2} \right |^{2}\<br>\left | B_{0} \right |^{2} &amp; \left | B_{1} \right |^{2} &amp; \left | B_{2} \right |^{2}<br>\end{pmatrix}<br>-<br>2\times AB^{T}<br>}$</p>
+<p>其中 $AB^{T}$ 得到的也是像前面两个 (3,3) 大小的矩阵。照应前面的说明，3 个矩阵对应位置相运算，最后开根得到距离矩阵。</p>
+<p>上面距离矩阵的 i、j 仅表示三个维度，同样我们可以以 i、j 表示任何维度大小，从而得到任意大小两个矩阵的距离矩阵表达式。</p>
+<blockquote>
+<p>$dist(A \, B) = \sqrt{\begin{pmatrix}<br>\left | A_{0} \right |^{2} &amp; \left | A_{0} \right |^{2} &amp; \cdots  &amp; \left | A_{0} \right |^{2}\<br>\left | A_{1} \right |^{2} &amp; \left | A_{1} \right |^{2} &amp; \cdots  &amp; \left | A_{1} \right |^{2}\<br>\vdots  &amp; \vdots  &amp; \ddots  &amp; \vdots \<br>\left | A_{i} \right |^{2} &amp; \left | A_{i} \right |^{2} &amp; \cdots  &amp; \left | A_{i} \right |^{2}<br>\end{pmatrix}<br>+<br>\begin{pmatrix}<br>\left | B_{0} \right |^{2} &amp; \left | B_{1} \right |^{2} &amp; \cdots  &amp; \left | B_{j} \right |^{2}\<br>\left | B_{0} \right |^{2} &amp; \left | B_{1} \right |^{2} &amp; \cdots  &amp; \left | B_{j} \right |^{2}\<br>\vdots  &amp; \vdots  &amp; \ddots  &amp; \vdots \<br>\left | B_{0} \right |^{2} &amp; \left | B_{1} \right |^{2} &amp; \cdots  &amp; \left | B_{j} \right |^{2}<br>\end{pmatrix}<br>-2 \times AB^{T}<br>}$</p>
+</blockquote>
+<p>到此终于完成了任务，我们已经得到了关于两个矩阵（跳出这里 (3,2) 矩阵的思维，两个矩阵可以表示任意长度，任意维度）的距离矩阵表达式。</p>
+<h4 id="4-实现公式"><a href="#4-实现公式" class="headerlink" title="4. 实现公式"></a>4. 实现公式</h4><h5 id="4-1-手动实现公式"><a href="#4-1-手动实现公式" class="headerlink" title="4.1. 手动实现公式"></a>4.1. 手动实现公式</h5><p>通过上面一步一步来，我们得到了最终的距离矩阵公式，不过使用代码如何实现呢？这里使用 Numpy 按照公式来对 A、B 矩阵进行运算：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">A_matrix = np.transpose([np.sum(np.square(A), axis=<span class="number">1</span>)])</span><br><span class="line">B_matrix = np.sum(np.square(B), axis=<span class="number">1</span>)</span><br><span class="line">C_matrix = <span class="number">-2</span>*np.dot(A,B.T)</span><br><span class="line"></span><br><span class="line">D_matrix = np.sqrt(A_matrix + B_matrix + C_matrix)</span><br><span class="line">print(D_matrix)</span><br><span class="line"><span class="comment"># [[1.         2.23606798 3.60555128]</span></span><br><span class="line"><span class="comment">#  [2.23606798 1.         1.        ]</span></span><br><span class="line"><span class="comment">#  [5.         3.60555128 2.23606798]]</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>答疑说明：A_matrix、B_matrix、C_matrix 与上面的公式一一对应。A_matrix、B_matrix 如何理解呢？这是简化了矩阵的表示方式可以看到第一个矩阵表达中每一行的元素都相等，第二个矩阵中每一列元素都相等。则可以只用一列、一行来代替，而在用它们和矩阵做运算时，会展开成对应大小的矩阵再对应位置运算。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="comment"># [[ 5]		[[5 , 5 , 5 ]</span></span><br><span class="line">&gt; <span class="comment">#  [25]	-&gt;	 [25, 25, 25]</span></span><br><span class="line">&gt; <span class="comment">#  [61]]	 [61, 61, 61]]</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="comment"># [ 8 18 32] -&gt;	[[8 , 18, 32]</span></span><br><span class="line">&gt; <span class="comment"># 				 [8 , 18, 32]</span></span><br><span class="line">&gt; <span class="comment"># 				 [8 , 18, 32]</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h5 id="4-2-使用-scipy-公式"><a href="#4-2-使用-scipy-公式" class="headerlink" title="4.2. 使用 scipy 公式"></a>4.2. 使用 scipy 公式</h5><p>scipy 是 python 的一个数学计算包，包含了大量线性代数以及其它知识。后来我才发现原来 scipy 中早已包含了计算距离矩阵的函数，真是让人省心，我们使用它来验证上面的结果。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scipy.spatial.distance <span class="keyword">import</span> cdist</span><br><span class="line"></span><br><span class="line">result = cdist(A, B, metric=<span class="string">'euclidean'</span>)</span><br><span class="line">print(result)</span><br><span class="line"><span class="comment"># [[1.         2.23606798 3.60555128]</span></span><br><span class="line"><span class="comment">#  [2.23606798 1.         1.        ]</span></span><br><span class="line"><span class="comment">#  [5.         3.60555128 2.23606798]]</span></span><br></pre></td></tr></table></figure>
+<p>验证结果完全没有问题，说明我们的公式完全正确。虽然有了现成的函数，但如果能掌握推算原理对我们理解问题将会有更进一步的帮助。</p>
+<h5 id="4-3-使用距离矩阵"><a href="#4-3-使用距离矩阵" class="headerlink" title="4.3. 使用距离矩阵"></a>4.3. 使用距离矩阵</h5><p>这里我们简单来使用一下距离矩阵，解决正如前面 3.2. 中提到的问题。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 返回距离矩阵中的最大值、最小值</span></span><br><span class="line">max_distance = D_matrix.max()</span><br><span class="line">min_distance = D_matrix.min()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 通过位置查询找到最大值、最小值在距离矩阵中对应的位置坐标</span></span><br><span class="line">max_locate = np.where(D_matrix == max_distance)</span><br><span class="line">min_locate = np.where(D_matrix == min_distance)</span><br><span class="line"><span class="comment"># (array([2], dtype=int64), array([0], dtype=int64))</span></span><br><span class="line"><span class="comment"># (array([0, 1, 1], dtype=int64), array([0, 1, 2], dtype=int64))</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 第一个元素对应A矩阵的行，第二个元素对应B矩阵的行</span></span><br><span class="line"><span class="comment"># 比如最大距离5，由A的2行和B的0行组成-&gt;[5 6]、[2 2]</span></span><br></pre></td></tr></table></figure>
+<p>可以利用距离矩阵做的事，远多于这个简单的例子。</p>
+<h4 id="5-文末"><a href="#5-文末" class="headerlink" title="5. 文末"></a>5. 文末</h4><p>关于向量的运算，很多时候都可以通过矩阵的方式来进行优化。上面的距离矩阵运算帮助我提高了程序 30 倍以上的运算效率，所以我觉得该知识点确实值得去学习。</p>
+<p>放假抽了一个晚上记录完了这篇文章，还是很欣慰的。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/矩阵优化/" rel="tag"># 矩阵优化</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/16/贝叶斯优化-Hyperopt/" rel="next" title="贝叶斯优化-Hyperopt">
+                <i class="fa fa-chevron-left"></i> 贝叶斯优化-Hyperopt
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/Favorite_CAT.png" alt="DHui">
+            
+              <p class="site-author-name" itemprop="name">DHui</p>
+              <p class="site-description motion-element" itemprop="description">--喜欢夏天的雨,冬天的阳光<br>喜欢春天的风,秋天的树叶.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/na-hai-95/activities" target="_blank" title="Zhihu">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Zhihu</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/daihuidai" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-文起"><span class="nav-number">1.</span> <span class="nav-text">1. 文起</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-问题描述"><span class="nav-number">2.</span> <span class="nav-text">2. 问题描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-距离矩阵"><span class="nav-number">3.</span> <span class="nav-text">3. 距离矩阵</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-场景"><span class="nav-number">3.1.</span> <span class="nav-text">3.1. 场景</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-问题"><span class="nav-number">3.2.</span> <span class="nav-text">3.2. 问题</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-解决问题"><span class="nav-number">3.3.</span> <span class="nav-text">3.3. 解决问题</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-实现公式"><span class="nav-number">4.</span> <span class="nav-text">4. 实现公式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#4-1-手动实现公式"><span class="nav-number">4.1.</span> <span class="nav-text">4.1. 手动实现公式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-2-使用-scipy-公式"><span class="nav-number">4.2.</span> <span class="nav-text">4.2. 使用 scipy 公式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-3-使用距离矩阵"><span class="nav-number">4.3.</span> <span class="nav-text">4.3. 使用距离矩阵</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-文末"><span class="nav-number">5.</span> <span class="nav-text">5. 文末</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DHui</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Nothing</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Nothing  </div>
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'J60WKXjcL6IxKlW13E5yINBW-gzGzoHsz',
+        appKey: 'g1IULIKLIy47zRNXBRtNEO5r',
+        placeholder: '如果你真的想说点什么的话ヾﾉ≧∀≦)o',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+</html>
