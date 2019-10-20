@@ -90,7 +90,7 @@
 <meta property="og:image" content="https://gitee.com/daihuidai/First_Image_Bed/raw/7ca0ecb865c24f4767cead11c7959e2a4cf6ac5b/Distance_matrix/1.png">
 <meta property="og:image" content="https://gitee.com/daihuidai/First_Image_Bed/raw/7ca0ecb865c24f4767cead11c7959e2a4cf6ac5b/Distance_matrix/2.png">
 <meta property="og:image" content="https://gitee.com/daihuidai/First_Image_Bed/raw/7ca0ecb865c24f4767cead11c7959e2a4cf6ac5b/Distance_matrix/3.png">
-<meta property="og:updated_time" content="2019-10-20T06:12:04.628Z">
+<meta property="og:updated_time" content="2019-10-20T06:19:52.207Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="距离矩阵">
 <meta name="twitter:description" content="万壑松风知客来，摇扇抚琴待留声 1. 文起好久没有写文章了，这段时间其实累积了很多想分享和记录的事，很想每一件都写下来，不过由于一篇文章需要仔细筹备相关的知识所以时间抽不出来，不过我会慢慢补上。 先从哪篇文章开始呢，我决定从最近刚遇到的一个问题开始做分享——距离矩阵，所以这是一篇讲通过矩阵来优化计算机运算的知识分享。 距离矩阵能够帮助你减少 for 循环的使用从而达到计算两个矩阵所有元素之间的距离">
@@ -379,17 +379,17 @@
 <p>那么首先从最简单的一个单元格入手寻找规律。以该黄色单元格为例表示 A 矩阵的第 0 行（[1,2]）与 B 矩阵的第 1 行（[3,3]）求欧式距离：</p>
 <p>$dist(A_{0}\, B_{1}) = \sqrt{(A_{00}-B_{10})^{2} + (A_{01}-B_{11})^{2}}$ $=$ $\sqrt{(A_{00}^{2} + A_{01}^{2}) + (B_{10}^{2} + B_{11}^{2}) - 2\times (A_{00}B_{10} + A_{01}B_{11})}$</p>
 <p>$A_{00}^{2} + A_{01}^{2}$ 其实表示的是 A 矩阵第 0 行的<strong>所有</strong>元素求平方和（这里是二维，所以只有两个数[1,2]）。这种方式可以通过数学符号 $||$ (模) 来表示 (hexo 渲染公式有一点点问题)。$A_{00}B_{10} + A_{01}B_{11}$ 表示两个二维向量的对应位置相乘，可以通过矩阵相乘的方式表达。所以距离矩阵的第 0 行第 1 列化简可以表示为：</p>
-<p>$dist(A_{0}\, B_{1}) = \sqrt{\left || A_{0} \right ||^{2} + \left || B_{1} \right ||^{2} - 2\times A_{0}B_{1}^T}  \Rightarrow  \sqrt{\left || A_{i} \right ||^{2} + \left || B_{j} \right ||^{2} - 2\times A_{i}B_{j}^T}$（i、j 分别代表 A、B 的任意一行）</p>
+<blockquote>
+<p>$dist(A_{0}\, B_{1}) = \sqrt{\left || A_{0} \right ||^{2} + \left || B_{1} \right ||^{2} - 2\times A_{0}B_{1}^T}  \Rightarrow  \sqrt{\left || A_{i} \right ||^{2} + \left || B_{j} \right ||^{2} - 2\times A_{i}B_{j}^T}$ （i、j 分别代表 A、B 的任意一行）</p>
+</blockquote>
 <p><strong>扩展到某一行：</strong></p>
 <p>上面已经求得了距离矩阵 [0,1] 位置处的距离表达公式，该公式已经可以扩展到距离矩阵的任何一个单元格，只需要根据所求行、列的位置，改变 A、B 的下标即可。</p>
 <p>这是一个规律，但还不够，我们做一点改变将这个公式从一个单元格表达式扩展到一行表达式，<strong>计算 A 矩阵的第 0 个向量与 B 矩阵的所有向量的距离，也就是距离矩阵的第 0 行</strong>：</p>
 <p><img width="200px" src="https://gitee.com/daihuidai/First_Image_Bed/raw/7ca0ecb865c24f4767cead11c7959e2a4cf6ac5b/Distance_matrix/2.png"></p>
 <blockquote>
 <p><small>简单解释下面公式扩展的一个理论知识，否则你可能会有疑惑。</small></p>
-</blockquote>
-<blockquote>
-<p>首先距离矩阵大小等于 A.shape[0] x B.shape[0]，所以一行有 B.shape[0] 个元素，这里 B.shape[0] = 3，扩展时需要保证这一行有 3 个元素。</p>
-<p>其次矩阵相加时，是对应位置一一相加。这两点是后面统一公式的条件。</p>
+<p><small>1: 距离矩阵大小等于 A.shape[0] x B.shape[0]，所以一行有 B.shape[0] 个元素，这里 B.shape[0] = 3，扩展时需要保证这一行有 3 个元素。</small></p>
+<p><small>2: 矩阵相加时，是对应位置一一相加。这两点是后面统一公式的条件。</small></p>
 </blockquote>
 <p>简单解释后继续我们的分析。下面分别列出了这三个位置对应的计算公式。</p>
 <p>$\sqrt{\left | A_{0} \right |^{2} + \left | B_{0} \right |^{2} - 2\times A_{0}B_{0}^T}$ $\sqrt{\left || A_{0} \right ||^{2} + \left || B_{1} \right ||^{2} - 2\times A_{0}B_{1}^T}$ $\sqrt{\left | A_{0} \right |^{2} + \left | B_{2} \right |^{2} - 2\times A_{0}B_{2}^T}$</p>
