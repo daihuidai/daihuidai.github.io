@@ -91,7 +91,7 @@
 <meta property="og:image" content="https://gitee.com/daihuidai/First_Image_Bed/raw/master/flip_stack_matrix/2.jpg">
 <meta property="og:image" content="https://gitee.com/daihuidai/First_Image_Bed/raw/master/flip_stack_matrix/3.jpg">
 <meta property="og:image" content="https://gitee.com/daihuidai/First_Image_Bed/raw/master/flip_stack_matrix/4.jpg">
-<meta property="og:updated_time" content="2019-11-09T15:12:09.824Z">
+<meta property="og:updated_time" content="2019-11-09T15:14:46.713Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python_tips-翻转组合矩阵">
 <meta name="twitter:description" content="万壑松风知客来，摇扇抚琴待留声 1. 文起NumPy 是 Python 语言的一个扩展程序库。支持高端大量的维度数组与矩阵运算，此外也针对数组运算提供大量的数学函数库，是 Python 作为数据分析语言最有力的一个工具包之一。 个人很喜欢使用 Numpy，它除了运算速度极快，数据处理能力和技巧也是相当了得。本文将以矩阵处理中其中两个例子来叙述——翻转矩阵和拼接矩阵。 在数据处理中，很多数据其实都是">
@@ -381,13 +381,13 @@
 <p><strong>三维：</strong></p>
 <p>为了更直观的观察翻转矩阵，在三维中我们通过翻转像素矩阵也就是图片，来观察翻转的结果。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="comment"># 原始图片</span></span><br><span class="line">matrix_3 = cv2.imread(<span class="string">r'./images.jpg'</span>)</span><br><span class="line">matrix_3 = cv2.resize(matrix_3,(<span class="number">400</span>,<span class="number">400</span>))</span><br><span class="line">cv2.imshow(<span class="string">'show'</span>, matrix_3)</span><br><span class="line">cv2.waitKey()</span><br></pre></td></tr></table></figure>
-<p><img width="400px" src="https://gitee.com/daihuidai/First_Image_Bed/raw/master/flip_stack_matrix/1.jpg"></p>
+<p><img width="200px" src="https://gitee.com/daihuidai/First_Image_Bed/raw/master/flip_stack_matrix/1.jpg"></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 沿y轴上下翻转</span></span><br><span class="line">matrix_3_flip_0 = np.flip(matrix_3, axis=<span class="number">0</span>)</span><br><span class="line"><span class="comment"># cv2.imwrite(r'./1.jpg', matrix_3_flip_0)</span></span><br><span class="line">cv2.imshow(<span class="string">'show'</span>, matrix_3_flip_0)</span><br><span class="line">cv2.waitKey()</span><br></pre></td></tr></table></figure>
-<p><img width="400px" src="https://gitee.com/daihuidai/First_Image_Bed/raw/master/flip_stack_matrix/2.jpg"></p>
+<p><img width="200px" src="https://gitee.com/daihuidai/First_Image_Bed/raw/master/flip_stack_matrix/2.jpg"></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 沿x轴左右翻转</span></span><br><span class="line">matrix_3_flip_1 = np.flip(matrix_3, axis=<span class="number">1</span>)</span><br><span class="line">cv2.imshow(<span class="string">'show'</span>, matrix_3_flip_1)</span><br><span class="line">cv2.waitKey()</span><br></pre></td></tr></table></figure>
-<p><img width="400px" src="https://gitee.com/daihuidai/First_Image_Bed/raw/master/flip_stack_matrix/3.jpg"></p>
+<p><img width="200px" src="https://gitee.com/daihuidai/First_Image_Bed/raw/master/flip_stack_matrix/3.jpg"></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 沿z轴翻转（对于图像来说z轴就是通道，如这里的BGR翻转为了RGB）</span></span><br><span class="line">matrix_3_flip_2 = np.flip(matrix_3, axis=<span class="number">2</span>)</span><br><span class="line">cv2.imshow(<span class="string">'show'</span>, matrix_3_flip_2)</span><br><span class="line">cv2.waitKey()</span><br><span class="line">cv2.destroyAllWindows()</span><br></pre></td></tr></table></figure>
-<p><img width="400px" src="https://gitee.com/daihuidai/First_Image_Bed/raw/master/flip_stack_matrix/4.jpg"></p>
+<p><img width="200px" src="https://gitee.com/daihuidai/First_Image_Bed/raw/master/flip_stack_matrix/4.jpg"></p>
 <p>flip 有两个简化的翻转方法，左右翻转的 <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.fliplr.html" target="_blank" rel="noopener">fliplr(m)</a>，上下翻转的 <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.flipud.html#numpy.flipud" target="_blank" rel="noopener">flipup(m)</a>，通过 flip 指定 axis 参数也可以完成，所以这里就不累述了。</p>
 <h4 id="3-拼接矩阵"><a href="#3-拼接矩阵" class="headerlink" title="3. 拼接矩阵"></a>3. 拼接矩阵</h4><p>另一种常用的矩阵处理方法——拼接矩阵。很多时候我们需要对不同数据矩阵进行处理，最后再合并这些结果矩阵。</p>
 <p>同样这里将使用 Numpy 实现该功能。 <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.stack.html" target="_blank" rel="noopener">numpy.stack(arrays,axis=0,out=None)</a> 是一个强大的拼接矩阵函数。包括参数 arrays 表示传入的原始数据，axis 表示指定的拼接维度方向，out 表示结果输出位置（一般不用指定，深度学习中可能用的多）。</p>
