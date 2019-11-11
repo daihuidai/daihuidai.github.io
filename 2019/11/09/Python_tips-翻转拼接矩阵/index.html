@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Python,numpy,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="万壑松风知客来，摇扇抚琴待留声 1. 文起NumPy 是 Python 语言的一个扩展程序库。支持高端大量的维度数组与矩阵运算，此外也针对数组运算提供大量的数学函数库，是 Python 作为数据分析语言最有力的一个工具包之一。 个人很喜欢使用 Numpy，它除了运算速度极快，数据处理能力和技巧也是相当了得。本文将以矩阵处理中其中两个例子来叙述——翻转矩阵和拼接矩阵。 在数据处理中，很多数据其实都是">
+<meta name="keywords" content="Python,numpy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python_tips-翻转拼接矩阵">
+<meta property="og:url" content="http://yoursite.com/2019/11/09/Python_tips-翻转拼接矩阵/index.html">
+<meta property="og:site_name" content="孤独的小丑">
+<meta property="og:description" content="万壑松风知客来，摇扇抚琴待留声 1. 文起NumPy 是 Python 语言的一个扩展程序库。支持高端大量的维度数组与矩阵运算，此外也针对数组运算提供大量的数学函数库，是 Python 作为数据分析语言最有力的一个工具包之一。 个人很喜欢使用 Numpy，它除了运算速度极快，数据处理能力和技巧也是相当了得。本文将以矩阵处理中其中两个例子来叙述——翻转矩阵和拼接矩阵。 在数据处理中，很多数据其实都是">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://gitee.com/daihuidai/First_Image_Bed/raw/master/flip_stack_matrix/1.jpg">
+<meta property="og:image" content="https://gitee.com/daihuidai/First_Image_Bed/raw/master/flip_stack_matrix/2.jpg">
+<meta property="og:image" content="https://gitee.com/daihuidai/First_Image_Bed/raw/master/flip_stack_matrix/3.jpg">
+<meta property="og:image" content="https://gitee.com/daihuidai/First_Image_Bed/raw/master/flip_stack_matrix/4.jpg">
+<meta property="og:updated_time" content="2019-11-10T03:37:33.715Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python_tips-翻转拼接矩阵">
+<meta name="twitter:description" content="万壑松风知客来，摇扇抚琴待留声 1. 文起NumPy 是 Python 语言的一个扩展程序库。支持高端大量的维度数组与矩阵运算，此外也针对数组运算提供大量的数学函数库，是 Python 作为数据分析语言最有力的一个工具包之一。 个人很喜欢使用 Numpy，它除了运算速度极快，数据处理能力和技巧也是相当了得。本文将以矩阵处理中其中两个例子来叙述——翻转矩阵和拼接矩阵。 在数据处理中，很多数据其实都是">
+<meta name="twitter:image" content="https://gitee.com/daihuidai/First_Image_Bed/raw/master/flip_stack_matrix/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/11/09/Python_tips-翻转拼接矩阵/">
+
+
+
+
+
+  <title>Python_tips-翻转拼接矩阵 | 孤独的小丑</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">孤独的小丑</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">美是初见</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/09/Python_tips-翻转拼接矩阵/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DHui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/Favorite_CAT.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="孤独的小丑">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Python_tips-翻转拼接矩阵</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-09T23:09:59+08:00">
+                2019-11-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python-tips系列/" itemprop="url" rel="index">
+                    <span itemprop="name">Python_tips系列</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/11/09/Python_tips-翻转拼接矩阵/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/11/09/Python_tips-翻转拼接矩阵/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><em>万壑松风知客来，摇扇抚琴待留声</em></p>
+<h4 id="1-文起"><a href="#1-文起" class="headerlink" title="1. 文起"></a>1. 文起</h4><p><a href="https://zh.wikipedia.org/zh-cn/NumPy" target="_blank" rel="noopener">NumPy</a> 是 Python 语言的一个扩展程序库。支持高端大量的维度数组与矩阵运算，此外也针对数组运算提供大量的数学函数库，是 Python 作为数据分析语言最有力的一个工具包之一。</p>
+<p>个人很喜欢使用 Numpy，它除了运算速度极快，数据处理能力和技巧也是相当了得。本文将以矩阵处理中其中两个例子来叙述——翻转矩阵和拼接矩阵。</p>
+<p>在数据处理中，很多数据其实都是以矩阵的方式表达的，因为矩阵运算速度更快更方便。例如上一篇<a href="https://daihuidai.github.io/2019/10/19/%E8%B7%9D%E7%A6%BB%E7%9F%A9%E9%98%B5/" target="_blank" rel="noopener">《距离矩阵》</a>中通过构建矩阵可以极大程度上优化运算。再例如在图像中，每一张图片其实都是由像素矩阵构成的。通过矩阵广播的功能可以远大于循环的处理方式。</p>
+<h4 id="2-翻转矩阵"><a href="#2-翻转矩阵" class="headerlink" title="2. 翻转矩阵"></a>2. 翻转矩阵</h4><p>在 Python 中进行矩阵运算时有很多方法都可以对矩阵进行翻转处理，下面以 Numpy 为例，通过调用其相关函数实现矩阵的翻转。</p>
+<p><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.flip.html" target="_blank" rel="noopener">numpy.flip(m,axis=None)</a> 是一个强大的翻转矩阵函数，虽然只有两个超参数。其中 m 是传入原始矩阵，axis 是翻转的维度轴，这个参数很重要，下面具体说说：</p>
+<p>矩阵是一个有维度的数据，例如最简单的一维矩阵也有 x 轴方向，然后二维矩阵有 x、y 轴方向，再然后三维矩阵有 x、y、z 轴方向，以此类推。翻转的<strong>原理就是沿着某个轴对该矩阵进行对称翻转</strong>。</p>
+<p>所以 axis 的作用就是给定翻转轴。当不指定参数 <strong>axis=None</strong> 时，表示会依次对矩阵的每个维度进行翻转；<strong>axis=0</strong> 表示沿着第一个维度轴翻转；<strong>axis=1</strong> 表示沿着第二个维度轴翻转；<strong>axis=2、3、4……</strong> 依次类推；同时还可以传入元组，指定某些轴翻转，如：<strong>axis=(0, 2)</strong> 表示依次沿着第一、第三个轴翻转；最后如果参数为负数 <strong>axis=-1、-2、-5</strong> 表示沿着倒数这个维度轴进行翻转。</p>
+<blockquote>
+<p><small>强调：所指定的 axis 参数维度轴，在原始矩阵中一定要相应的轴，不能二维数据要求它三维翻转。</small></p>
+</blockquote>
+<p>为了更容易理解，下面我们用代码分别处理一、二、三维矩阵。</p>
+<p><strong>一维：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">matrix_1 = np.arange(<span class="number">5</span>)</span><br><span class="line"><span class="comment"># [0 1 2 3 4]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 等同于axis=None，等同于axis=-1</span></span><br><span class="line">matrix_1_flip_0 = np.flip(matrix_1, axis=<span class="number">0</span>)</span><br><span class="line"><span class="comment"># [4 3 2 1 0]</span></span><br></pre></td></tr></table></figure>
+<p><strong>二维：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">matrix_2 = np.arange(<span class="number">9</span>).reshape((<span class="number">3</span>,<span class="number">3</span>))</span><br><span class="line"><span class="comment"># [[0 1 2]</span></span><br><span class="line"><span class="comment">#  [3 4 5]</span></span><br><span class="line"><span class="comment">#  [6 7 8]]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 沿y轴翻转</span></span><br><span class="line">matrix_2_flip_0 = np.flip(matrix_2, axis=<span class="number">0</span>)</span><br><span class="line"><span class="comment"># [[6 7 8]</span></span><br><span class="line"><span class="comment">#  [3 4 5]</span></span><br><span class="line"><span class="comment">#  [0 1 2]]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 沿x轴翻转</span></span><br><span class="line">matrix_2_flip_1 = np.flip(matrix_2, axis=<span class="number">1</span>)</span><br><span class="line"><span class="comment"># [[2 1 0]</span></span><br><span class="line"><span class="comment">#  [5 4 3]</span></span><br><span class="line"><span class="comment">#  [8 7 6]]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># x、y轴都翻转。等同于axis=(0,1)</span></span><br><span class="line">matrix_2_flip_all = np.flip(matrix_2)</span><br><span class="line"><span class="comment"># [[8 7 6]</span></span><br><span class="line"><span class="comment">#  [5 4 3]</span></span><br><span class="line"><span class="comment">#  [2 1 0]]</span></span><br></pre></td></tr></table></figure>
+<p><strong>三维：</strong></p>
+<p>为了更直观的观察翻转矩阵，在三维中我们通过翻转像素矩阵也就是图片，来观察翻转的结果。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="comment"># 原始图片</span></span><br><span class="line">matrix_3 = cv2.imread(<span class="string">r'./images.jpg'</span>)</span><br><span class="line">matrix_3 = cv2.resize(matrix_3,(<span class="number">400</span>,<span class="number">400</span>))</span><br><span class="line">cv2.imshow(<span class="string">'show'</span>, matrix_3)</span><br><span class="line">cv2.waitKey()</span><br></pre></td></tr></table></figure>
+<p><img width="200px" src="https://gitee.com/daihuidai/First_Image_Bed/raw/master/flip_stack_matrix/1.jpg"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 沿y轴上下翻转</span></span><br><span class="line">matrix_3_flip_0 = np.flip(matrix_3, axis=<span class="number">0</span>)</span><br><span class="line"><span class="comment"># cv2.imwrite(r'./1.jpg', matrix_3_flip_0)</span></span><br><span class="line">cv2.imshow(<span class="string">'show'</span>, matrix_3_flip_0)</span><br><span class="line">cv2.waitKey()</span><br></pre></td></tr></table></figure>
+<p><img width="200px" src="https://gitee.com/daihuidai/First_Image_Bed/raw/master/flip_stack_matrix/2.jpg"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 沿x轴左右翻转</span></span><br><span class="line">matrix_3_flip_1 = np.flip(matrix_3, axis=<span class="number">1</span>)</span><br><span class="line">cv2.imshow(<span class="string">'show'</span>, matrix_3_flip_1)</span><br><span class="line">cv2.waitKey()</span><br></pre></td></tr></table></figure>
+<p><img width="200px" src="https://gitee.com/daihuidai/First_Image_Bed/raw/master/flip_stack_matrix/3.jpg"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 沿z轴翻转（对于图像来说z轴就是通道，如这里的BGR翻转为了RGB）</span></span><br><span class="line">matrix_3_flip_2 = np.flip(matrix_3, axis=<span class="number">2</span>)</span><br><span class="line">cv2.imshow(<span class="string">'show'</span>, matrix_3_flip_2)</span><br><span class="line">cv2.waitKey()</span><br><span class="line">cv2.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+<p><img width="200px" src="https://gitee.com/daihuidai/First_Image_Bed/raw/master/flip_stack_matrix/4.jpg"></p>
+<p>flip 有两个简化的翻转方法，左右翻转的 <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.fliplr.html" target="_blank" rel="noopener">fliplr(m)</a>，上下翻转的 <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.flipud.html#numpy.flipud" target="_blank" rel="noopener">flipup(m)</a>，通过 flip 指定 axis 参数也可以完成，所以这里就不累述了。</p>
+<h4 id="3-拼接矩阵"><a href="#3-拼接矩阵" class="headerlink" title="3. 拼接矩阵"></a>3. 拼接矩阵</h4><p>另一种常用的矩阵处理方法——拼接矩阵。很多时候我们需要对不同数据矩阵进行处理，最后再合并这些结果矩阵。</p>
+<p>同样这里将使用 Numpy 实现该功能。 <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.stack.html" target="_blank" rel="noopener">numpy.stack(arrays,axis=0,out=None)</a> 是一个强大的拼接矩阵函数。包括参数 arrays 表示传入的原始数据，axis 表示指定的拼接维度方向，out 表示结果输出位置（一般不用指定，深度学习中可能用的多）。</p>
+<p>拼接时也会遇到不同维度矩阵的问题，下面用具体数据来看看。</p>
+<p><strong>一维数据：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">matrix_a = np.arange(<span class="number">5</span>)</span><br><span class="line">matrix_b = np.arange(<span class="number">5</span>)</span><br><span class="line"><span class="comment"># [0 1 2 3 4]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 行拼接：</span></span><br><span class="line">matrix_c = np.stack((matrix_a, matrix_b), axis=<span class="number">0</span>)</span><br><span class="line"><span class="comment"># [[0 1 2 3 4]</span></span><br><span class="line"><span class="comment">#  [0 1 2 3 4]]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 列拼接：</span></span><br><span class="line">matrix_d = np.stack((matrix_a, matrix_b), axis=<span class="number">1</span>)</span><br><span class="line"><span class="comment"># [[0 0]</span></span><br><span class="line"><span class="comment">#  [1 1]</span></span><br><span class="line"><span class="comment">#  [2 2]</span></span><br><span class="line"><span class="comment">#  [3 3]</span></span><br><span class="line"><span class="comment">#  [4 4]]</span></span><br></pre></td></tr></table></figure>
+<p><strong>二维数据：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">matrix_a = np.arange(<span class="number">4</span>).reshape((<span class="number">2</span>,<span class="number">2</span>))</span><br><span class="line"><span class="comment"># [[0 1]</span></span><br><span class="line"><span class="comment">#  [2 3]]</span></span><br><span class="line"></span><br><span class="line">matrix_b = (np.ones((<span class="number">2</span>,<span class="number">2</span>))*<span class="number">4</span>).reshape((<span class="number">2</span>,<span class="number">2</span>))</span><br><span class="line"><span class="comment"># [[4. 4.]</span></span><br><span class="line"><span class="comment">#  [4. 4.]]</span></span><br><span class="line"></span><br><span class="line">matrix_c = np.stack((matrix_a, matrix_b), axis=<span class="number">0</span>)</span><br><span class="line"><span class="comment"># [[[0. 1.]</span></span><br><span class="line"><span class="comment">#   [2. 3.]]</span></span><br><span class="line"><span class="comment">#  [[4. 4.]</span></span><br><span class="line"><span class="comment">#   [4. 4.]]]</span></span><br><span class="line">print(matrix_c.shape)</span><br><span class="line"><span class="comment"># (2, 2, 2)</span></span><br><span class="line"></span><br><span class="line">matrix_d = np.stack((matrix_a, matrix_b), axis=<span class="number">1</span>)</span><br><span class="line"><span class="comment"># [[[0. 1.]</span></span><br><span class="line"><span class="comment">#   [4. 4.]]</span></span><br><span class="line"><span class="comment">#  [[2. 3.]</span></span><br><span class="line"><span class="comment">#   [4. 4.]]]</span></span><br><span class="line">print(matrix_d.shape)</span><br><span class="line"><span class="comment"># (2, 2, 2)</span></span><br></pre></td></tr></table></figure>
+<p>矩阵的拼接相对于矩阵的翻转理解起来要有一定的难度，这里暂不做过多的文字描述，想了解的更清楚，可以使用具体数据进行实践。</p>
+<p>当然 stack 函数也有两个简化后的处理方法  <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.hstack.html" target="_blank" rel="noopener">hstack</a>、<a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.vstack.html#numpy.vstack" target="_blank" rel="noopener">vstack</a> ，这两种方法分别对应上面一维处理的列拼接、行拼接。</p>
+<h4 id="4-文末"><a href="#4-文末" class="headerlink" title="4. 文末"></a>4. 文末</h4><p>翻转矩阵和拼接矩阵是两个很常见的处理方式。虽然这里记录的内容较少，但实际两者都需要花大量的时间去实践后才能融会贯通，面对高维数据处理时尤为重要。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/numpy/" rel="tag"># numpy</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/27/Python_tips-投影分割图像/" rel="next" title="Python_tips-投影分割图像.">
+                <i class="fa fa-chevron-left"></i> Python_tips-投影分割图像.
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/Favorite_CAT.png" alt="DHui">
+            
+              <p class="site-author-name" itemprop="name">DHui</p>
+              <p class="site-description motion-element" itemprop="description">喜欢春天的风，秋天的树叶； <br> 喜欢夏天的雨，冬天的阳光。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/na-hai-95/activities" target="_blank" title="Zhihu">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Zhihu</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/daihuidai" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-文起"><span class="nav-number">1.</span> <span class="nav-text">1. 文起</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-翻转矩阵"><span class="nav-number">2.</span> <span class="nav-text">2. 翻转矩阵</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-拼接矩阵"><span class="nav-number">3.</span> <span class="nav-text">3. 拼接矩阵</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-文末"><span class="nav-number">4.</span> <span class="nav-text">4. 文末</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DHui</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Nothing</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Nothing  </div>
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'J60WKXjcL6IxKlW13E5yINBW-gzGzoHsz',
+        appKey: 'g1IULIKLIy47zRNXBRtNEO5r',
+        placeholder: '如果你真的想说点什么的话ヾﾉ≧∀≦)o',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+</html>
