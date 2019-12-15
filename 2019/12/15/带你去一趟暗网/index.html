@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="暗网,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="万壑松风知客来，摇扇抚琴待留声  1. 文起 说明：为了让小白也能了解暗网，本文将不深入说明任何相关技术的实现，可能会提供外网链接。  最近和一位女生聊到了一个话题——《暗网》，似乎很多人对这个灰色产业还是很感兴趣的。还记得我在大一刚搭建完科学上网服务后所做的第一件事情就是到暗网去逛了逛，对其本身并不是很感兴趣。能进暗网这是技术的一种体现，所以在进入过一次后就再也没有接触了。 最近抽了点时间打算对">
+<meta name="keywords" content="暗网">
+<meta property="og:type" content="article">
+<meta property="og:title" content="带你去一趟暗网">
+<meta property="og:url" content="http://yoursite.com/2019/12/15/带你去一趟暗网/index.html">
+<meta property="og:site_name" content="孤独的小丑">
+<meta property="og:description" content="万壑松风知客来，摇扇抚琴待留声  1. 文起 说明：为了让小白也能了解暗网，本文将不深入说明任何相关技术的实现，可能会提供外网链接。  最近和一位女生聊到了一个话题——《暗网》，似乎很多人对这个灰色产业还是很感兴趣的。还记得我在大一刚搭建完科学上网服务后所做的第一件事情就是到暗网去逛了逛，对其本身并不是很感兴趣。能进暗网这是技术的一种体现，所以在进入过一次后就再也没有接触了。 最近抽了点时间打算对">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content=" https://gitee.com/daihuidai/First_Image_Bed/raw/master/Dark_Web/0.png ">
+<meta property="og:image" content=" https://gitee.com/daihuidai/First_Image_Bed/raw/master/Dark_Web/3.png ">
+<meta property="og:image" content=" https://gitee.com/daihuidai/First_Image_Bed/raw/master/Dark_Web/2.png ">
+<meta property="og:image" content=" https://gitee.com/daihuidai/First_Image_Bed/raw/master/Dark_Web/12.png ">
+<meta property="og:image" content=" https://gitee.com/daihuidai/First_Image_Bed/raw/master/Dark_Web/4.png ">
+<meta property="og:image" content=" https://gitee.com/daihuidai/First_Image_Bed/raw/master/Dark_Web/6_1.png">
+<meta property="og:image" content=" https://gitee.com/daihuidai/First_Image_Bed/raw/master/Dark_Web/6.png">
+<meta property="og:image" content=" https://gitee.com/daihuidai/First_Image_Bed/raw/master/Dark_Web/13.png ">
+<meta property="og:image" content=" https://gitee.com/daihuidai/First_Image_Bed/raw/master/Dark_Web/7_1.png ">
+<meta property="og:image" content=" https://gitee.com/daihuidai/First_Image_Bed/raw/master/Dark_Web/7.png">
+<meta property="og:image" content=" https://gitee.com/daihuidai/First_Image_Bed/raw/master/Dark_Web/8.png">
+<meta property="og:image" content=" https://gitee.com/daihuidai/First_Image_Bed/raw/master/Dark_Web/9.png">
+<meta property="og:image" content=" https://gitee.com/daihuidai/First_Image_Bed/raw/master/Dark_Web/10.png">
+<meta property="og:image" content="https://gitee.com/daihuidai/First_Image_Bed/raw/master/Dark_Web/14.jpg">
+<meta property="og:image" content="https://gitee.com/daihuidai/First_Image_Bed/raw/master/Dark_Web/15.png">
+<meta property="og:image" content="https://gitee.com/daihuidai/First_Image_Bed/raw/master/Dark_Web/16.png">
+<meta property="og:image" content="https://gitee.com/daihuidai/First_Image_Bed/raw/master/Dark_Web/17.png">
+<meta property="og:updated_time" content="2019-12-15T13:52:11.399Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="带你去一趟暗网">
+<meta name="twitter:description" content="万壑松风知客来，摇扇抚琴待留声  1. 文起 说明：为了让小白也能了解暗网，本文将不深入说明任何相关技术的实现，可能会提供外网链接。  最近和一位女生聊到了一个话题——《暗网》，似乎很多人对这个灰色产业还是很感兴趣的。还记得我在大一刚搭建完科学上网服务后所做的第一件事情就是到暗网去逛了逛，对其本身并不是很感兴趣。能进暗网这是技术的一种体现，所以在进入过一次后就再也没有接触了。 最近抽了点时间打算对">
+<meta name="twitter:image" content=" https://gitee.com/daihuidai/First_Image_Bed/raw/master/Dark_Web/0.png ">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/12/15/带你去一趟暗网/">
+
+
+
+
+
+  <title>带你去一趟暗网 | 孤独的小丑</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">孤独的小丑</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">愿得一人心</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/15/带你去一趟暗网/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DHui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/Favorite_CAT.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="孤独的小丑">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">带你去一趟暗网</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-15T21:50:10+08:00">
+                2019-12-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/科学上网/" itemprop="url" rel="index">
+                    <span itemprop="name">科学上网</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/12/15/带你去一趟暗网/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/12/15/带你去一趟暗网/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><em>万壑松风知客来，摇扇抚琴待留声</em></p>
+<p><img width="400px" src=" https://gitee.com/daihuidai/First_Image_Bed/raw/master/Dark_Web/0.png "></p>
+<h4 id="1-文起"><a href="#1-文起" class="headerlink" title="1. 文起"></a>1. 文起</h4><blockquote>
+<p><small>说明：为了让小白也能了解暗网，本文将不深入说明任何相关技术的实现，可能会提供外网链接。</small></p>
+</blockquote>
+<p>最近和一位女生聊到了一个话题——<strong>《暗网》</strong>，似乎很多人对这个灰色产业还是很感兴趣的。还记得我在大一刚搭建完科学上网服务后所做的第一件事情就是到暗网去逛了逛，对其本身并不是很感兴趣。能进暗网这是技术的一种体现，所以在进入过一次后就再也没有接触了。</p>
+<p>最近抽了点时间打算对这个”神秘”的网站做一个简单的介绍。其实一般技术能访问到的并不是暗网，而是更上一层较为容易进入的交易网站——<strong>《深网》</strong>（也就是上图中的红色箭头）。</p>
+<p>不论是深网还是暗网都属于非法产业，各国政府和相关机构从来都是在进行打压中。如果你是一个经常使用网络的人，那在你应该可以了解到暗网就是一个搭建：<strong>贩卖毒品、器官交易、色情交易、地下赌博、暗杀组织、机密盗取</strong>等等各种违法交易并且使用虚拟货币，如比特币来进行交易的平台。</p>
+<p>具体是这样的吗？下面我带你进入真实的暗网看看它的初貌。</p>
+<h4 id="2-什么阻挡了你进入暗网"><a href="#2-什么阻挡了你进入暗网" class="headerlink" title="2. 什么阻挡了你进入暗网"></a>2. 什么阻挡了你进入暗网</h4><p>首先如果要进入暗网，我们得了解暗网是一个怎样的平台，它是如何使用的。</p>
+<h5 id="2-1-长城防火墙"><a href="#2-1-长城防火墙" class="headerlink" title="2.1. 长城防火墙"></a>2.1. 长城防火墙</h5><p>想过一个问题没有，既然绝大多数人都知道暗网，那为什么绝大多数人都没有进入过，而且政府机关也没有禁止的办法？</p>
+<p>（格外补充）作为一个中国人，从你开始使用网络的时刻起，我们伟大的祖国就免费强制的送给了你一个礼物——<strong>长城防火墙（GFW）</strong>。它既有好处也有坏处，坏处是它几乎杜绝了我们大陆与外界的联系，例如你无法使用最好的搜索引擎 Google，你无法使用最大的社交平台 Fackbook，无法第一时间查阅优质的国外资料等等。好处是国家政治是一个十分敏感的问题，如果你能够查看到国外的网站，你就会知道哪些煽动暴乱、搞独立、抹黑中国领导人的文章铺天盖地。中国人口大国，教育素质和个体差异导致有极大一部分人员是无法却别这些误导信息的，说白了就是保护大多数国人（当然也有为了封锁消息）。它的存在将我们的世界限制和保护在了神奇的大陆——中国。</p>
+<p>并且在国家的监管下，例如百度等搜索引擎会过滤掉敏感词汇。说了这么多，这些都是非暗网技术带来的你所不能深入了解暗网的原因。那暗网本身又是如何限制我们进入它们的领域的呢？下面给你展示暗网的访问入口是什么样。</p>
+<h5 id="2-2-暗网本身的技术"><a href="#2-2-暗网本身的技术" class="headerlink" title="2.2. 暗网本身的技术"></a>2.2. 暗网本身的技术</h5><p><img width="600px" height="400px" src=" https://gitee.com/daihuidai/First_Image_Bed/raw/master/Dark_Web/3.png "></p>
+<p>上面这张图中红色的网址其实就是暗网的访问连接。你可能有点疑惑，这些连接怎么与我们平时见到的连接并不一样，它的中间都是乱码，结尾则是 onion 。其实这是暗网链接进行加密后的结果，普通人拿到了这些链接并没有任何用处，因为所有正常合法的浏览器都不能解码这些链接，会导致访问失败。需要使用专门的解析浏览器才能使用。</p>
+<h5 id="2-3-洋葱网络"><a href="#2-3-洋葱网络" class="headerlink" title="2.3. 洋葱网络"></a>2.3. 洋葱网络</h5><p>以上的第一个防范措施。下面说说另一个更重要的东西，这个技术不仅暗网在使用，例如美国军方、其它政府机构都会使用该技术——洋葱网络</p>
+<p>你知道洋葱是什么样的吗？暗网就像我们生活中吃的洋葱，（洋葱炒肉很不错的）美丽的洋葱被外壳一层一层的包裹，拨开一层又一层，就像在隐藏着自己的内心不让别人触碰。</p>
+<p>暗网则是利用了该技术，<strong>我们最初访问或传输的信息被这个网络想一层一层的蜕掉外壳，每次蜕掉一层它就给你下一层的位置，当你到达下一层，它又重复该过程，直到这个信息被传到无人能追查的地方</strong>。</p>
+<p>所以现在知道为什么它能如此嚣张，任何国家都无法完全禁止它了吧。</p>
+<h4 id="3-进入暗网"><a href="#3-进入暗网" class="headerlink" title="3. 进入暗网"></a>3. 进入暗网</h4><p>补充了这么多关于暗网的小知识，下面可以进去瞧瞧了。</p>
+<h5 id="3-1-使用-Tor-浏览器"><a href="#3-1-使用-Tor-浏览器" class="headerlink" title="3.1. 使用 Tor 浏览器"></a>3.1. 使用 Tor 浏览器</h5><p>想要进入暗网，需要一个强大的工具，帮助我们解决上面的一些问题，它就是一个隐私、开放的自由网络工具——<a href="https://www.torproject.org/zh-CN/thank-you/" target="_blank" rel="noopener">Tor Browser</a>。</p>
+<p>你需要下载、安装、配置它，并且格外需要搭建科学上网服务，然后访问特殊地址，就可以进入暗网了。在这里暂不做任何使用教程的说明（<strong>该技术复杂、该行为危险</strong>）。结束后你可以看到这样一个浏览器界面：</p>
+<p><img width="600px" src=" https://gitee.com/daihuidai/First_Image_Bed/raw/master/Dark_Web/2.png "></p>
+<h5 id="3-2-真正的暗网来了"><a href="#3-2-真正的暗网来了" class="headerlink" title="3.2. 真正的暗网来了"></a>3.2. 真正的暗网来了</h5><p>可能你最感兴趣的还是暗网里面的东西，所以跟着我的视角来看看吧。</p>
+<p>首先我挑选并进入了一个暗网的交易商店，我们浏览下它主要的交易活动都是什么：</p>
+<p><img width="600px" src=" https://gitee.com/daihuidai/First_Image_Bed/raw/master/Dark_Web/12.png "></p>
+<p>原谅我的英语并不好，大致翻译后可以得到，左边就是暗网商店的名字，中间就是产品，以及其它的东西。不过我似乎并没有看到该网站上有任何的商品出售。似乎商店关门了，或是需要等到某个时刻才开门，不过我意外发现了每个商店都贴了一则通告：</p>
+<p><img width="600px" src=" https://gitee.com/daihuidai/First_Image_Bed/raw/master/Dark_Web/4.png "></p>
+<p>大意为该男子原为它们的成员，不过盗取了它们的财务和发布了相关消息被网站通缉，上面贴了该男子 LE 以及他的家人，并且组织正在寻找，且需要砍掉它的手指等等威胁的言论。这或许是该商店暂时关门的一个原因之一（再次说明了暗网危险啊）。</p>
+<p>这个大网站关门了，所以我决定到其它的暗网空间去会会它们，接下来你将陆续看到很多在我们的世界中所无法看到但在暗网中却十分常见的非法产业。</p>
+<p><strong>毒品交易：</strong></p>
+<p>其中一个毒品网站吸引了我的目光，它的描述中说到这是一个 5 岁小孩也能买到毒品的交易场所：</p>
+<p><img width="600px" src=" https://gitee.com/daihuidai/First_Image_Bed/raw/master/Dark_Web/6_1.png"></p>
+<p><img width="600px" src=" https://gitee.com/daihuidai/First_Image_Bed/raw/master/Dark_Web/6.png"></p>
+<p>产品的名字很多都不认识，不过查了下全是毒品，明码标价（居然还有打折促销）。毒品是十分危险的东西，千万不要因为它便宜就动了心。这样的毒品网站太多了，简直就是毒贩的天堂，吸毒者的地狱。甚至还有评论区，大多是对生活的消极。</p>
+<p><img width="600px" src=" https://gitee.com/daihuidai/First_Image_Bed/raw/master/Dark_Web/13.png "></p>
+<p><strong>器官交易：</strong></p>
+<p>部分图片过于恶心，文字太过扎眼，暂时不对其描述</p>
+<h5 id="色情交易："><a href="#色情交易：" class="headerlink" title="色情交易："></a>色情交易：</h5><p>同上。</p>
+<p><strong>杀手组织：</strong></p>
+<p>这个很多人应该都是比较感兴趣的，杀手这个词可能也只有在电影中才能听闻。我浏览了多个类似这样的杀手组织，就像这样：</p>
+<p><img width="600px" src=" https://gitee.com/daihuidai/First_Image_Bed/raw/master/Dark_Web/7_1.png "></p>
+<p><img width="600px" src=" https://gitee.com/daihuidai/First_Image_Bed/raw/master/Dark_Web/7.png"></p>
+<p>同样是明码标价，原来一个人的生命如此廉价。</p>
+<blockquote>
+<p><small>它真实存在于我们的世界，或许很遥远，不过它真的存在。如果你能仔细想想，你会感受到这些文字后面的黑暗。</small></p>
+</blockquote>
+<p>我翻译了这段英文，大致如下：</p>
+<p><img width="600px" src=" https://gitee.com/daihuidai/First_Image_Bed/raw/master/Dark_Web/8.png"></p>
+<p>有 48 个杀手在待业中。。。</p>
+<p>接着我看了看这个杀手组织的使用教程，如果你有业务应该如何与他们沟通呢？</p>
+<p><img width="600px" src=" https://gitee.com/daihuidai/First_Image_Bed/raw/master/Dark_Web/9.png"></p>
+<p><img width="600px" src=" https://gitee.com/daihuidai/First_Image_Bed/raw/master/Dark_Web/10.png"></p>
+<p>杀手也是很有礼貌的，不过也难掩盖它们畜生的一面。</p>
+<p><strong>赌博产业：</strong></p>
+<p>赌博是什么样呢？想象一下电影里面的情景，看看吧：</p>
+<p><img width="600px" src="https://gitee.com/daihuidai/First_Image_Bed/raw/master/Dark_Web/14.jpg"></p>
+<p>一个普通的页面展示，接着我到了玩扑克牌的这一项目中看了看：</p>
+<p><img width="600px" src="https://gitee.com/daihuidai/First_Image_Bed/raw/master/Dark_Web/15.png"></p>
+<p>各种花样都有，不过由于需要注册相关信息才能更深入的了解，所以暂时我就不去了。</p>
+<p><strong>“教育”类交易：</strong></p>
+<p>你可能很难想象到这样一个世界竟然还有知识的交易：</p>
+<p><img width="600px" src="https://gitee.com/daihuidai/First_Image_Bed/raw/master/Dark_Web/16.png"></p>
+<p>好像并没有太有意思，所以我就没有进去了。</p>
+<p><strong>枪支交易：</strong></p>
+<p>我似乎并没有找到太多关于非法枪支、弹药交易的平台，这个在几年前我刚进入时是一个十分常见的交易种类：</p>
+<p><img width="600px" src="https://gitee.com/daihuidai/First_Image_Bed/raw/master/Dark_Web/17.png"></p>
+<h5 id="3-3-暗网总结"><a href="#3-3-暗网总结" class="headerlink" title="3.3. 暗网总结"></a>3.3. 暗网总结</h5><p>看了暗网这个灰色产业的一小部分，想必你现在已经有了一个简单的认知，无非就是一群坏人为了挣钱通过某种技术开展的违法交易活动。</p>
+<p>暗网这个空间大概占比我们所有网络的 4% ，是一个很小的一部分，这也是大多数人并不能接触到的原因。如果一个人内心没有邪恶的思想，那我们普通人是一辈子都不会和它有任何的交集。所以这就是一个可有可无的小插曲，出于好奇，我们了解了它。出于人性和自我保护，我们应当远离它。</p>
+<h4 id="4-文末"><a href="#4-文末" class="headerlink" title="4. 文末"></a>4. 文末</h4><p>暗网并不是一个多神奇的东西，反而是一个制造混乱的地狱。我不想过多的记录太多十分消极的内容，还记得刚进入暗网时看了一篇文章，一个人是如何被活活打死的，这让我十分的抵触，血淋淋的图片和文字让人想吐。</p>
+<p>所以我们更应该学会如何保护自己，人类就应该探究世界，了解世界的未知，才能有应对的办法。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/暗网/" rel="tag"># 暗网</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/03/Pytorch-手写数字识别/" rel="next" title="Pytorch-手写数字识别">
+                <i class="fa fa-chevron-left"></i> Pytorch-手写数字识别
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/Favorite_CAT.png" alt="DHui">
+            
+              <p class="site-author-name" itemprop="name">DHui</p>
+              <p class="site-description motion-element" itemprop="description">喜欢春天的风，秋天的树叶； <br> 喜欢夏天的雨，冬天的阳光。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/na-hai-95/activities" target="_blank" title="Zhihu">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Zhihu</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/daihuidai" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-文起"><span class="nav-number">1.</span> <span class="nav-text">1. 文起</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-什么阻挡了你进入暗网"><span class="nav-number">2.</span> <span class="nav-text">2. 什么阻挡了你进入暗网</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-长城防火墙"><span class="nav-number">2.1.</span> <span class="nav-text">2.1. 长城防火墙</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-暗网本身的技术"><span class="nav-number">2.2.</span> <span class="nav-text">2.2. 暗网本身的技术</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-洋葱网络"><span class="nav-number">2.3.</span> <span class="nav-text">2.3. 洋葱网络</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-进入暗网"><span class="nav-number">3.</span> <span class="nav-text">3. 进入暗网</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-使用-Tor-浏览器"><span class="nav-number">3.1.</span> <span class="nav-text">3.1. 使用 Tor 浏览器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-真正的暗网来了"><span class="nav-number">3.2.</span> <span class="nav-text">3.2. 真正的暗网来了</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#色情交易："><span class="nav-number">3.3.</span> <span class="nav-text">色情交易：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-暗网总结"><span class="nav-number">3.4.</span> <span class="nav-text">3.3. 暗网总结</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-文末"><span class="nav-number">4.</span> <span class="nav-text">4. 文末</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DHui</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Nothing</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Nothing  </div>
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'J60WKXjcL6IxKlW13E5yINBW-gzGzoHsz',
+        appKey: 'g1IULIKLIy47zRNXBRtNEO5r',
+        placeholder: '如果你真的想说点什么的话ヾﾉ≧∀≦)o',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+</html>
