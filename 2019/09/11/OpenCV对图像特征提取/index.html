@@ -94,7 +94,7 @@
 <meta property="og:image" content="https://gitee.com/daihuidai/First_Image_Bed/raw/master/OpenCV/4.jpg">
 <meta property="og:image" content="https://gitee.com/daihuidai/First_Image_Bed/raw/master/OpenCV/5.jpg">
 <meta property="og:image" content="https://gitee.com/daihuidai/First_Image_Bed/raw/master/OpenCV/6.jpg">
-<meta property="og:updated_time" content="2019-09-20T02:55:48.680Z">
+<meta property="og:updated_time" content="2020-02-19T09:30:07.538Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OpenCV对图像特征提取">
 <meta name="twitter:description" content="万壑松风知客来，摇扇抚琴待留声 1. 文起随着深度学习的兴起，借由搭建神经网络完成的图像识别技术也越来越成熟，并由此产出了许多科技产品，例如生活中常见的人脸识别。当然随着技术的成熟，在如今这个鼓励、热衷开源的时代自然会出现许多普通人就能使用的强大工具——OpenCV 2. OpenCV 简介OpenCV 全称 Open Source Computer Vision Library（即：开源计算机视">
@@ -439,7 +439,7 @@
 </tbody>
 </table>
 <p><strong>三：边缘检测</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 边缘检测</span></span><br><span class="line">canny = cv2.Canny(image=thresh, threshold1=<span class="number">200</span>, threshold2=<span class="number">300</span>, apertureSize=<span class="number">3</span>, L2gradient=<span class="keyword">False</span>)</span><br><span class="line"></span><br><span class="line">cv2.imshow(<span class="string">'heart'</span>, canny)</span><br><span class="line">cv2.waitKey()</span><br><span class="line">cv2.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 边缘检测</span></span><br><span class="line">canny = cv2.Canny(image=thresh, threshold1=<span class="number">200</span>, threshold2=<span class="number">250</span>, apertureSize=<span class="number">3</span>, L2gradient=<span class="keyword">False</span>)</span><br><span class="line"></span><br><span class="line">cv2.imshow(<span class="string">'heart'</span>, canny)</span><br><span class="line">cv2.waitKey()</span><br><span class="line">cv2.destroyAllWindows()</span><br></pre></td></tr></table></figure>
 <p><img width="300px" src="https://gitee.com/daihuidai/First_Image_Bed/raw/master/OpenCV/3.jpg"></p>
 <p>Canny 是一种边缘检测的方法，使用 Canny() 函数可以调用该方法。<code>image</code> 传入图像，<code>threshold1</code> 和 <code>threshold2</code> 分别传入 minVal 和 maxVal 。当图像的灰度梯度高于 maxVal 时被认为是真的边界，那些低于 minVal 的边界会被抛弃。如果介于两者之间的话，就要看这个点是否与某个被确定为真正边界点相连，如果是，就认为它也是边界点，如果不是就抛弃。</p>
 <p><code>apertureSize</code> 用来设置计算图像梯度的 Sobel 卷积核的大小（3、5、7），默认值为3。<code>L2gradient</code> 设定求梯度大小的方程，默认为 False。</p>
@@ -999,7 +999,7 @@
         }
       });
     </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -1007,5 +1007,5 @@
 
   
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html>
